@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
   private Rigidbody rb;
+  private Item item;
   public Camera playercamera;
   public float speed;
   public float jumpheight;
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour {
   // Use this for initialization
   void Start () {
     rb = GetComponent<Rigidbody>();
+    item = GetComponent<Item>();
   }
 
   // Update is called once per frame
@@ -36,15 +38,14 @@ public class PlayerController : MonoBehaviour {
 
     if (horizontal != 0){
       Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-      rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, Time.deltaTime);
+      rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 2 * Time.deltaTime);
+    }
+
+    // use item
+    float fire = Input.GetAxis("Fire3"); //temporary
+    if (fire > 0){
+      item.Activate();
     }
 
   }
-
-  // void OnTriggerEnter (Collider other) {
-  //   //Debug.Log("Collided with object");
-
-  //   if (other.CompareTag("Pickup")) {
-  //   }
-  // }
 }
