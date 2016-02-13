@@ -14,7 +14,7 @@ public class DefenseDefenseItem : Item {
   }
 
   override public void Activate () {
-    Debug.Log("Used DD Item");
+    //Debug.Log("Used DD Item");
     DefenseBarrier db = gameObject.AddComponent<DefenseBarrier>() as DefenseBarrier;
     // -1 for invincibility regardless of counts
     db.setupDefenseBarrier(GlobalSetting.Instance.ddBarrierDuration, -1);

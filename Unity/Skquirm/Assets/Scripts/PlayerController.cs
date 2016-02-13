@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
   private Rigidbody rb;
   private Item item;
+  public ItemStateUI itemUI;
   public Camera playercamera;
   public float speed;
   public float jumpheight;
@@ -47,8 +48,8 @@ public class PlayerController : MonoBehaviour {
       item.Activate();
       Destroy(item);
       item = null;
+      itemUI.UpdateUI(item);
     }
-
   }
 
   void PickupItem (string newType) {
@@ -58,9 +59,12 @@ public class PlayerController : MonoBehaviour {
       // just to get it working... will look for more elegant ways later...
       if (newType == "Defense"){
         item = gameObject.AddComponent<DefenseItem>() as DefenseItem;
+      }else if (newType == "Offense"){
+        item = gameObject.AddComponent<OffenseItem>() as OffenseItem;
       }else if (newType == "Speed"){
         item = gameObject.AddComponent<SpeedItem>() as SpeedItem;
       }
     }
+    itemUI.UpdateUI(item);
   }
 }

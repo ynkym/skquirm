@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpeedItem : Item {
+public class OffenseItem : Item {
 
 	// Use this for initialization
 	void Start () {
@@ -11,11 +11,11 @@ public class SpeedItem : Item {
   override public Item CombineWith (string anotherType) {
     Item newitem = null;
     if (anotherType == "Defense"){
-      newitem = gameObject.AddComponent<SpeedDefenseItem>() as SpeedDefenseItem;
+      newitem = gameObject.AddComponent<OffenseDefenseItem>() as OffenseDefenseItem;
     } else if (anotherType == "Offense"){
-      newitem = gameObject.AddComponent<OffenseSpeedItem>() as OffenseSpeedItem;
+      newitem = gameObject.AddComponent<OffenseOffenseItem>() as OffenseOffenseItem;
     } else if (anotherType == "Speed"){
-      newitem = gameObject.AddComponent<SpeedSpeedItem>() as SpeedSpeedItem;
+      newitem = gameObject.AddComponent<OffenseSpeedItem>() as OffenseSpeedItem;
     }
 
     if (newitem != null){
@@ -26,8 +26,7 @@ public class SpeedItem : Item {
   }
 
   override public void Activate() {
-    // Debug.Log("Used Speed Item");
-    Rigidbody rb = GetComponent<Rigidbody>();
-    rb.AddForce(GlobalSetting.Instance.speedItemThrust * transform.forward, ForceMode.Impulse);
+    Debug.Log("Used Offense Item");
+    // TODO: implement
   }
 }

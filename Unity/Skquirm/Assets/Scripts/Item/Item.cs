@@ -8,8 +8,6 @@ public class Item : MonoBehaviour {
   }
 
   virtual public Item CombineWith (string anotherType){
-    //TODO: fixme
-    //itemUI.SendMessage("UpdateUI", this.type);
     return this;
   }
 
