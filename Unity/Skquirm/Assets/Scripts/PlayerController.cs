@@ -43,9 +43,24 @@ public class PlayerController : MonoBehaviour {
 
     // use item
     float fire = Input.GetAxis("Fire3"); //temporary
-    if (fire > 0){
+    if (fire > 0 && item != null){
       item.Activate();
+      Destroy(item);
+      item = null;
     }
 
+  }
+
+  void PickupItem (string newType) {
+    if (item != null){
+      item.CombineWith(newType);
+    }else{
+      // just to get it working... will look for more elegant ways later...
+      if (newType == "Defense"){
+        item = gameObject.AddComponent<DefenseItem>() as DefenseItem;
+      }else if (newType == "Speed"){
+        item = gameObject.AddComponent<SpeedItem>() as SpeedItem;
+      }
+    }
   }
 }
