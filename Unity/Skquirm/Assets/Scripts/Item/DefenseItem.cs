@@ -8,8 +8,13 @@ public class DefenseItem : Item {
 
 	}
 
-  override public void CombineWith (string anotherType) {
-    // TODO
+  override public Item CombineWith (string anotherType) {
+    if (anotherType == "Defense"){
+      Item newitem = gameObject.AddComponent<DefenseDefenseItem>() as DefenseDefenseItem;
+      Destroy(this);
+      return newitem;
+    }
+    return this;
   }
 
   override public void Activate() {

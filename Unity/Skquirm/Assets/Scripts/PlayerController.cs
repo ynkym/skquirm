@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 
   void PickupItem (string newType) {
     if (item != null){
-      item.CombineWith(newType);
+      item = item.CombineWith(newType);
     }else{
       // just to get it working... will look for more elegant ways later...
       if (newType == "Defense"){

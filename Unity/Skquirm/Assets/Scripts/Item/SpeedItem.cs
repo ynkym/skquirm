@@ -8,8 +8,9 @@ public class SpeedItem : Item {
 
 	}
 
-  override public void CombineWith (string anotherType) {
+  override public Item CombineWith (string anotherType) {
     // TODO
+    return this;
   }
 
   override public void Activate() {
