@@ -54,6 +54,10 @@ public class OffenseItem : Item {
 
 		//Give it a velocity
 		temp_projectile.GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * speed;
+
+		//Set projectile info
+		temp_projectile.GetComponent<OffenseOffenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
+
 		temp_projectile = null;
 
   }
