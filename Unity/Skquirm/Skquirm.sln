@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{3AE35A07-9D9E-85DC-BE7B-2C8882DC21D7}") = "Skquirm", "Assembly-CSharp-firstpass.csproj", "{88386770-7985-7EFD-620C-BD4B8D607F8D}"
+EndProject
 Project("{3AE35A07-9D9E-85DC-BE7B-2C8882DC21D7}") = "Skquirm", "Assembly-CSharp.csproj", "{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88386770-7985-7EFD-620C-BD4B8D607F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88386770-7985-7EFD-620C-BD4B8D607F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88386770-7985-7EFD-620C-BD4B8D607F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88386770-7985-7EFD-620C-BD4B8D607F8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
