@@ -4,7 +4,7 @@ using InControl;
 
 public class PlayerController : MonoBehaviour {
 
-	public GlobalSetting globalSet; 
+	public GlobalSetting globalSet;
 
 	private Rigidbody rb;
 	private Item item;
@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour {
         // only consider vertical input for movement force.
         Vector3 movement = speed * transform.forward * vertical + new Vector3(0, jump * jumpheight, 0);
         rb.AddForce(movement);
-
         // now count horizontal input to determine the new direction we want to face.
         Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
         lookDirection.Normalize();
@@ -105,9 +104,9 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-
+		
 	// Fixed time step update, usually for physics
-	void FixedUpdate () {
+	//void FixedUpdate () {
 		/*
         var inputDevice = InputManager.ActiveDevice;
 		if (!testingObj) {
@@ -155,7 +154,68 @@ public class PlayerController : MonoBehaviour {
 				itemUI.UpdateUI (item);
 			}
 		}*/
-	}
+
+    // Fixed time step update, usually for physics, everything moved to updateMovement
+    void FixedUpdate () {
+        var inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+        if (inputDevice == null)
+        {
+            // If no controller exists for this cube, just make it translucent.
+            // cubeRenderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
+
+		
+	        var inputdevice = InputManager.ActiveDevice;
+			if (!testingObj) {
+            
+	            float horizontal; //for inControl functionality
+	            float vertical;
+				float jump;
+				float fire;
+
+				if (!TestWithoutJoystick) {
+					horizontal = inputdevice.LeftStickX; //for inControl functionality
+					vertical = inputdevice.LeftStickY;
+					jump = inputdevice.Action1;
+					fire = inputdevice.Action3;
+				} else {
+					horizontal = Input.GetAxis ("Horizontal");
+					vertical = Input.GetAxis ("Vertical");
+					jump = Input.GetAxis ("Jump");
+					fire = Input.GetAxis ("Fire3");
+				}
+	            
+	            //float jump = Input.GetAxis ("Jump");
+
+				// only consider vertical input for movement force.
+				Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
+				rb.AddForce (movement);
+
+				// now count horizontal input to determine the new direction we want to face.
+				Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
+				lookDirection.Normalize ();
+
+				if (horizontal != 0) {
+					Quaternion newRotation = Quaternion.LookRotation (lookDirection);
+					rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
+				}
+
+            // use item
+            //float fire = inputDevice.Action3;
+			//float fire = Input.GetAxis ("Fire3"); //temporary
+
+				if (fire > 0 && item != null) {
+					item.Activate ();
+					Destroy (item);
+					item = null;
+					itemUI.UpdateUI (item);
+				}
+			}
+        }
+        else
+        {
+            UpdateMovement(inputDevice);
+        }
+		}
 
 	void PickupItem (string newType) {
 		if (!testingObj) {
