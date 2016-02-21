@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour {
         DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
         if (barrier == null) {
             // Do actual damage
-            health.life -= 1;
+            health.getDamaged();
             print("caused damage to the player");
             return true;
         } else {

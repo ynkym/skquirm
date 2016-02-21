@@ -20,12 +20,13 @@ public class Health : MonoBehaviour
         currentLife = life;
     }
 
-    void getDamaged ()
+    public void getDamaged ()
     {
         currentLife -= 1;
         if (currentLife <= 0)
         {
             //Application.LoadLevel("GameOver");
+            Debug.Log("GameOver");
         }
     }
 
