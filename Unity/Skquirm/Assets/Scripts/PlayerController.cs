@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using InControl;
 
@@ -99,30 +99,30 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public void TryToHurt(){
-		//Todo
-		DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
-		if (barrier == null) {
-			// Do actual damage
-			print("caused damage to the player");
-		} else {
-			// block by barrier
-			barrier.breakingBarrier();
-		}
-	}
+    public void TryToHurt(){
+        //Todo
+        DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
+        if (barrier == null) {
+            // Do actual damage
+            print("caused damage to the player");
+        } else {
+            // block by barrier
+            barrier.breakingBarrier();
+        }
+    }
 
-	void OnCollisionEnter(Collision collision){
-		if (collision.gameObject.tag == "Player") {
-			OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
-			if (odBarrier != null) {
-				// this player have OD barrier
-				collision.gameObject.GetComponent<PlayerController>().TryToHurt();
-				odBarrier.breakingBarrier();
-			}
-		}
-	}
+    void OnCollisionEnter(Collision collision){
+        if (collision.gameObject.tag == "Player") {
+            OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
+            if (odBarrier != null) {
+                // this player have OD barrier
+                collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+                odBarrier.breakingBarrier();
+            }
+        }
+    }
 
-	public void IncreaseScore(){
-		//Todo
-	}
+    public void IncreaseScore(){
+        //Todo
+    }
 }
