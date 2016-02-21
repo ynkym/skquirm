@@ -44,6 +44,8 @@ public class GlobalSetting : MonoBehaviour {
 		min_index = i;
 
 		for (int j = i+1; j < players.Length; j++) {
+			if (players [j] == currentPlayer)
+				continue;
 			temp_dist = Vector3.Distance (currentPlayer.transform.position, players [j].transform.position);
 			if (min_distance > temp_dist) {
 				min_distance = temp_dist;
