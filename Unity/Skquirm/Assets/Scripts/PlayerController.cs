@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using InControl;
 
@@ -12,17 +12,21 @@ public class PlayerController : MonoBehaviour {
 	public Camera playercamera;
 	public float speed;
 	public float jumpheight;
+
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
+	public GameObject shooter_back; //drop position of the mine (also an empty Obj for coordinate purposes)
+
     public int playerNum;
-	public int lives = 3;
 
 	public bool testingObj;
 	public bool TestWithoutJoystick;
+    private Health health;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		item = GetComponent<Item>();
+        health = GetComponent<Health>();
 	}
 
 	// Update is called once per frame
@@ -37,8 +41,9 @@ public class PlayerController : MonoBehaviour {
 
         if (!TestWithoutJoystick) {
             horizontal = inputdevice.LeftStickX; //for inControl functionality
-            vertical = inputdevice.LeftStickY;
-            jump = inputdevice.Action1;
+            //vertical = inputdevice.LeftStickY;
+            vertical = inputdevice.Action1;
+            jump = inputdevice.Action2;
             fire = inputdevice.Action3;
         } else {
             horizontal = Input.GetAxis ("Horizontal");
@@ -79,7 +84,7 @@ public class PlayerController : MonoBehaviour {
                 UpdateMovement(inputDevice);
             }
         }
-		}
+	}
 
 	void PickupItem (string newType) {
 		if (!testingObj) {
@@ -99,30 +104,33 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public void TryToHurt(){
-		//Todo
-		DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
-		if (barrier == null) {
-			// Do actual damage
-			print("caused damage to the player");
-		} else {
-			// block by barrier
-			barrier.breakingBarrier();
-		}
-	}
+    public bool TryToHurt(){
+        //Todo
+        DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
+        if (barrier == null) {
+            // Do actual damage
+            health.life -= 1;
+            print("caused damage to the player");
+            return true;
+        } else {
+            // block by barrier
+            barrier.breakingBarrier();
+            return false;
+        }
+    }
 
-	void OnCollisionEnter(Collision collision){
-		if (collision.gameObject.tag == "Player") {
-			OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
-			if (odBarrier != null) {
-				// this player have OD barrier
-				collision.gameObject.GetComponent<PlayerController>().TryToHurt();
-				odBarrier.breakingBarrier();
-			}
-		}
-	}
+    void OnCollisionEnter(Collision collision){
+        if (collision.gameObject.tag == "Player") {
+            OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
+            if (odBarrier != null) {
+                // this player have OD barrier
+                collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+                odBarrier.breakingBarrier();
+            }
+        }
+    }
 
-	public void IncreaseScore(){
-		//Todo
-	}
+    public void IncreaseScore(){
+        //Todo
+    }
 }
