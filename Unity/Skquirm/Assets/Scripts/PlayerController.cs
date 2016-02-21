@@ -78,9 +78,27 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public void Damage(){
+	public void TryToHurt(){
 		//Todo
-		print("caused damage to the player");
+		DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
+		if (barrier == null) {
+			// Do actual damage
+			print("caused damage to the player");
+		} else {
+			// block by barrier
+			barrier.breakingBarrier();
+		}
+	}
+
+	void OnCollisionEnter(Collision collision){
+		if (collision.gameObject.tag == "Player") {
+			OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
+			if (odBarrier != null) {
+				// this player have OD barrier
+				collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+				odBarrier.breakingBarrier();
+			}
+		}
 	}
 
 	public void IncreaseScore(){

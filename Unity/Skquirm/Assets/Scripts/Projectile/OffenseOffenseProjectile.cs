@@ -37,7 +37,7 @@ public class OffenseOffenseProjectile : Projectile {
 			collision.gameObject.GetComponent<Rigidbody>().AddForce(dist_vector*20f);
 
 			// Cause Damage
-			collision.gameObject.GetComponent<PlayerController>().Damage();
+			collision.gameObject.GetComponent<PlayerController>().TryToHurt();
 
 			// Send the score to the player
 			origin.IncreaseScore();
