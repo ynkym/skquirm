@@ -37,8 +37,9 @@ public class PlayerController : MonoBehaviour {
 
         if (!TestWithoutJoystick) {
             horizontal = inputdevice.LeftStickX; //for inControl functionality
-            vertical = inputdevice.LeftStickY;
-            jump = inputdevice.Action1;
+            //vertical = inputdevice.LeftStickY;
+            vertical = inputdevice.Action1;
+            jump = inputdevice.Action2;
             fire = inputdevice.Action3;
         } else {
             horizontal = Input.GetAxis ("Horizontal");
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour {
                 UpdateMovement(inputDevice);
             }
         }
-		}
+	}
 
 	void PickupItem (string newType) {
 		if (!testingObj) {
