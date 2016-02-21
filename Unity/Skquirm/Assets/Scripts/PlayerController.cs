@@ -12,12 +12,15 @@ public class PlayerController : MonoBehaviour {
 	public Camera playercamera;
 	public float speed;
 	public float jumpheight;
+
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
+	public GameObject shooter_back; //drop position of the mine (also an empty Obj for coordinate purposes)
+
     public int playerNum;
 	public int lives = 3;
 
 	public bool testingObj;
-	public bool TestWithoutJoystick;
+	//public bool TestWithoutJoystick;
 
 	// Use this for initialization
 	void Start () {

@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
 	{
 
 		if (life == 2){
-			Debug.Log("lol");
+			//Debug.Log("lol");
 			gameObject.GetComponent<Renderer>().material.color = Color.red;
 			//barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
 		}
