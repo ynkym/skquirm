@@ -4,7 +4,7 @@ using InControl;
 
 public class PlayerController : MonoBehaviour {
 
-	public GlobalSetting globalSet; 
+	public GlobalSetting globalSet;
 
 	private Rigidbody rb;
 	private Item item;
@@ -26,16 +26,6 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        var inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
-        if (inputDevice == null)
-        {
-            // If no controller exists for this cube, just make it translucent.
-            // cubeRenderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
-        }
-        else
-        {
-            UpdateMovement(inputDevice);
-        }
     }
 
     void UpdateMovement(InputDevice inputdevice){
@@ -49,7 +39,6 @@ public class PlayerController : MonoBehaviour {
         // only consider vertical input for movement force.
         Vector3 movement = speed * transform.forward * vertical + new Vector3(0, jump * jumpheight, 0);
         rb.AddForce(movement);
-
         // now count horizontal input to determine the new direction we want to face.
         Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
         lookDirection.Normalize();
@@ -77,7 +66,16 @@ public class PlayerController : MonoBehaviour {
 
     // Fixed time step update, usually for physics, everything moved to updateMovement
     void FixedUpdate () {
-
+        var inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+        if (inputDevice == null)
+        {
+            // If no controller exists for this cube, just make it translucent.
+            // cubeRenderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
+        }
+        else
+        {
+            UpdateMovement(inputDevice);
+        }
 	}
 
 	void PickupItem (string newType) {
