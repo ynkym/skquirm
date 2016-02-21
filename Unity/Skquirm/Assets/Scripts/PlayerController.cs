@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public float jumpheight;
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
-
+    public int playerNum;
 	public int lives = 3;
 
 	public bool testingObj;
@@ -39,11 +39,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     void UpdateMovement(InputDevice inputdevice){
-        float horizontal = inputDevice.LeftStickX; //for inControl functionality
-        float vertical = inputDevice.LeftStickY;
+        float horizontal = inputdevice.LeftStickX; //for inControl functionality
+        float vertical = inputdevice.LeftStickY;
         //float horizontal = Input.GetAxis ("Horizontal");
         //float vertical = Input.GetAxis ("Vertical");
-        float jump = inputDevice.Action1;
+        float jump = inputdevice.Action1;
         //float jump = Input.GetAxis ("Jump");
 
         // only consider vertical input for movement force.
@@ -61,20 +61,23 @@ public class PlayerController : MonoBehaviour {
         }
 
         // use item
-        float fire = inputDevice.Action3;
+        float fire = inputdevice.Action3;
         //float fire = Input.GetAxis ("Fire3"); //temporary
+        if (!testingObj)
+        {
+            if (fire > 0 && item != null)
+            {
+                item.Activate();
+                Destroy(item);
+                item = null;
+                itemUI.UpdateUI(item);
+            }
+        }
     }
 
-    // Fixed time step update, usually for physics
+    // Fixed time step update, usually for physics, everything moved to updateMovement
     void FixedUpdate () {
-		if (!testingObj) {
-			if (fire > 0 && item != null) {
-				item.Activate ();
-				Destroy (item);
-				item = null;
-				itemUI.UpdateUI (item);
-			}
-		}
+
 	}
 
 	void PickupItem (string newType) {
