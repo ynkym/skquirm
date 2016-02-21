@@ -47,7 +47,7 @@ public class OffenseItem : Item {
 		Vector3 temp_rotation = transform.rotation.eulerAngles;
 
 		//Adjust the rotation of the projectile that will be generated
-		//temp_rotation.x = 90f;
+		temp_rotation.x = 90f;
 
 		//Instantiate
 		temp_projectile = Instantiate(projectile_prefab, shooter.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
