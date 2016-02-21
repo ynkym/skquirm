@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Health : MonoBehaviour
 {
-	public static int life;        // The player's life.
+	public int life;        // The player's life.
 	//public Material damaged;
 	void Awake ()
 	{
