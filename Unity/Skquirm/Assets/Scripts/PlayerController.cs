@@ -14,15 +14,16 @@ public class PlayerController : MonoBehaviour {
 	public float jumpheight;
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
     public int playerNum;
-	public int lives = 3;
 
 	public bool testingObj;
 	public bool TestWithoutJoystick;
+    private Health health;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		item = GetComponent<Item>();
+        health = GetComponent<Health>();
 	}
 
 	// Update is called once per frame
@@ -100,15 +101,18 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-    public void TryToHurt(){
+    public bool TryToHurt(){
         //Todo
         DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
         if (barrier == null) {
             // Do actual damage
+            health.life -= 1;
             print("caused damage to the player");
+            return true;
         } else {
             // block by barrier
             barrier.breakingBarrier();
+            return false;
         }
     }
 
