@@ -78,12 +78,15 @@ public class PlayerController : MonoBehaviour {
     // Fixed time step update, usually for physics, everything moved to updateMovement
     void FixedUpdate () {
         InputDevice inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
-        if (inputDevice != null)
-        {
-            if (!testingObj) {
-                UpdateMovement(inputDevice);
-            }
-        }
+		if (inputDevice != null) {
+			if (!testingObj) {
+				UpdateMovement (inputDevice);
+			}
+		} else {
+			if (!testingObj && TestWithoutJoystick) {
+				UpdateMovement (null);
+			}
+		}
 	}
 
 	void PickupItem (string newType) {
