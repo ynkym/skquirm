@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class PlayerController : MonoBehaviour {
 
@@ -30,11 +31,15 @@ public class PlayerController : MonoBehaviour {
 
 	// Fixed time step update, usually for physics
 	void FixedUpdate () {
+        var inputDevice = InputManager.ActiveDevice;
 		if (!testingObj) {
-			float horizontal = Input.GetAxis ("Horizontal");
-			float vertical = Input.GetAxis ("Vertical");
-
-			float jump = Input.GetAxis ("Jump");
+            
+            float horizontal = inputDevice.LeftStickX; //for inControl functionality
+            float vertical = inputDevice.LeftStickY;
+            //float horizontal = Input.GetAxis ("Horizontal");
+            //float vertical = Input.GetAxis ("Vertical");
+            float jump = inputDevice.Action1;
+            //float jump = Input.GetAxis ("Jump");
 
 			// only consider vertical input for movement force.
 			Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
@@ -49,8 +54,10 @@ public class PlayerController : MonoBehaviour {
 				rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
 			}
 
-			// use item
-			float fire = Input.GetAxis ("Fire3"); //temporary
+            // use item
+            float fire = inputDevice.Action3;
+			//float fire = Input.GetAxis ("Fire3"); //temporary
+
 			if (fire > 0 && item != null) {
 				item.Activate ();
 				Destroy (item);
