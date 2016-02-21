@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
 	public int lives = 3;
 
 	public bool testingObj;
+	public bool TestWithoutJoystick;
 
 	// Use this for initialization
 	void Start () {
@@ -34,11 +35,23 @@ public class PlayerController : MonoBehaviour {
         var inputDevice = InputManager.ActiveDevice;
 		if (!testingObj) {
             
-            float horizontal = inputDevice.LeftStickX; //for inControl functionality
-            float vertical = inputDevice.LeftStickY;
-            //float horizontal = Input.GetAxis ("Horizontal");
-            //float vertical = Input.GetAxis ("Vertical");
-            float jump = inputDevice.Action1;
+            float horizontal; //for inControl functionality
+            float vertical;
+			float jump;
+			float fire;
+
+			if (!TestWithoutJoystick) {
+				horizontal = inputDevice.LeftStickX; //for inControl functionality
+				vertical = inputDevice.LeftStickY;
+				jump = inputDevice.Action1;
+				fire = inputDevice.Action3;
+			} else {
+				horizontal = Input.GetAxis ("Horizontal");
+				vertical = Input.GetAxis ("Vertical");
+				jump = Input.GetAxis ("Jump");
+				fire = Input.GetAxis ("Fire3");
+			}
+            
             //float jump = Input.GetAxis ("Jump");
 
 			// only consider vertical input for movement force.
@@ -55,7 +68,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
             // use item
-            float fire = inputDevice.Action3;
+            //float fire = inputDevice.Action3;
 			//float fire = Input.GetAxis ("Fire3"); //temporary
 
 			if (fire > 0 && item != null) {
