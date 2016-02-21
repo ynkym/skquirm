@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StraightProjectile : Projectile {
+public class OffenseProjectile : Projectile {
 
 
 	GameObject explosion;

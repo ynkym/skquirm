@@ -29,7 +29,6 @@ public class ItemSpawner : MonoBehaviour {
         GameObject prefab;
         // determine randomly which item to spawn
         float rand = Random.Range(0.0f, offenseRatio + defenseRatio + speedRatio);
-				print (rand);
         if (rand < offenseRatio){
           prefab = offenseItem;
         } else if (rand < offenseRatio + defenseRatio){

@@ -5,6 +5,8 @@ Project("{3AE35A07-9D9E-85DC-BE7B-2C8882DC21D7}") = "Skquirm", "Assembly-CSharp-
 EndProject
 Project("{3AE35A07-9D9E-85DC-BE7B-2C8882DC21D7}") = "Skquirm", "Assembly-CSharp.csproj", "{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}"
 EndProject
+Project("{3AE35A07-9D9E-85DC-BE7B-2C8882DC21D7}") = "Skquirm", "Assembly-CSharp-Editor.csproj", "{D4FA6320-0228-CFB7-EC5D-9D7FA736B8A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5AAA353-C97B-DB2B-6F23-FD1427504C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4FA6320-0228-CFB7-EC5D-9D7FA736B8A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4FA6320-0228-CFB7-EC5D-9D7FA736B8A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4FA6320-0228-CFB7-EC5D-9D7FA736B8A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4FA6320-0228-CFB7-EC5D-9D7FA736B8A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
