@@ -19,7 +19,7 @@ public class OffenseProjectile : Projectile {
 			collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward*20f);
 
 			// Cause Damage
-			collision.gameObject.GetComponent<PlayerController>().Damage();
+			collision.gameObject.GetComponent<PlayerController>().TryToHurt();
 
 			// Send the score to the player
 			origin.IncreaseScore();

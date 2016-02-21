@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using InControl;
 
@@ -27,193 +27,57 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        var inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
-        if (inputDevice == null)
-        {
-			float horizontal; //for inControl functionality
-			float vertical;
-			float jump;
-			float fire;
-
-			horizontal = Input.GetAxis ("Horizontal");
-			vertical = Input.GetAxis ("Vertical");
-			jump = Input.GetAxis ("Jump");
-			fire = Input.GetAxis ("Fire3");
-
-			Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
-			rb.AddForce (movement);
-
-			// now count horizontal input to determine the new direction we want to face.
-			Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
-			lookDirection.Normalize ();
-
-			if (horizontal != 0) {
-				Quaternion newRotation = Quaternion.LookRotation (lookDirection);
-				rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
-			}
-
-			// use item
-			//float fire = inputDevice.Action3;
-			//float fire = Input.GetAxis ("Fire3"); //temporary
-
-			if (fire > 0 && item != null) {
-				item.Activate ();
-				Destroy (item);
-				item = null;
-				itemUI.UpdateUI (item);
-			}
-        }
-        else
-        {
-            UpdateMovement(inputDevice);
-        }
     }
 
     void UpdateMovement(InputDevice inputdevice){
-        float horizontal = inputdevice.LeftStickX; //for inControl functionality
-        float vertical = inputdevice.LeftStickY;
-        //float horizontal = Input.GetAxis ("Horizontal");
-        //float vertical = Input.GetAxis ("Vertical");
-        float jump = inputdevice.Action1;
+        float horizontal; //for inControl functionality
+        float vertical;
+        float jump;
+        float fire;
+
+        if (!TestWithoutJoystick) {
+            horizontal = inputdevice.LeftStickX; //for inControl functionality
+            vertical = inputdevice.LeftStickY;
+            jump = inputdevice.Action1;
+            fire = inputdevice.Action3;
+        } else {
+            horizontal = Input.GetAxis ("Horizontal");
+            vertical = Input.GetAxis ("Vertical");
+            jump = Input.GetAxis ("Jump");
+            fire = Input.GetAxis ("Fire3");
+        }
+
         //float jump = Input.GetAxis ("Jump");
 
         // only consider vertical input for movement force.
-        Vector3 movement = speed * transform.forward * vertical + new Vector3(0, jump * jumpheight, 0);
-        rb.AddForce(movement);
+        Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
+        rb.AddForce (movement);
+
         // now count horizontal input to determine the new direction we want to face.
         Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
-        lookDirection.Normalize();
+        lookDirection.Normalize ();
 
-        if (horizontal != 0)
-        {
-            Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 2 * Time.deltaTime);
+        if (horizontal != 0) {
+            Quaternion newRotation = Quaternion.LookRotation (lookDirection);
+            rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
         }
 
-        // use item
-        float fire = inputdevice.Action3;
-        //float fire = Input.GetAxis ("Fire3"); //temporary
-        if (!testingObj)
-        {
-            if (fire > 0 && item != null)
-            {
-                item.Activate();
-                Destroy(item);
-                item = null;
-                itemUI.UpdateUI(item);
-            }
+        if (fire > 0 && item != null) {
+            item.Activate ();
+            Destroy (item);
+            item = null;
+            itemUI.UpdateUI (item);
         }
     }
-		
-	// Fixed time step update, usually for physics
-	//void FixedUpdate () {
-		/*
-        var inputDevice = InputManager.ActiveDevice;
-		if (!testingObj) {
-            
-            float horizontal; //for inControl functionality
-            float vertical;
-			float jump;
-			float fire;
-
-			if (!TestWithoutJoystick) {
-				horizontal = inputDevice.LeftStickX; //for inControl functionality
-				vertical = inputDevice.LeftStickY;
-				jump = inputDevice.Action1;
-				fire = inputDevice.Action3;
-			} else {
-				horizontal = Input.GetAxis ("Horizontal");
-				vertical = Input.GetAxis ("Vertical");
-				jump = Input.GetAxis ("Jump");
-				fire = Input.GetAxis ("Fire3");
-			}
-            
-            //float jump = Input.GetAxis ("Jump");
-
-			// only consider vertical input for movement force.
-			Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
-			rb.AddForce (movement);
-
-			// now count horizontal input to determine the new direction we want to face.
-			Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
-			lookDirection.Normalize ();
-
-			if (horizontal != 0) {
-				Quaternion newRotation = Quaternion.LookRotation (lookDirection);
-				rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
-			}
-
-            // use item
-            //float fire = inputDevice.Action3;
-			//float fire = Input.GetAxis ("Fire3"); //temporary
-
-			if (fire > 0 && item != null) {
-				item.Activate ();
-				Destroy (item);
-				item = null;
-				itemUI.UpdateUI (item);
-			}
-		}*/
 
     // Fixed time step update, usually for physics, everything moved to updateMovement
     void FixedUpdate () {
-        var inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
-        if (inputDevice == null)
+        InputDevice inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+        if (inputDevice != null)
         {
-            // If no controller exists for this cube, just make it translucent.
-            // cubeRenderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
-
-		
-	        var inputdevice = InputManager.ActiveDevice;
-			if (!testingObj) {
-            
-	            float horizontal; //for inControl functionality
-	            float vertical;
-				float jump;
-				float fire;
-
-				if (!TestWithoutJoystick) {
-					horizontal = inputdevice.LeftStickX; //for inControl functionality
-					vertical = inputdevice.LeftStickY;
-					jump = inputdevice.Action1;
-					fire = inputdevice.Action3;
-				} else {
-					horizontal = Input.GetAxis ("Horizontal");
-					vertical = Input.GetAxis ("Vertical");
-					jump = Input.GetAxis ("Jump");
-					fire = Input.GetAxis ("Fire3");
-				}
-	            
-	            //float jump = Input.GetAxis ("Jump");
-
-				// only consider vertical input for movement force.
-				Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
-				rb.AddForce (movement);
-
-				// now count horizontal input to determine the new direction we want to face.
-				Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
-				lookDirection.Normalize ();
-
-				if (horizontal != 0) {
-					Quaternion newRotation = Quaternion.LookRotation (lookDirection);
-					rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
-				}
-
-            // use item
-            //float fire = inputDevice.Action3;
-			//float fire = Input.GetAxis ("Fire3"); //temporary
-
-				if (fire > 0 && item != null) {
-					item.Activate ();
-					Destroy (item);
-					item = null;
-					itemUI.UpdateUI (item);
-				}
-			}
-        }
-        else
-        {
-            UpdateMovement(inputDevice);
+            if (!testingObj) {
+                UpdateMovement(inputDevice);
+            }
         }
 		}
 
@@ -235,9 +99,27 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public void Damage(){
+	public void TryToHurt(){
 		//Todo
-		print("caused damage to the player");
+		DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
+		if (barrier == null) {
+			// Do actual damage
+			print("caused damage to the player");
+		} else {
+			// block by barrier
+			barrier.breakingBarrier();
+		}
+	}
+
+	void OnCollisionEnter(Collision collision){
+		if (collision.gameObject.tag == "Player") {
+			OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
+			if (odBarrier != null) {
+				// this player have OD barrier
+				collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+				odBarrier.breakingBarrier();
+			}
+		}
 	}
 
 	public void IncreaseScore(){

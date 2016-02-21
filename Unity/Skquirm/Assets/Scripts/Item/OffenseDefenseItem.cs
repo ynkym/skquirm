@@ -15,6 +15,9 @@ public class OffenseDefenseItem : Item {
 
   override public void Activate () {
     Debug.Log("Used OD Item");
-    // TODO: implement
+	OffenseDefenseBarrier odb = gameObject.AddComponent<OffenseDefenseBarrier>() as OffenseDefenseBarrier;
+	odb.setupDefenseBarrier(GlobalSetting.Instance.defenseBarrierDuration,
+		                       GlobalSetting.Instance.defenseBarrierCount);
+
   }
 }

@@ -26,6 +26,9 @@ public class GlobalSetting : MonoBehaviour {
   // number of times the defense (D) barrier will withstand attacks
   public int defenseBarrierCount = 1;
 
+  // number of times the offense-defense (OD) barrier can attack
+	public int odAttackCount = 1;
+
   // the impulse force applied to the player at speed (S) item activation
   public float speedItemThrust = 15.0f;
 

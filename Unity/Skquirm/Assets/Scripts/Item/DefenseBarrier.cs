@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DefenseBarrier : MonoBehaviour {
 
-  private GameObject barrier;
+  protected GameObject barrier;
   public float remainingTime;
   public int barrierCount;
 
@@ -19,7 +19,7 @@ public class DefenseBarrier : MonoBehaviour {
     if (remainingTime > 0){
       remainingTime = remainingTime - Time.deltaTime;
       if (remainingTime <= 0){
-        this.DestroyBarrier();
+        DestroyBarrier();
       }
     }
   }
@@ -35,10 +35,10 @@ public class DefenseBarrier : MonoBehaviour {
     barrierCount = count;
   }
 
-  public void hitBarrier () {
+  public void breakingBarrier () {
     barrierCount = barrierCount - 1;
     if (barrierCount == 0){
-      this.DestroyBarrier();
+      DestroyBarrier();
     }
   }
 }
