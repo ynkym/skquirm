@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 61c801125aa364840a5fb80afe431695
 timeCreated: 1456085482
+=======
+guid: ec5a4a36311855347b7c94ef4026eace
+timeCreated: 1456088489
+>>>>>>> offenseSpeed
 licenseType: Free
 NativeFormatImporter:
   userData: 
