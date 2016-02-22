@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
         currentLife = life;
     }
 
-    public void getDamaged ()
+    public IEnumerator getDamaged ()
     {
         if (!invincible)
         {
