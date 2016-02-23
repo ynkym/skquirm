@@ -6,8 +6,11 @@ public class Health : MonoBehaviour
 {
 	public int life;        // The player's life.
 
+    private bool invincible = false;
+
     private int currentLife;
-    
+
+	public LifeStateUI lifeUI;
 
 	//public Material damaged;
 	void Awake ()
@@ -20,13 +23,23 @@ public class Health : MonoBehaviour
         currentLife = life;
     }
 
-    public void getDamaged ()
+    public IEnumerator getDamaged ()
     {
-        currentLife -= 1;
-        if (currentLife <= 0)
+        if (!invincible)
         {
-            //Application.LoadLevel("GameOver");
-            Debug.Log("GameOver");
+            currentLife -= 1;
+
+            if (currentLife <= 0)
+            {
+                //Application.LoadLevel("GameOver");
+                Debug.Log("GameOver");
+            }
+            else {
+                lifeUI.UpdateUI(currentLife);
+            }
+            invincible = true;
+            yield return new WaitForSeconds(3); //waits for 3 seconds before changing invincibility back to false
+            invincible = false;
         }
     }
 
