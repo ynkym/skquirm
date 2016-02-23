@@ -28,7 +28,7 @@ public class OffenseOffenseItem : Item {
     return this;
   }
 
-	override public void Activate () {
+	override public Item Activate () {
 	    Debug.Log("Used OO Item");
 	    // TODO: implement
 		//Get the rotation of the car object as EulerAngles
@@ -50,6 +50,8 @@ public class OffenseOffenseItem : Item {
 		temp_projectile.GetComponent<OffenseOffenseProjectile> ().SetInfo (target, origin);
 
 		temp_projectile = null;
+
+        return null;
   }
 
 

@@ -13,11 +13,12 @@ public class OffenseDefenseItem : Item {
     return this;
   }
 
-  override public void Activate () {
+  override public Item Activate () {
     Debug.Log("Used OD Item");
 	OffenseDefenseBarrier odb = gameObject.AddComponent<OffenseDefenseBarrier>() as OffenseDefenseBarrier;
 	odb.setupDefenseBarrier(GlobalSetting.Instance.defenseBarrierDuration,
 		                       GlobalSetting.Instance.defenseBarrierCount);
+        return null;
 
   }
 }

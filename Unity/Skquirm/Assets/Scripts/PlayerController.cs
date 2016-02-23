@@ -22,72 +22,65 @@ public class PlayerController : MonoBehaviour {
 	public bool TestWithoutJoystick;
     private Health health;
 
-	// Use this for initialization
-	void Start () {
-		rb = GetComponent<Rigidbody>();
+    private float horizontal; //for inControl functionality
+    private float vertical;
+    private float jump;
+    private bool fire;
+
+    // Use this for initialization
+    void Start () {
+        
+        rb = GetComponent<Rigidbody>();
 		item = GetComponent<Item>();
         health = GetComponent<Health>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-    }
-
-    void UpdateMovement(InputDevice inputdevice){
-        float horizontal; //for inControl functionality
-        float vertical;
-        float jump;
-        float fire;
-
-        if (!TestWithoutJoystick) {
-            horizontal = inputdevice.LeftStickX; //for inControl functionality
+        InputDevice inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+        if (inputDevice != null && !TestWithoutJoystick)
+        {
+            horizontal = inputDevice.LeftStickX; //for inControl functionality
             //vertical = inputdevice.LeftStickY;
-            vertical = inputdevice.Action1;
-            jump = inputdevice.Action2;
-            fire = inputdevice.Action3;
-        } else {
-            horizontal = Input.GetAxis ("Horizontal");
-            vertical = Input.GetAxis ("Vertical");
-            jump = Input.GetAxis ("Jump");
-            fire = Input.GetAxis ("Fire3");
+            vertical = inputDevice.Action1;
+            jump = inputDevice.Action2;
+            fire = inputDevice.Action3;
+        }
+        else {
+            if (playerNum == 0)
+            {
+                horizontal = Input.GetAxis("Horizontal");
+                vertical = Input.GetAxis("Vertical");
+                jump = Input.GetAxis("Jump");
+                fire = Input.GetButtonDown("Fire3");
+            }
         }
 
-        //float jump = Input.GetAxis ("Jump");
-
-        // only consider vertical input for movement force.
-        Vector3 movement = speed * transform.forward * vertical + new Vector3 (0, jump * jumpheight, 0);
-        rb.AddForce (movement);
-
-        // now count horizontal input to determine the new direction we want to face.
-        Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
-        lookDirection.Normalize ();
-
-        if (horizontal != 0) {
-            Quaternion newRotation = Quaternion.LookRotation (lookDirection);
-            rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, newRotation, 2 * Time.deltaTime);
-        }
-
-        if (fire > 0 && item != null) {
-            item.Activate ();
-            Destroy (item);
-            item = null;
-            itemUI.UpdateUI (item);
+        if (fire && item != null)
+        {
+            Item newItem = item.Activate();
+            Destroy(item);
+            item = newItem;
+            itemUI.UpdateUI(item);
         }
     }
+
 
     // Fixed time step update, usually for physics, everything moved to updateMovement
     void FixedUpdate () {
-        InputDevice inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
-		if (inputDevice != null) {
-			if (!testingObj) {
-				UpdateMovement (inputDevice);
-			}
-		} else {
-			if (!testingObj && TestWithoutJoystick) {
-				UpdateMovement (null);
-			}
-		}
-	}
+        Vector3 movement = speed * transform.forward * vertical + new Vector3(0, jump * jumpheight, 0);
+        rb.AddForce(movement);
+
+        // now count horizontal input to determine the new direction we want to face.
+        Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
+        lookDirection.Normalize();
+
+        if (horizontal != 0)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 2 * Time.deltaTime);
+        }
+    }
 
 	void PickupItem (string newType) {
 		if (!testingObj) {

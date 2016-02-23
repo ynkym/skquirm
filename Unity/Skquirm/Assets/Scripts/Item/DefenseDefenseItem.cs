@@ -13,10 +13,11 @@ public class DefenseDefenseItem : Item {
     return this;
   }
 
-  override public void Activate () {
+  override public Item Activate () {
     //Debug.Log("Used DD Item");
     DefenseBarrier db = gameObject.AddComponent<DefenseBarrier>() as DefenseBarrier;
     // -1 for invincibility regardless of counts
     db.setupDefenseBarrier(GlobalSetting.Instance.ddBarrierDuration, -1);
+        return null;
   }
 }

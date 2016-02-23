@@ -25,10 +25,11 @@ public class DefenseItem : Item {
     return this;
   }
 
-  override public void Activate() {
+  override public Item Activate() {
     //Debug.Log("Used Defense Item");
     DefenseBarrier db = gameObject.AddComponent<DefenseBarrier>() as DefenseBarrier;
     db.setupDefenseBarrier(GlobalSetting.Instance.defenseBarrierDuration,
                            GlobalSetting.Instance.defenseBarrierCount);
+        return null;
   }
 }

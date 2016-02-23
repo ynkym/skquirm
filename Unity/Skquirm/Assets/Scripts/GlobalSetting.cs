@@ -26,13 +26,19 @@ public class GlobalSetting : MonoBehaviour {
   // number of times the defense (D) barrier will withstand attacks
   public int defenseBarrierCount = 1;
 
-  // number of times the offense-defense (OD) barrier can attack
-	public int odAttackCount = 1;
-
   // the impulse force applied to the player at speed (S) item activation
   public float speedItemThrust = 15.0f;
 
-	public GameObject ReturnTheNearest(GameObject currentPlayer){
+    // Keep track of the number of combined item
+    private const int totalNumOfCombinedItem = 6;
+
+    public static int getTotalNumOfCombinedItem()
+    {
+        return totalNumOfCombinedItem;
+    }
+
+
+    public GameObject ReturnTheNearest(GameObject currentPlayer){
 		float min_distance;
 		int min_index;
 		float temp_dist;

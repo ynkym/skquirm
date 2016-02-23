@@ -22,7 +22,7 @@ public class SpeedDefenseItem : Item {
 		return this;
 	}
 
-	override public void Activate () {
+	override public Item Activate () {
 		Debug.Log("Used SD Item");
 		// TODO: implement
 
@@ -43,5 +43,7 @@ public class SpeedDefenseItem : Item {
 		temp_projectile.GetComponent<SpeedDefenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
 
 		temp_projectile = null;
+
+        return null;
 	}
 }

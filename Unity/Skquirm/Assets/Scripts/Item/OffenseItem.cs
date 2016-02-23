@@ -39,7 +39,7 @@ public class OffenseItem : Item {
     return this;
   }
 
-  override public void Activate() {
+  override public Item Activate() {
   		Debug.Log("Used Offense Item");
   		// TODO: implement
 
@@ -59,6 +59,8 @@ public class OffenseItem : Item {
 		temp_projectile.GetComponent<OffenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
 
 		temp_projectile = null;
+
+        return null;
 
 	}
 }

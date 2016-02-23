@@ -23,7 +23,7 @@ public class OffenseSpeedItem : Item {
     return this;
   }
 
-	override public void Activate () {
+	override public Item Activate () {
 		Debug.Log("Used OS Item");
 		// TODO: implement
 
@@ -43,5 +43,7 @@ public class OffenseSpeedItem : Item {
 		temp_projectile.GetComponent<OffenseOffenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
 
 		temp_projectile = null;
+
+        return null;
 	}
 }

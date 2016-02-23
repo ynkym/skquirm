@@ -25,9 +25,11 @@ public class SpeedItem : Item {
     return this;
   }
 
-  override public void Activate() {
+  override public Item Activate() {
     // Debug.Log("Used Speed Item");
     Rigidbody rb = GetComponent<Rigidbody>();
     rb.AddForce(GlobalSetting.Instance.speedItemThrust * transform.forward, ForceMode.Impulse);
+
+        return null;
   }
 }
