@@ -15,7 +15,11 @@ public class OffenseSpeedItem : Item {
 
 	// Use this for initialization
 	void Start () {
+		//Load projectile prefab
+		projectile_prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Capsule.prefab", (typeof(GameObject))) as GameObject;
 
+		//Find the shooter
+		shooter = GetComponent<PlayerController>().shooter;
 	}
 
   override public Item CombineWith (string anotherType) {
@@ -40,7 +44,7 @@ public class OffenseSpeedItem : Item {
 		temp_projectile.GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * speed;
 
 		//Set projectile info
-		temp_projectile.GetComponent<OffenseOffenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
+		temp_projectile.GetComponent<OffenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
 
 		temp_projectile = null;
 

@@ -10,7 +10,7 @@ public class OffenseItem : Item {
 
 	GameObject temp_projectile;
 
-	[SerializeField] float speed = 25f;
+	[SerializeField] float speed = 20f;
 	[SerializeField] float max_time;
 
 	void Start(){
