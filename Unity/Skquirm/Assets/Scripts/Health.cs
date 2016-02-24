@@ -23,34 +23,42 @@ public class Health : MonoBehaviour
         currentLife = life;
     }
 
-    public IEnumerator getDamaged ()
+    public void getDamaged ()
     {
-        if (!invincible)
-        {
+       // if (!invincible) **change void to IEnumerator if we're using this.
+        //{
             currentLife -= 1;
 
-            if (currentLife <= 0)
-            {
-                //Application.LoadLevel("GameOver");
-                Debug.Log("GameOver");
-            }
-            else {
-                lifeUI.UpdateUI(currentLife);
-            }
-            invincible = true;
-            yield return new WaitForSeconds(3); //waits for 3 seconds before changing invincibility back to false
-            invincible = false;
+        if (currentLife <= 0)
+        {
+            //Application.LoadLevel("GameOver");
+            Debug.Log("GameOver");
         }
+        else {
+            lifeUI.UpdateUI(currentLife);
+        }
+
+        if (currentLife == 2)
+        {
+            //Debug.Log("lol");
+            gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
+        else if (currentLife == 1)
+        {
+            gameObject.GetComponent<Renderer>().material.color = Color.black;
+            //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
+        }
+        else {
+            gameObject.SetActive(false);
+        }
+        //invincible = true;
+        //yield return new WaitForSeconds(3); //waits for 3 seconds before changing invincibility back to false
+        // invincible = false;
+        //}
     }
 
 	void Update ()
 	{
-
-		if (currentLife == 2){
-			//Debug.Log("lol");
-			gameObject.GetComponent<Renderer>().material.color = Color.red;
-			//barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
-		}
 
 	}
 }
