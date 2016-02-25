@@ -77,8 +77,15 @@ public class PlayerController : MonoBehaviour {
 
         if (horizontal != 0)
         {
-            Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 2 * Time.deltaTime);
+            if (vertical != 0)
+            {
+                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 1.9f * Time.deltaTime);
+            }
+            else {
+                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 0.7f * Time.deltaTime);
+            }
         }
     }
 
@@ -125,6 +132,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
 
     public void IncreaseScore(){
         //Todo

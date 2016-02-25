@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
 	public int life;        // The player's life.
 
-    private bool invincible = false;
+    //private bool invincible = false;
 
     private int currentLife;
 
