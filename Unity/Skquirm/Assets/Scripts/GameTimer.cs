@@ -10,6 +10,15 @@ public class GameTimer : MonoBehaviour {
   private bool gameOver;
   private Text timerText;
   private Color tcol;
+  private float fadeoutTimer;
+  private int index;
+
+  private TimeNotification[] notification = new TimeNotification[]{
+    new TimeNotification( 20f, 0.5f, "0:20" ),
+    new TimeNotification( 10f, 0.5f, "0:10" ),
+    new TimeNotification( 5f, 0.5f, "0:05" ),
+    new TimeNotification( 0f, 1.0f, "Time Up!" ),
+  };
 
 	// Use this for initialization
 	void Start () {
@@ -19,31 +28,56 @@ public class GameTimer : MonoBehaviour {
     tcol = timerText.color;
     tcol.a = 0;
     timerText.color = tcol;
+		fadeoutTimer = 0;
+		index = 0;
 	}
 
 	// Update is called once per frame
 	void Update () {
     remainingTime = remainingTime - Time.deltaTime;
-    if (remainingTime < 0){
-      if (gameOver == false){
-        gameOver = true;
-        // time is up, display message
-        tcol.a = 1;
 
-        // TODO: also stop all players
+		if (index < notification.Length && remainingTime < notification[index].time) {
+			tcol.a = 1;
+			fadeoutTimer = notification[index].fadeTime;
+      timerText.text = notification[index].text;
+      index++;
+		}
 
-      }
-
-      float scaleFactor = (0.5f * Time.deltaTime);
-
-      // fade out the text
-      tcol.a = tcol.a - (0.5f * Time.deltaTime);
-      timerUIObject.transform.localScale += new Vector3(scaleFactor, scaleFactor, 0);
+		if (fadeoutTimer > 0) {
+			float scaleFactor = (Time.deltaTime / fadeoutTimer);
+			tcol.a = tcol.a - scaleFactor;
+			timerUIObject.transform.localScale += new Vector3(scaleFactor, scaleFactor, 0);
+			timerText.color = tcol;
+			if (tcol.a <= 0) {
+				tcol.a = 0;
+				fadeoutTimer = 0;
+        timerUIObject.transform.localScale = new Vector3(1,1,1);
+			}
       timerText.color = tcol;
-      // when enough time has passed, switch scene
-      if (remainingTime < -2){
-        SceneManager.LoadScene("GameOver");
+		}
+
+    if (remainingTime < 0 && gameOver == false){
+      gameOver = true;
+      // stop all players
+      GameObject[] players = this.gameObject.GetComponent<GlobalSetting>().players;
+      for (int i = 0; i < players.Length; i++){
+        PlayerController controller = players[i].GetComponent<PlayerController>();
+        controller.enabled = !controller.enabled;
       }
     }
+
+    // when enough time has passed, switch scene
+    if (remainingTime < -3){
+      SceneManager.LoadScene("GameOver");
+    }
 	}
+}
+
+public struct TimeNotification {
+  public float time;
+  public float fadeTime;
+  public string text;
+  public TimeNotification (float t, float ft, string x){
+    time = t; fadeTime = ft; text = x;
+  }
 }
