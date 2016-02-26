@@ -36,7 +36,7 @@ public class ItemSpawner : MonoBehaviour {
 				GameObject prefab;
 				// determine randomly which item to spawn
 				float rand = Random.Range (0.0f, offenseRatio + defenseRatio + speedRatio);
-			
+
 				if (rand < offenseRatio) {
 					prefab = offenseItem;
 				} else if (rand < offenseRatio + defenseRatio) {
@@ -58,7 +58,7 @@ public class ItemSpawner : MonoBehaviour {
 					if (!firstSpawned) {
 						prefab = ReturnPrefabByIndex (firstSpawn);
 						firstSpawned = true;
-					} 
+					}
 					else {
 						prefab = ReturnPrefabByIndex (secondSpawn);
 						firstSpawned = false;
@@ -85,13 +85,10 @@ public class ItemSpawner : MonoBehaviour {
 		switch (index) {
 		case 0:
 			return offenseItem;
-			break;
 		case 1:
 			return defenseItem;
-			break;
 		case 2:
 			return speedItem;
-			break;
 		}
 		return null;
 	}
