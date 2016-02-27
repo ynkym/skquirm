@@ -4,6 +4,9 @@ using InControl;
 
 public class PlayerController : MonoBehaviour {
 
+    private static ArrayList allPlayers;
+    public static ArrayList getAllPlayers() { return allPlayers; }
+
 	public GlobalSetting globalSet;
 
 	private Rigidbody rb;
@@ -27,12 +30,20 @@ public class PlayerController : MonoBehaviour {
     private float jump;
     private bool fire;
 
+    private int score;
+
     // Use this for initialization
     void Start () {
-        
+
         rb = GetComponent<Rigidbody>();
 		item = GetComponent<Item>();
         health = GetComponent<Health>();
+        score = 0;
+
+        if (allPlayers == null){
+            allPlayers = new ArrayList();
+        }
+        allPlayers.Add(this);
 	}
 
 	// Update is called once per frame
@@ -77,8 +88,15 @@ public class PlayerController : MonoBehaviour {
 
         if (horizontal != 0)
         {
-            Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 2 * Time.deltaTime);
+            if (vertical != 0)
+            {
+                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 1.9f * Time.deltaTime);
+            }
+            else {
+                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 0.7f * Time.deltaTime);
+            }
         }
     }
 
@@ -126,7 +144,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
     public void IncreaseScore(){
-        //Todo
+        score += 1;
     }
 }

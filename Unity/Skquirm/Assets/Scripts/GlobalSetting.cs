@@ -9,8 +9,12 @@ public class GlobalSetting : MonoBehaviour {
 
 	public GameObject[] players;
 
+  // Are there any better place to keep this??
+  public int playerRemaining;
+
   void Awake(){
     m_Instance = this;
+    m_Instance.playerRemaining = 4;
   }
 
   void OnDestroy(){
@@ -37,7 +41,6 @@ public class GlobalSetting : MonoBehaviour {
         return totalNumOfCombinedItem;
     }
 
-
     public GameObject ReturnTheNearest(GameObject currentPlayer){
 		float min_distance;
 		int min_index;
@@ -61,4 +64,12 @@ public class GlobalSetting : MonoBehaviour {
 
 		return players [min_index];
 	}
+
+  void PlayerDefeated(int playernum){
+    Debug.Log("Player " + playernum + " is defeated");
+    playerRemaining -= 1;
+    if (playerRemaining == 1){
+      gameObject.SendMessage("ThereIsWinner");
+    }
+  }
 }

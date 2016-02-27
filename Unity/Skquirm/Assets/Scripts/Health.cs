@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
 	public int life;        // The player's life.
 
-    private bool invincible = false;
+    //private bool invincible = false;
 
     private int currentLife;
 
@@ -49,6 +49,7 @@ public class Health : MonoBehaviour
             //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
         }
         else {
+            GlobalSetting.Instance.SendMessage("PlayerDefeated", gameObject.GetComponent<PlayerController>().playerNum);
             gameObject.SetActive(false);
         }
         //invincible = true;
