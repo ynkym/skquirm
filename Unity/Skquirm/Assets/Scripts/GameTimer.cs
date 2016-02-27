@@ -32,6 +32,26 @@ public class GameTimer : MonoBehaviour {
 		index = 0;
 	}
 
+  void ThereIsWinner () {
+    gameOver = true;
+    index = notification.Length;
+    fadeoutTimer = 1.0f;
+    timerText.text = "Game Set!";
+    tcol.a = 1;
+    remainingTime = 0.0f;
+    GameOver();
+  }
+
+  void GameOver () {
+    gameOver = true;
+    // stop all players
+    ArrayList players = PlayerController.getAllPlayers();
+    for (int i = 0; i < players.Count; i++){
+      PlayerController controller = (PlayerController) players[i];
+      controller.enabled = !controller.enabled;
+    }
+  }
+
 	// Update is called once per frame
 	void Update () {
     remainingTime = remainingTime - Time.deltaTime;
@@ -57,13 +77,7 @@ public class GameTimer : MonoBehaviour {
 		}
 
     if (remainingTime < 0 && gameOver == false){
-      gameOver = true;
-      // stop all players
-      GameObject[] players = this.gameObject.GetComponent<GlobalSetting>().players;
-      for (int i = 0; i < players.Length; i++){
-        PlayerController controller = players[i].GetComponent<PlayerController>();
-        controller.enabled = !controller.enabled;
-      }
+      GameOver();
     }
 
     // when enough time has passed, switch scene

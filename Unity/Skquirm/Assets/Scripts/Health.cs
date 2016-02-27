@@ -49,6 +49,7 @@ public class Health : MonoBehaviour
             //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
         }
         else {
+            GlobalSetting.Instance.SendMessage("PlayerDefeated", gameObject.GetComponent<PlayerController>().playerNum);
             gameObject.SetActive(false);
         }
         //invincible = true;
