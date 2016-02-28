@@ -25,9 +25,16 @@ public class DefenseBarrier : MonoBehaviour {
   }
 
   void DestroyBarrier () {
-    Destroy(barrier);
-    Destroy(this);
+        iTween.ScaleTo(barrier, Vector3.zero, 0.5f);
+        StartCoroutine(DestroyBarrierAfter(0.6f));
   }
+
+    // Create a delay to destroy barrier
+    IEnumerator DestroyBarrierAfter(float time) {
+        yield return new WaitForSeconds(time);
+        Destroy(barrier);
+        Destroy(this);
+    }
 
   // Set to negative values for infinite count or infinite time
   public void setupDefenseBarrier (float time, int count) {
