@@ -8,11 +8,14 @@ public class ScoreBoard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+    //Debug.Log(GlobalSetting.Instance);
         ArrayList players = GlobalSetting.Instance.getAllPlayers();
 
     //Debug.Log(players.Count);
     for (int i = 0; i < players.Count; i++){
-      PlayerController controller = (PlayerController) players[i];
+      GameObject player = (GameObject)players[i];
+
+      PlayerController controller = player.GetComponent<PlayerController>();
       int playerId = controller.playerNum;
       scoreText[playerId].text = "" + controller.GetScore();
     }

@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour {
         score = 0;
 
         GlobalSetting.Instance.registerPlayer(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
 	}
 
 	// Update is called once per frame
@@ -132,17 +133,17 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter(Collision collision){
         if (collision.gameObject.tag == "Player") {
             OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
-            
+
             if (odBarrier != null) {
                 // this player have OD barrier
-                
+
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
                 odBarrier.breakingBarrier();
                 test++;
                 Debug.Log(test + " " + gameObject.name);
                 test = 0;
             }
-           
+
         }
     }
 

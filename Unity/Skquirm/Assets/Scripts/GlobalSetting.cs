@@ -16,6 +16,7 @@ public class GlobalSetting : MonoBehaviour {
 
 
   void Awake(){
+    DontDestroyOnLoad(gameObject);
     m_Instance = this;
         players = new ArrayList();
         alivePlayers = new ArrayList();
@@ -25,11 +26,11 @@ public class GlobalSetting : MonoBehaviour {
     {
         players.Add(player);
         alivePlayers.Add(player);
-    } 
+    }
 
 
   void OnDestroy(){
-    m_Instance = null;
+    //m_Instance = null;
   }
 
   // time the defense (D) barrier will hold in seconds

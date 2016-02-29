@@ -83,6 +83,7 @@ public class GameTimer : MonoBehaviour {
     // when enough time has passed, switch scene
     if (remainingTime < -3){
       SceneManager.LoadScene("GameOver");
+      Destroy(this);
     }
 	}
 }
