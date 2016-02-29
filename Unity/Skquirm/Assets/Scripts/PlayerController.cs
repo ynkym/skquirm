@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour {
 
     private int score;
 
+    private int test = 0;
+
     // Use this for initialization
     void Start () {
 
@@ -128,11 +130,17 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter(Collision collision){
         if (collision.gameObject.tag == "Player") {
             OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
+            
             if (odBarrier != null) {
                 // this player have OD barrier
+                
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
                 odBarrier.breakingBarrier();
+                test++;
+                Debug.Log(test + " " + gameObject.name);
+                test = 0;
             }
+           
         }
     }
 

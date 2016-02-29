@@ -25,16 +25,12 @@ public class DefenseBarrier : MonoBehaviour {
   }
 
   void DestroyBarrier () {
-        iTween.ScaleTo(barrier, Vector3.zero, 0.5f);
-        StartCoroutine(DestroyBarrierAfter(0.6f));
-  }
-
-    // Create a delay to destroy barrier
-    IEnumerator DestroyBarrierAfter(float time) {
-        yield return new WaitForSeconds(time);
         Destroy(barrier);
+        GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/BarrierClosing.prefab", (typeof(GameObject))) as GameObject;
+        GameObject tempBarrier = Instantiate(prefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+        tempBarrier.transform.parent = gameObject.transform;
         Destroy(this);
-    }
+  }
 
   // Set to negative values for infinite count or infinite time
   public void setupDefenseBarrier (float time, int count) {
@@ -43,7 +39,7 @@ public class DefenseBarrier : MonoBehaviour {
   }
 
   public void breakingBarrier () {
-    barrierCount = barrierCount - 1;
+    barrierCount--;
     if (barrierCount == 0){
       DestroyBarrier();
     }
