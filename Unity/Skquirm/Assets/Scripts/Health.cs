@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     private int currentLife;
 
 	public LifeStateUI lifeUI;
+    public Renderer bottleRenderer;
 
 	//public Material damaged;
 	void Awake ()
@@ -38,15 +39,14 @@ public class Health : MonoBehaviour
             lifeUI.UpdateUI(currentLife);
         }
 
-        if (currentLife == 2)
+        if (currentLife == 2 && bottleRenderer != null)
         {
             //Debug.Log("lol");
-            gameObject.GetComponent<Renderer>().material.color = Color.red;
+            bottleRenderer.material.color = Color.red;
         }
-        else if (currentLife == 1)
+        else if (currentLife == 1 && bottleRenderer != null)
         {
-            gameObject.GetComponent<Renderer>().material.color = Color.black;
-            //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
+            bottleRenderer.material.color = Color.black;
         }
         else {
             GlobalSetting.Instance.SendMessage("PlayerDefeated", gameObject.GetComponent<PlayerController>().playerNum);
