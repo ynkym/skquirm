@@ -150,4 +150,8 @@ public class PlayerController : MonoBehaviour {
     public void IncreaseScore(){
         score += 1;
     }
+
+    public int GetScore(){
+        return score;
+    }
 }
