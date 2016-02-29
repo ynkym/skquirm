@@ -16,7 +16,7 @@ public class EventHorizon : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")){
-          GlobalSetting.Instance.SendMessage("PlayerDefeated", other.gameObject.GetComponent<PlayerController>().playerNum);
+          GlobalSetting.Instance.SendMessage("PlayerDefeated", other.gameObject);
         }
         other.gameObject.SetActive(false);
     }

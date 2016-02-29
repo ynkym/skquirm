@@ -4,11 +4,6 @@ using InControl;
 
 public class PlayerController : MonoBehaviour {
 
-    private static ArrayList allPlayers;
-    public static ArrayList getAllPlayers() { return allPlayers; }
-
-	public GlobalSetting globalSet;
-
 	private Rigidbody rb;
 	private Item item;
 	public ItemStateUI itemUI;
@@ -32,6 +27,8 @@ public class PlayerController : MonoBehaviour {
 
     private int score;
 
+    private int test = 0;
+
     // Use this for initialization
     void Start () {
 
@@ -40,10 +37,7 @@ public class PlayerController : MonoBehaviour {
         health = GetComponent<Health>();
         score = 0;
 
-        if (allPlayers == null){
-            allPlayers = new ArrayList();
-        }
-        allPlayers.Add(this);
+        GlobalSetting.Instance.registerPlayer(this.gameObject);
 	}
 
 	// Update is called once per frame
@@ -138,11 +132,17 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter(Collision collision){
         if (collision.gameObject.tag == "Player") {
             OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
+            
             if (odBarrier != null) {
                 // this player have OD barrier
+                
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
                 odBarrier.breakingBarrier();
+                test++;
+                Debug.Log(test + " " + gameObject.name);
+                test = 0;
             }
+           
         }
     }
 

@@ -30,14 +30,14 @@ public class SpeedSpeedItem : Item {
                 randCombinedItem = gameObject.AddComponent<OffenseDefenseItem>();
                 break;
             case 2:
-                //randCombinedItem = gameObject.AddComponent<OffenseSpeedItem>();
-                //break;
+                randCombinedItem = gameObject.AddComponent<OffenseSpeedItem>();
+                break;
             case 3:
                 randCombinedItem = gameObject.AddComponent<DefenseDefenseItem>();
                 break;
             case 4:
-                //randCombinedItem = gameObject.AddComponent<SpeedDefenseItem>() as SpeedDefenseItem;
-                //break;
+                randCombinedItem = gameObject.AddComponent<SpeedDefenseItem>();
+                break;
             default:
                 break;
         }

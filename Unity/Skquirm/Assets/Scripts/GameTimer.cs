@@ -45,9 +45,10 @@ public class GameTimer : MonoBehaviour {
   void GameOver () {
     gameOver = true;
     // stop all players
-    ArrayList players = PlayerController.getAllPlayers();
+    ArrayList players = GetComponent<GlobalSetting>().getAllPlayers();
     for (int i = 0; i < players.Count; i++){
-      PlayerController controller = (PlayerController) players[i];
+            GameObject currPlayer = (GameObject)players[i];
+            PlayerController controller = currPlayer.GetComponent<PlayerController>(); ;
       controller.enabled = !controller.enabled;
     }
   }
@@ -55,7 +56,6 @@ public class GameTimer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
     remainingTime = remainingTime - Time.deltaTime;
-
 		if (index < notification.Length && remainingTime < notification[index].time) {
 			tcol.a = 1;
 			fadeoutTimer = notification[index].fadeTime;

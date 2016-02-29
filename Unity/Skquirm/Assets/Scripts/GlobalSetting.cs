@@ -7,15 +7,26 @@ public class GlobalSetting : MonoBehaviour {
   private static GlobalSetting m_Instance;
   public static GlobalSetting Instance { get { return m_Instance; } }
 
-	public GameObject[] players;
+    // this list keep track of all players which doesn't change in game
+	private ArrayList players;
+    public ArrayList getAllPlayers() { return players; }
 
-  // Are there any better place to keep this??
-  public int playerRemaining;
+    // this list only keep track of alive player
+    private ArrayList alivePlayers;
+
 
   void Awake(){
     m_Instance = this;
-    m_Instance.playerRemaining = 4;
+        players = new ArrayList();
+        alivePlayers = new ArrayList();
   }
+
+  public void registerPlayer(GameObject player)
+    {
+        players.Add(player);
+        alivePlayers.Add(player);
+    } 
+
 
   void OnDestroy(){
     m_Instance = null;
@@ -46,29 +57,32 @@ public class GlobalSetting : MonoBehaviour {
 		int min_index;
 		float temp_dist;
 		int i = 0;
+        GameObject tempPlayer;
 
-		if (players [0] == currentPlayer) i++;
-
-		min_distance = Vector3.Distance (currentPlayer.transform.position, players [i].transform.position);
+        if ((GameObject)alivePlayers[0] == currentPlayer) i++;
+        tempPlayer = (GameObject)alivePlayers[i];
+        min_distance = Vector3.Distance (currentPlayer.transform.position, tempPlayer.transform.position);
 		min_index = i;
 
-		for (int j = i+1; j < players.Length; j++) {
-			if (players [j] == currentPlayer)
+		for (int j = i+1; j < alivePlayers.Count; j++) {
+			if ((GameObject) alivePlayers[j] == currentPlayer)
 				continue;
-			temp_dist = Vector3.Distance (currentPlayer.transform.position, players [j].transform.position);
+            tempPlayer = (GameObject)alivePlayers[j];
+            temp_dist = Vector3.Distance (currentPlayer.transform.position, tempPlayer.transform.position);
 			if (min_distance > temp_dist) {
 				min_distance = temp_dist;
 				min_index = j;
 			}
 		}
 
-		return players [min_index];
+		return (GameObject)alivePlayers[min_index];
 	}
 
-  void PlayerDefeated(int playernum){
-    Debug.Log("Player " + playernum + " is defeated");
-    playerRemaining -= 1;
-    if (playerRemaining == 1){
+  void PlayerDefeated(GameObject defeatedPlayer){
+        PlayerController pc = defeatedPlayer.GetComponent<PlayerController>();
+    Debug.Log("Player " + pc.playerNum + " is defeated");
+        alivePlayers.Remove(defeatedPlayer);
+    if (alivePlayers.Count == 1){
       gameObject.SendMessage("ThereIsWinner");
     }
   }
