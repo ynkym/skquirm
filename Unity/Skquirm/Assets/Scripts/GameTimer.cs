@@ -48,7 +48,7 @@ public class GameTimer : MonoBehaviour {
     ArrayList players = GetComponent<GlobalSetting>().getAllPlayers();
     for (int i = 0; i < players.Count; i++){
             GameObject currPlayer = (GameObject)players[i];
-            PlayerController controller = currPlayer.GetComponent<PlayerController>(); ;
+            PlayerController controller = currPlayer.GetComponent<PlayerController>();
       controller.enabled = !controller.enabled;
     }
   }

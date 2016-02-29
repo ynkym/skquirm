@@ -38,18 +38,18 @@ public class Health : MonoBehaviour
             Debug.Log("GameOver");
         }
         else {        
-            if (currentLife == 2)
+            if (currentLife == 2 && bottleRenderer != null)
             {
                 //Debug.Log("lol");
-                gameObject.GetComponent<Renderer>().material.color = Color.red;
+                bottleRenderer.material.color = Color.red;
             }
-            else if (currentLife == 1)
+            else if (currentLife == 1 && bottleRenderer != null)
             {
-                gameObject.GetComponent<Renderer>().material.color = Color.black;
-                //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
+                bottleRenderer.material.color = Color.black;
             }
+
         }
-    
+
         //invincible = true;
         //yield return new WaitForSeconds(3); //waits for 3 seconds before changing invincibility back to false
         // invincible = false;

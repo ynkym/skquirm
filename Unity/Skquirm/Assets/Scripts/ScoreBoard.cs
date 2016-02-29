@@ -8,7 +8,7 @@ public class ScoreBoard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	   ArrayList players = PlayerController.getAllPlayers();
+        ArrayList players = GlobalSetting.Instance.getAllPlayers();
 
     //Debug.Log(players.Count);
     for (int i = 0; i < players.Count; i++){
