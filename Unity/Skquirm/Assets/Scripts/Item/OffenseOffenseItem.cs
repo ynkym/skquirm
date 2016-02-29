@@ -41,7 +41,7 @@ public class OffenseOffenseItem : Item {
 		temp_projectile = Instantiate(projectile_prefab, shooter.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
 
 		//Get target
-		target = origin.globalSet.ReturnTheNearest (this.gameObject);//return the nearest target
+		target = GlobalSetting.Instance.ReturnTheNearest (this.gameObject);//return the nearest target
 
 		//Give it a velocity
 		temp_projectile.GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * speed;

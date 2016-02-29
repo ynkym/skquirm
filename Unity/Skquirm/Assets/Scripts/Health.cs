@@ -28,38 +28,31 @@ public class Health : MonoBehaviour
        // if (!invincible) **change void to IEnumerator if we're using this.
         //{
             currentLife -= 1;
-
+        lifeUI.UpdateUI(currentLife);
         if (currentLife <= 0)
         {
             //Application.LoadLevel("GameOver");
+            GlobalSetting.Instance.SendMessage("PlayerDefeated", this.gameObject);
+            gameObject.SetActive(false);
             Debug.Log("GameOver");
         }
         else {
-            lifeUI.UpdateUI(currentLife);
+            
+            if (currentLife == 2)
+            {
+                //Debug.Log("lol");
+                gameObject.GetComponent<Renderer>().material.color = Color.red;
+            }
+            else if (currentLife == 1)
+            {
+                gameObject.GetComponent<Renderer>().material.color = Color.black;
+                //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
+            }
         }
-
-        if (currentLife == 2)
-        {
-            //Debug.Log("lol");
-            gameObject.GetComponent<Renderer>().material.color = Color.red;
-        }
-        else if (currentLife == 1)
-        {
-            gameObject.GetComponent<Renderer>().material.color = Color.black;
-            //barSoap.renderer.GetComponent<Renderer>().material.color = Color.black;
-        }
-        else {
-            GlobalSetting.Instance.SendMessage("PlayerDefeated", gameObject.GetComponent<PlayerController>().playerNum);
-            gameObject.SetActive(false);
-        }
+    
         //invincible = true;
         //yield return new WaitForSeconds(3); //waits for 3 seconds before changing invincibility back to false
         // invincible = false;
         //}
     }
-
-	void Update ()
-	{
-
-	}
 }
