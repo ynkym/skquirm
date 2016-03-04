@@ -6,10 +6,11 @@ public class Health : MonoBehaviour
 {
 	public int life;        // The player's life.
 
-    //private bool invincible = false;
+    private bool invincible = false;
 
     private int currentLife;
 
+    public int invincibilityFrames;
 	public LifeStateUI lifeUI;
     public Renderer bottleRenderer;
 
@@ -24,35 +25,37 @@ public class Health : MonoBehaviour
         currentLife = life;
     }
 
-    public void getDamaged ()
+    public IEnumerator getDamaged()
     {
-       // if (!invincible) **change void to IEnumerator if we're using this.
-        //{
-            currentLife -= 1;
-        lifeUI.UpdateUI(currentLife);
-        if (currentLife <= 0)
+        if (!invincible)
         {
-            //Application.LoadLevel("GameOver");
-            GlobalSetting.Instance.SendMessage("PlayerDefeated", this.gameObject);
-            gameObject.SetActive(false);
-            Debug.Log("GameOver");
-        }
-        else {        
-            if (currentLife == 2 && bottleRenderer != null)
+            currentLife -= 1;
+            lifeUI.UpdateUI(currentLife);
+            if (currentLife <= 0)
             {
-                //Debug.Log("lol");
-                bottleRenderer.material.color = Color.red;
+                //Application.LoadLevel("GameOver");
+                GlobalSetting.Instance.SendMessage("PlayerDefeated", this.gameObject);
+                gameObject.SetActive(false);
+                Debug.Log("GameOver");
             }
-            else if (currentLife == 1 && bottleRenderer != null)
-            {
-                bottleRenderer.material.color = Color.black;
-            }
+            else {
+                if (currentLife == 2 && bottleRenderer != null)
+                {
+                    //Debug.Log("lol");
+                    bottleRenderer.material.color = Color.red;
+                }
+                else if (currentLife == 1 && bottleRenderer != null)
+                {
+                    bottleRenderer.material.color = Color.black;
+                }
 
+            }
         }
+        invincible = true;
+        //print("INVINCIBLE");
+        yield return new WaitForSeconds(invincibilityFrames); //waits for 3 seconds before changing invincibility back to false
+        invincible = false;
+        //print("Not Invincible...");
 
-        //invincible = true;
-        //yield return new WaitForSeconds(3); //waits for 3 seconds before changing invincibility back to false
-        // invincible = false;
-        //}
     }
 }
