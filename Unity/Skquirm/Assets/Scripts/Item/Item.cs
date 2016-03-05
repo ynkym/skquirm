@@ -8,6 +8,7 @@ public class Item : MonoBehaviour {
     return this;
   }
 
-  virtual public void Activate () {
+  virtual public Item Activate () {
+        return null;
   }
 }

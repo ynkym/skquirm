@@ -10,14 +10,14 @@ public class OffenseItem : Item {
 
 	GameObject temp_projectile;
 
-	[SerializeField] float speed = 25f;
+	[SerializeField] float speed = 20f;
 	[SerializeField] float max_time;
 
 	void Start(){
 		//Load projectile prefab
 		projectile_prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Capsule.prefab", (typeof(GameObject))) as GameObject;
 
-		//Find the shooter 
+		//Find the shooter
 		shooter = GetComponent<PlayerController>().shooter;
 
 	}
@@ -39,7 +39,7 @@ public class OffenseItem : Item {
     return this;
   }
 
-  override public void Activate() {
+  override public Item Activate() {
   		Debug.Log("Used Offense Item");
   		// TODO: implement
 
@@ -53,12 +53,14 @@ public class OffenseItem : Item {
 		temp_projectile = Instantiate(projectile_prefab, shooter.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
 
 		//Give it a velocity
-		temp_projectile.GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * speed;
+		temp_projectile.GetComponent<Rigidbody>().velocity = transform.forward * speed;
 
 		//Set projectile info
 		temp_projectile.GetComponent<OffenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());
 
 		temp_projectile = null;
+
+        return null;
 
 	}
 }
