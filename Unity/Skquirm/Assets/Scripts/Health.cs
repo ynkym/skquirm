@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
     public Renderer bottleRenderer;
 
 	//public Material damaged;
-	public int force; 
+	public int force;
 	public GameObject water;
 	public Rigidbody rb;
 	void Awake ()
@@ -53,27 +53,24 @@ public class Health : MonoBehaviour
                     bottleRenderer.material.color = Color.black;
                 }
 
-<<<<<<< HEAD
-		if (life == 1){
-			if(transform.position.y >= water.transform.position.y){
-				//rigid.body.AddForce(transform.down * force * 10); 
-				//transform.localPosition = new Vector3(0, 0, 0);
-				//rb.AddForce(0, -15, 0);
-				//rb.AddForce(transform.down * 10);
-				rb.AddForce(new Vector3(0, transform.position.y , 0) * -10);
-			}
+            		if (life == 1){
+            			if(transform.position.y >= water.transform.position.y){
+            				//rigid.body.AddForce(transform.down * force * 10);
+            				//transform.localPosition = new Vector3(0, 0, 0);
+            				//rb.AddForce(0, -15, 0);
+            				//rb.AddForce(transform.down * 10);
+            				rb.AddForce(new Vector3(0, transform.position.y , 0) * -10);
+            			}
 
-		}
+            		}
 
-		if (life <= 0){
-			Destroy(this.gameObject);
-			//Application.LoadLevel("GameOver");
-		}
-
-	}
-=======
+            		if (life <= 0){
+            			Destroy(this.gameObject);
+            			//Application.LoadLevel("GameOver");
+            		}
             }
-        }
+
+      }
         invincible = true;
         //print("INVINCIBLE");
         yield return new WaitForSeconds(invincibilityFrames); //waits for 3 seconds before changing invincibility back to false
@@ -81,5 +78,5 @@ public class Health : MonoBehaviour
         //print("Not Invincible...");
 
     }
->>>>>>> origin/master
+
 }
