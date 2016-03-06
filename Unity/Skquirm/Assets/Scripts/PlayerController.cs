@@ -119,7 +119,6 @@ public class PlayerController : MonoBehaviour {
         if (barrier == null) {
             // Do actual damage
             health.getDamaged();
-            StartCoroutine(health.getDamaged());
             // quick hack: shift the position vertically to make bouncing due to buoyancy happen
             rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
             print("caused damage to the player");
