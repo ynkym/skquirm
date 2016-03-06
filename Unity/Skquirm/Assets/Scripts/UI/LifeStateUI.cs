@@ -4,52 +4,71 @@ using System.Collections.Generic;
 using UnityEditor;
 
 public class LifeStateUI : MonoBehaviour {
-  private UnityEngine.UI.Image image;
-  private Sprite[] spriteTable;
 
-	// Use this for initialization
-	void Start () {
-    spriteTable = new Sprite[4];
-    spriteTable[3] = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life_3.jpg", (typeof(Sprite))) as Sprite);
-    spriteTable[2] = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life_2.jpg", (typeof(Sprite))) as Sprite);
-    spriteTable[1] = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life_1.jpg", (typeof(Sprite))) as Sprite);
+  static float[] angles = { Mathf.PI / 4, 3 * Mathf.PI / 8, Mathf.PI / 8 };
+  static float[] playerScaleY = { 1, 1, -1, -1 };
+  static float[] playerScaleX = { 1, -1, 1, -1 };
 
-    // spriteTable = new Dictionary<string, Sprite>();
-
-    // spriteTable.Add("OffenseItem", ;
-    // spriteTable.Add("DefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_D.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("SpeedItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_S.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("OffenseOffenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_OO.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("DefenseDefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_DD.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("SpeedSpeedItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_SS.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("OffenseSpeedItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_OS.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("OffenseDefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_OD.png", (typeof(Sprite))) as Sprite));
-    // spriteTable.Add("SpeedDefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_SD.png", (typeof(Sprite))) as Sprite));
-    // emptySprite = AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_Empty.png", (typeof(Sprite))) as Sprite;
-    // spriteTable.Add("default", emptySprite);
-
-    image = gameObject.GetComponent<UnityEngine.UI.Image>();
-	}
-
-  public void UpdateUI (int life){
-    image.sprite = spriteTable[life];
-    // string itemtype;
-
-    // if (item != null){
-    //   itemtype = item.GetType().ToString();
-    // } else {
-    //   itemtype = "default";
-    // }
-
-    // if (spriteTable.ContainsKey(itemtype)){
-    //   image.sprite = spriteTable[itemtype];
-    // }else{
-    //   image.sprite = emptySprite;
-    // }
+  static Dictionary<int, LifeStateUI> Instances = new Dictionary<int, LifeStateUI>();
+  public static void UpdateForPlayer(int playerNum, int life){
+    if (Instances.ContainsKey(playerNum)){
+        Instances[playerNum].UpdateUI(life);
+    }
   }
 
-	// Update is called once per frame
-	void Update () {
+  public enum PlayerColor{ yellow, red, brown, purple }
+  public PlayerColor color;
 
-	}
+  public int playerNum;
+  public UnityEngine.UI.Image ringImage;
+
+  private GameObject popObject;
+  private ImageAnimation[] lives;
+  private int prevLife;
+
+    void Start () {
+        // For when using ExecuteinEditMode... But doesn't work well when playing.
+        // if (lives != null){
+        //     for(int i = 0; i < 3 ; i++){
+        //         Destroy(lives[i].gameObject);
+        //         lives[i] = null;
+        //     }
+        // }
+
+        // load assets
+        string colorstring = color.ToString();
+        popObject = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life/BubblePop.prefab", (typeof(GameObject))) as GameObject);
+        Texture2D bubbleSprite = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life/circle_" + colorstring + ".png", (typeof(Texture2D))) as Texture2D);
+        Sprite ringSprite = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life/ring_" + colorstring + ".png", (typeof(Sprite))) as Sprite);
+
+        // initialize variables
+        lives = new ImageAnimation[3];
+        prevLife = 3; // number of life
+
+        // setup the whole UI
+        gameObject.transform.localScale = new Vector3(playerScaleX[playerNum], playerScaleY[playerNum], 1);
+        ringImage.sprite = ringSprite;
+
+        // setup the individual lives
+        float radius = 120;
+        float offset = Mathf.PI / 2;
+        for (int i = 0; i < 3 ; i++){
+            GameObject lifeBubble = (GameObject) Instantiate(popObject, gameObject.transform.position, Quaternion.identity);
+            lifeBubble.transform.SetParent(gameObject.transform);
+            lifeBubble.transform.localPosition = new Vector3(radius * Mathf.Cos(angles[i] + offset),
+                radius * Mathf.Sin(angles[i] + offset), 0);
+            lives[i] = lifeBubble.GetComponent<ImageAnimation>();
+            lives[i].spriteSht = bubbleSprite;
+        }
+
+        Instances.Add(playerNum, this);
+    }
+
+  public void UpdateUI (int life){
+    for (int i = prevLife - 1; i >= life && i >= 0; i--){
+        lives[i].StartAnim();
+        lives[i] = null;
+    }
+    prevLife = life;
+  }
 }

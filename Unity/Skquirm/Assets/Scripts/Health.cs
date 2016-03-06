@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -11,7 +11,6 @@ public class Health : MonoBehaviour
     private int currentLife;
 
     public int invincibilityFrames;
-	public LifeStateUI lifeUI;
     public Renderer bottleRenderer;
 
 	//public Material damaged;
@@ -29,12 +28,12 @@ public class Health : MonoBehaviour
         currentLife = life;
     }
 
-    public IEnumerator getDamaged()
+    public IEnumerator getDamaged(int playerNum)
     {
         if (!invincible)
         {
             currentLife -= 1;
-            lifeUI.UpdateUI(currentLife);
+            LifeStateUI.UpdateForPlayer(playerNum, currentLife);
             if (currentLife <= 0)
             {
                 //Application.LoadLevel("GameOver");

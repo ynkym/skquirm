@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using UnityEditor;
 
 public class ItemStateUI : MonoBehaviour {
+  static Dictionary<int, ItemStateUI> Instances = new Dictionary<int, ItemStateUI>();
+  public static void UpdateForPlayer(int playerNum, Item item){
+    if (Instances.ContainsKey(playerNum)){
+        Instances[playerNum].UpdateUI(item);
+    }
+  }
+
+  public int playerNum;
 
   private Sprite emptySprite;
   private UnityEngine.UI.Image image;
@@ -27,6 +35,8 @@ public class ItemStateUI : MonoBehaviour {
 
     image = gameObject.GetComponent<UnityEngine.UI.Image>();
     image.sprite = emptySprite;
+
+    Instances.Add(playerNum, this);
 	}
 
   public void UpdateUI (Item item){

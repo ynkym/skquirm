@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using InControl;
 
@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour {
 
 	private Rigidbody rb;
 	private Item item;
-	public ItemStateUI itemUI;
 	public Camera playercamera;
 	public float speed;
 	public float jumpheight;
@@ -67,7 +66,7 @@ public class PlayerController : MonoBehaviour {
             Item newItem = item.Activate();
             Destroy(item);
             item = newItem;
-            itemUI.UpdateUI(item);
+            ItemStateUI.UpdateForPlayer(playerNum, item);
         }
     }
 
@@ -109,7 +108,7 @@ public class PlayerController : MonoBehaviour {
 					item = gameObject.AddComponent<SpeedItem> () as SpeedItem;
 				}
 			}
-			itemUI.UpdateUI (item);
+			ItemStateUI.UpdateForPlayer (playerNum, item);
 		}
 	}
 
@@ -118,8 +117,8 @@ public class PlayerController : MonoBehaviour {
         DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
         if (barrier == null) {
             // Do actual damage
-            health.getDamaged();
-            StartCoroutine(health.getDamaged());
+            health.getDamaged(playerNum);
+            StartCoroutine(health.getDamaged(playerNum));
             // quick hack: shift the position vertically to make bouncing due to buoyancy happen
             rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
             print("caused damage to the player");
