@@ -34,11 +34,11 @@ public class ObstacleBehaviour : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //collision case of an obstacle with the event horizon.
-        if (collision.gameObject.tag == "EHorizon")
+        /*if (collision.gameObject.tag == "EHorizon")
         {
             obstaclespawn.currentNumOfObs -= 1;
             print(obstaclespawn.currentNumOfObs);
-        }
+        }*/
         //collision case of a meteor obstacle vs. player
         if (collision.gameObject.tag == "Player")
         {

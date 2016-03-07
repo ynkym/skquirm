@@ -18,6 +18,11 @@ public class EventHorizon : MonoBehaviour {
         if (other.gameObject.CompareTag("Player")){
           GlobalSetting.Instance.SendMessage("PlayerDefeated", other.gameObject);
         }
-        other.gameObject.SetActive(false);
+        if (other.gameObject.CompareTag("obstacle"))
+        {
+            gameObject.GetComponent<ObstacleSpawn>().currentNumOfObs -= 1;
+        }
+        //other.gameObject.SetActive(false);
+        Destroy(other.gameObject);
     }
 }
