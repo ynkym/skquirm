@@ -10,6 +10,7 @@ public class ItemStateUI : MonoBehaviour {
         Instances[playerNum].UpdateUI(item);
     }
   }
+  public static void Clear(){ Instances.Clear(); }
 
   public int playerNum;
 
@@ -36,7 +37,11 @@ public class ItemStateUI : MonoBehaviour {
     image = gameObject.GetComponent<UnityEngine.UI.Image>();
     image.sprite = emptySprite;
 
-    Instances.Add(playerNum, this);
+    if (Instances.ContainsKey(playerNum)){
+      Instances[playerNum] = this;
+    }else{
+      Instances.Add(playerNum, this);
+    }
 	}
 
   public void UpdateUI (Item item){

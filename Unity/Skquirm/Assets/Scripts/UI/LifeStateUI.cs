@@ -15,6 +15,7 @@ public class LifeStateUI : MonoBehaviour {
         Instances[playerNum].UpdateUI(life);
     }
   }
+  public static void Clear(){ Instances.Clear(); }
 
   public enum PlayerColor{ yellow, red, brown, purple }
   public PlayerColor color;
@@ -61,7 +62,11 @@ public class LifeStateUI : MonoBehaviour {
             lives[i].spriteSht = bubbleSprite;
         }
 
+      if (Instances.ContainsKey(playerNum)){
+        Instances[playerNum] = this;
+      }else{
         Instances.Add(playerNum, this);
+      }
     }
 
   public void UpdateUI (int life){

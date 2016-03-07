@@ -16,10 +16,9 @@ public class GlobalSetting : MonoBehaviour {
 
 
   void Awake(){
-    DontDestroyOnLoad(gameObject);
     m_Instance = this;
-        players = new ArrayList();
-        alivePlayers = new ArrayList();
+    players = new ArrayList();
+    alivePlayers = new ArrayList();
   }
 
   public void registerPlayer(GameObject player)

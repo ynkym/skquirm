@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour {
     private float jump;
     private bool fire;
 
-    private int score;
-
     private int test = 0;
 
     // Use this for initialization
@@ -34,10 +32,9 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
 		item = GetComponent<Item>();
         health = GetComponent<Health>();
-        score = 0;
 
+        PlayerScore.Create(playerNum);
         GlobalSetting.Instance.registerPlayer(this.gameObject);
-        DontDestroyOnLoad(this.gameObject);
 	}
 
 	// Update is called once per frame
@@ -149,10 +146,6 @@ public class PlayerController : MonoBehaviour {
 
 
     public void IncreaseScore(){
-        score += 1;
-    }
-
-    public int GetScore(){
-        return score;
+        PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
     }
 }

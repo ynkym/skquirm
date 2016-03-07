@@ -13,11 +13,11 @@ public class ScoreBoard : MonoBehaviour {
 
     //Debug.Log(players.Count);
     for (int i = 0; i < players.Count; i++){
-      GameObject player = (GameObject)players[i];
+      // GameObject player = (GameObject)players[i];
 
-      PlayerController controller = player.GetComponent<PlayerController>();
-      int playerId = controller.playerNum;
-      scoreText[playerId].text = "" + controller.GetScore();
+      // PlayerController controller = player.GetComponent<PlayerController>();
+      // int playerId = controller.playerNum;
+      scoreText[i].text = "" + PlayerScore.GetScore(i);
     }
 	}
 
