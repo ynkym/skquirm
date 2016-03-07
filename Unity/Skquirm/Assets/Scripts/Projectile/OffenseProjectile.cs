@@ -20,7 +20,7 @@ public class OffenseProjectile : Projectile {
 
 			if (collision.gameObject != origin.gameObject){
 				// Push Player away
-				collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward*20f);
+				collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.up*400f);
 
 				// Cause Damage
 				bool attackSuccess = collision.gameObject.GetComponent<PlayerController>().TryToHurt();
