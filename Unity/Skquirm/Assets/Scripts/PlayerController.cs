@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
 
     public int playerNum;
 
+    public Animator charAnimator;
+
 	public bool testingObj;
 	public bool TestWithoutJoystick;
     private Health health;
@@ -25,6 +27,9 @@ public class PlayerController : MonoBehaviour {
     private bool fire;
 
     private int test = 0;
+
+    // hash variables for animation
+    private int hitHash = Animator.StringToHash("Hit");
 
     // Use this for initialization
     void Start () {
@@ -118,6 +123,9 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(health.getDamaged(playerNum));
             // quick hack: shift the position vertically to make bouncing due to buoyancy happen
             rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
+            // set a trigger to animate the character
+            charAnimator.SetTrigger(hitHash); // Go to "Hit" animation
+
             print("caused damage to the player");
             return true;
         } else {
