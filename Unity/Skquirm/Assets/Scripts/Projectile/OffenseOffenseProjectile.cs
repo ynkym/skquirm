@@ -11,7 +11,7 @@ public class OffenseOffenseProjectile : Projectile {
 	// Use this for initialization
 	void Start () {
 		//Get the explosion prefab
-		explosion = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Standard Assets/ParticleSystems/Prefabs/Explosion.prefab", (typeof(GameObject))) as GameObject;
+		explosion = Resources.Load("Effects/Explosion", (typeof(GameObject))) as GameObject;
 	}
 
 	void FixedUpdate () {

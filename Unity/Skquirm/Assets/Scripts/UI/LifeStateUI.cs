@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class LifeStateUI : MonoBehaviour {
 
@@ -38,9 +37,9 @@ public class LifeStateUI : MonoBehaviour {
 
         // load assets
         string colorstring = color.ToString();
-        popObject = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life/BubblePop.prefab", (typeof(GameObject))) as GameObject);
-        Texture2D bubbleSprite = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life/circle_" + colorstring + ".png", (typeof(Texture2D))) as Texture2D);
-        Sprite ringSprite = (AssetDatabase.LoadAssetAtPath("Assets/Sprites/life/ring_" + colorstring + ".png", (typeof(Sprite))) as Sprite);
+        popObject = (Resources.Load("Prefabs/BubblePop", (typeof(GameObject))) as GameObject);
+        Texture2D bubbleSprite = (Resources.Load("Sprites/Life/circle_" + colorstring, (typeof(Texture2D))) as Texture2D);
+        Sprite ringSprite = (Resources.Load("Sprites/Life/ring_" + colorstring, (typeof(Sprite))) as Sprite);
 
         // initialize variables
         lives = new ImageAnimation[3];

@@ -9,7 +9,7 @@ public class DefenseBarrier : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
-    GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Barrier.prefab", (typeof(GameObject))) as GameObject;
+    GameObject prefab = Resources.Load("Prefabs/Barrier/Barrier", (typeof(GameObject))) as GameObject;
     barrier = (GameObject) Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
     barrier.transform.parent = gameObject.transform;
   }
@@ -26,7 +26,7 @@ public class DefenseBarrier : MonoBehaviour {
 
   void DestroyBarrier () {
         Destroy(barrier);
-        GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/BarrierClosing.prefab", (typeof(GameObject))) as GameObject;
+        GameObject prefab = Resources.Load("Prefabs/Barrier/BarrierClosing", (typeof(GameObject))) as GameObject;
         GameObject tempBarrier = Instantiate(prefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         tempBarrier.transform.parent = gameObject.transform;
         Destroy(this);

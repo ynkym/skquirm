@@ -10,8 +10,8 @@ public class SpeedDefenseItem : Item {
 
 	// Use this for initialization
 	void Start () {
-		//Get the prefab 
-		projectile_prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Mine.prefab", (typeof(GameObject))) as GameObject;
+		//Get the prefab
+		projectile_prefab = Resources.Load("Prefabs/Mine", (typeof(GameObject))) as GameObject;
 
 		//Get the shooter back gameobj
 		shooter_back = GetComponent<PlayerController>().shooter_back;

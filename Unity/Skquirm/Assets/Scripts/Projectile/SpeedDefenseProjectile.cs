@@ -6,7 +6,7 @@ public class SpeedDefenseProjectile : Projectile {
 	GameObject explosion;
 
 	void Start () {
-		explosion = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Standard Assets/ParticleSystems/Prefabs/Explosion.prefab", (typeof(GameObject))) as GameObject;
+		explosion = Resources.Load("Effects/Explosion", (typeof(GameObject))) as GameObject;
 	}
 
 	void OnCollisionEnter(Collision collision){
@@ -24,7 +24,7 @@ public class SpeedDefenseProjectile : Projectile {
 			// Send the score to the player
 			origin.IncreaseScore();
 
-		} 
+		}
 		//Are we colliding with anything else?
 		else {
 			//What to do?

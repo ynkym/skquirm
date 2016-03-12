@@ -8,7 +8,7 @@ public class SpeedItem : Item {
 
     // Use this for initialization
     void Start () {
-        boost_explosion = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Standard Assets/ParticleSystems/Prefabs/Flare.prefab", (typeof(GameObject))) as GameObject;
+        boost_explosion = Resources.Load("Effects/Flare", (typeof(GameObject))) as GameObject;
         shooter_back = gameObject.GetComponent<PlayerController>().shooter_back;
     }
 

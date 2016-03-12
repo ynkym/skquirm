@@ -18,8 +18,8 @@ public class OffenseOffenseItem : Item {
 	void Start () {
 		origin = GetComponent<PlayerController> ();
 
-		projectile_prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/OOProjectile.prefab", (typeof(GameObject))) as GameObject;
-		//Find the shooter 
+		projectile_prefab = Resources.Load("Prefabs/Projectile/OOProjectile", (typeof(GameObject))) as GameObject;
+		//Find the shooter
 		shooter = origin.shooter;
 	}
 

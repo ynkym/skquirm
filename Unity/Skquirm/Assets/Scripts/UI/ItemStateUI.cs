@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class ItemStateUI : MonoBehaviour {
   static Dictionary<int, ItemStateUI> Instances = new Dictionary<int, ItemStateUI>();
@@ -22,16 +24,16 @@ public class ItemStateUI : MonoBehaviour {
 	void Start () {
     spriteTable = new Dictionary<string, Sprite>();
 
-    spriteTable.Add("OffenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_O.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("DefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_D.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("SpeedItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_S.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("OffenseOffenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_OO.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("DefenseDefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_DD.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("SpeedSpeedItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_SS.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("OffenseSpeedItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_OS.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("OffenseDefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_OD.png", (typeof(Sprite))) as Sprite));
-    spriteTable.Add("SpeedDefenseItem", (AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_SD.png", (typeof(Sprite))) as Sprite));
-    emptySprite = AssetDatabase.LoadAssetAtPath("Assets/Sprites/item_Empty.png", (typeof(Sprite))) as Sprite;
+    spriteTable.Add("OffenseItem", (Resources.Load("Sprites/Item/item_O", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("DefenseItem", (Resources.Load("Sprites/Item/item_D", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("SpeedItem", (Resources.Load("Sprites/Item/item_S", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("OffenseOffenseItem", (Resources.Load("Sprites/Item/item_OO", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("DefenseDefenseItem", (Resources.Load("Sprites/Item/item_DD", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("SpeedSpeedItem", (Resources.Load("Sprites/Item/item_SS", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("OffenseSpeedItem", (Resources.Load("Sprites/Item/item_OS", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("OffenseDefenseItem", (Resources.Load("Sprites/Item/item_OD", (typeof(Sprite))) as Sprite));
+    spriteTable.Add("SpeedDefenseItem", (Resources.Load("Sprites/Item/item_SD", (typeof(Sprite))) as Sprite));
+    emptySprite = Resources.Load("Sprites/Item/item_Empty", (typeof(Sprite))) as Sprite;
     spriteTable.Add("default", emptySprite);
 
     image = gameObject.GetComponent<UnityEngine.UI.Image>();
