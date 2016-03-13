@@ -31,6 +31,11 @@ public class PlayerController : MonoBehaviour {
     // hash variables for animation
     private int hitHash = Animator.StringToHash("Hit");
 
+    // particle system variables
+    [SerializeField] private ParticleSystem left_wave;
+    [SerializeField] private ParticleSystem right_wave;
+    [SerializeField] private ParticleSystem bubble;
+
     // Use this for initialization
     void Start () {
 
