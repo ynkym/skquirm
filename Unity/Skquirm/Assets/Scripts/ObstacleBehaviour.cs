@@ -17,9 +17,9 @@ public class ObstacleBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
             //this portion of the code comes into play after the meteor object lands onto the water, at which then it is harmless, simply acts as a wall for players
-            //it works, but it doesnt look good atm. Uncomment the code to see the results 
+            //it works, but it doesnt look good atm. Uncomment the code to see the results
             if (gameObject.transform.position.y < 3.6F)
             {
                 //this is to disable rag dolling after it hits the water/reaches below a certain point in Y-coordinate
@@ -28,7 +28,7 @@ public class ObstacleBehaviour : MonoBehaviour
                 vf.pullStrength = 0.001f;
                 //rb.detectCollisions = false;
             }
-        
+
     }
 
     void OnCollisionEnter(Collision collision)
@@ -45,6 +45,16 @@ public class ObstacleBehaviour : MonoBehaviour
             if (gameObject.transform.position.y > 3.6F)
             {
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+            }else{
+
+                // get reflection vector
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                Vector3 reflVector = Vector3.Reflect (rb.velocity, collision.contacts[0].normal);
+                // omit y-direction to avoid jumps and sinks
+                reflVector.y = 0;
+                reflVector.Normalize();
+                rb.AddForce(10 * reflVector, ForceMode.Impulse);
+
             }
         }
     }
