@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
 
     private RiderParticles rider_particles;
 
+    [SerializeField] private float rotationAngle;
+
     // Use this for initialization
     void Start () {
 
@@ -87,19 +89,42 @@ public class PlayerController : MonoBehaviour {
         Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
         lookDirection.Normalize();
 
+        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+        Vector3 temp_rot = newRotation.eulerAngles;
+        float time_slerp = 0f;
+
         if (horizontal != 0)
         {
             if (vertical != 0)
             {
-                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 1.9f * Time.deltaTime);
+                time_slerp = 1.9f;
+
+                if (playerNum == 0)
+                    print(temp_rot);
+
+                temp_rot.z = -10f * horizontal;
+                temp_rot.x = 0f;
             }
             else {
-                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 0.7f * Time.deltaTime);
+                time_slerp = 0.7f;
+                temp_rot.z = -10f * horizontal;
+                temp_rot.x = 0f;
             }
+            newRotation.eulerAngles = temp_rot;
+            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
+        }
+        else {
+            time_slerp = 3f;
+            temp_rot = transform.rotation.eulerAngles;
+            temp_rot.z = 0f;
+            temp_rot.x = 0f;
+
+            newRotation.eulerAngles = temp_rot;
+            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
         }
         
+        
+
     }
 
 	void PickupItem (string newType) {
