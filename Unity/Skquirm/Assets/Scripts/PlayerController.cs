@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour {
             }
             else {
                 Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 0.7f * Time.deltaTime);
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 1.3f * Time.deltaTime);
             }
         }
         
