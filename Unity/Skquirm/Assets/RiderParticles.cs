@@ -36,7 +36,6 @@ public class RiderParticles : MonoBehaviour
 
     public void SetEmissionRate(ParticleSystem particleSystem, float emissionRate)
     {
-        print(emissionRate);
         var emission = particleSystem.emission;
         var rate = emission.rate;
         rate.constantMax = emissionRate;

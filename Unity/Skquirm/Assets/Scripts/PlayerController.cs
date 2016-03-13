@@ -33,6 +33,11 @@ public class PlayerController : MonoBehaviour {
 
     private RiderParticles rider_particles;
 
+    [SerializeField] private float rotationAngle;
+
+    InputDevice inputDevice;
+    bool button_pressed = false;
+
     // Use this for initialization
     void Start () {
 
@@ -48,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        InputDevice inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+        inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
         if (inputDevice != null && !TestWithoutJoystick)
         {
             horizontal = inputDevice.LeftStickX; //for inControl functionality
@@ -56,6 +61,10 @@ public class PlayerController : MonoBehaviour {
             vertical = inputDevice.Action1;
             jump = inputDevice.Action2;
             fire = inputDevice.Action3;
+
+            print(inputDevice.AnyButton);
+            if (inputDevice.AnyButton == null) button_pressed = false;
+            else button_pressed = true;
         }
         else {
             if (playerNum == 0)
@@ -64,6 +73,9 @@ public class PlayerController : MonoBehaviour {
                 vertical = Input.GetAxis("Vertical");
                 jump = Input.GetAxis("Jump");
                 fire = Input.GetButtonDown("Fire3");
+
+                if (Input.anyKeyDown) button_pressed = true;
+                else button_pressed = false;
             }
         }
 
@@ -87,19 +99,46 @@ public class PlayerController : MonoBehaviour {
         Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
         lookDirection.Normalize();
 
+        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+        Vector3 temp_rot = newRotation.eulerAngles;
+        float time_slerp = 0f;
+
         if (horizontal != 0)
         {
             if (vertical != 0)
             {
-                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 1.9f * Time.deltaTime);
+                time_slerp = 1.9f;
+
+                if (playerNum == 0)
+                    print(temp_rot);
+
+                temp_rot.z = -10f * horizontal;
+                temp_rot.x = 0f;
             }
             else {
-                Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 1.3f * Time.deltaTime);
+                time_slerp = 0.7f;
+                temp_rot.z = -10f * horizontal;
+                temp_rot.x = 0f;
             }
+            newRotation.eulerAngles = temp_rot;
+            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
+        }
+        else {
+            if (!button_pressed)
+            {
+                time_slerp = 3f;
+                temp_rot = transform.rotation.eulerAngles;
+                temp_rot.z = 0f;
+                temp_rot.x = 0f;
+
+                newRotation.eulerAngles = temp_rot;
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
+            }
+            
         }
         
+        
+
     }
 
 	void PickupItem (string newType) {
