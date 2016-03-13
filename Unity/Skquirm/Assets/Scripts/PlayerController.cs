@@ -31,10 +31,7 @@ public class PlayerController : MonoBehaviour {
     // hash variables for animation
     private int hitHash = Animator.StringToHash("Hit");
 
-    // particle system variables
-    [SerializeField] private ParticleSystem left_wave;
-    [SerializeField] private ParticleSystem right_wave;
-    [SerializeField] private ParticleSystem bubble;
+    private RiderParticles rider_particles;
 
     // Use this for initialization
     void Start () {
@@ -45,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 
         PlayerScore.Create(playerNum);
         GlobalSetting.Instance.registerPlayer(this.gameObject);
+
+        rider_particles = GetComponent<RiderParticles>();
 	}
 
 	// Update is called once per frame
@@ -75,6 +74,7 @@ public class PlayerController : MonoBehaviour {
             item = newItem;
             ItemStateUI.UpdateForPlayer(playerNum, item);
         }
+        rider_particles.UpdateParticles(horizontal, vertical);
     }
 
 
@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour {
                 rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, 0.7f * Time.deltaTime);
             }
         }
+        
     }
 
 	void PickupItem (string newType) {
