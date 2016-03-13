@@ -22,8 +22,8 @@ public class ObstacleSpawn : MonoBehaviour {
             spawnTime -= Time.deltaTime;
             if (spawnTime <= 0)
             {
-                xVar = Random.Range(-7.0F, 7.0F);
-                zVar = Random.Range(-6.0F, 6.0F);
+                xVar = Random.Range(-37.0F, 25.0F);
+                zVar = Random.Range(-28.0F, 25.0F);
                 currentNumOfObs += 1;
                 Instantiate(obstacle, new Vector3(xVar , 100F, zVar), Quaternion.identity);
                 spawnTime = remainingTime;
