@@ -112,12 +112,12 @@ public class PlayerController : MonoBehaviour {
                 if (playerNum == 0)
                     print(temp_rot);
 
-                temp_rot.z = -10f * horizontal;
+                temp_rot.z = -8f * horizontal;
                 temp_rot.x = 0f;
             }
             else {
                 time_slerp = 0.7f;
-                temp_rot.z = -10f * horizontal;
+                temp_rot.z = -8f * horizontal;
                 temp_rot.x = 0f;
             }
             newRotation.eulerAngles = temp_rot;
