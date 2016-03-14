@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float rotationAngle;
 
+    InputDevice inputDevice;
+    bool button_pressed = false;
+
     // Use this for initialization
     void Start () {
 
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        InputDevice inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+        inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
         if (inputDevice != null && !TestWithoutJoystick)
         {
             horizontal = inputDevice.LeftStickX; //for inControl functionality
@@ -58,6 +61,10 @@ public class PlayerController : MonoBehaviour {
             vertical = inputDevice.Action1;
             jump = inputDevice.Action2;
             fire = inputDevice.Action3;
+
+            print(inputDevice.AnyButton);
+            if (inputDevice.AnyButton == null) button_pressed = false;
+            else button_pressed = true;
         }
         else {
             if (playerNum == 0)
@@ -66,6 +73,9 @@ public class PlayerController : MonoBehaviour {
                 vertical = Input.GetAxis("Vertical");
                 jump = Input.GetAxis("Jump");
                 fire = Input.GetButtonDown("Fire3");
+
+                if (Input.anyKeyDown) button_pressed = true;
+                else button_pressed = false;
             }
         }
 
@@ -102,25 +112,29 @@ public class PlayerController : MonoBehaviour {
                 if (playerNum == 0)
                     print(temp_rot);
 
-                temp_rot.z = -10f * horizontal;
+                temp_rot.z = -8f * horizontal;
                 temp_rot.x = 0f;
             }
             else {
                 time_slerp = 0.7f;
-                temp_rot.z = -10f * horizontal;
+                temp_rot.z = -8f * horizontal;
                 temp_rot.x = 0f;
             }
             newRotation.eulerAngles = temp_rot;
             rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
         }
         else {
-            time_slerp = 3f;
-            temp_rot = transform.rotation.eulerAngles;
-            temp_rot.z = 0f;
-            temp_rot.x = 0f;
+            if (!button_pressed)
+            {
+                time_slerp = 3f;
+                temp_rot = transform.rotation.eulerAngles;
+                temp_rot.z = 0f;
+                temp_rot.x = 0f;
 
-            newRotation.eulerAngles = temp_rot;
-            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
+                newRotation.eulerAngles = temp_rot;
+                rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
+            }
+            
         }
         
         
