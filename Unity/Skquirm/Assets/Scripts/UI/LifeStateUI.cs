@@ -57,6 +57,7 @@ public class LifeStateUI : MonoBehaviour {
             lifeBubble.transform.SetParent(gameObject.transform);
             lifeBubble.transform.localPosition = new Vector3(radius * Mathf.Cos(angles[i] + offset),
                 radius * Mathf.Sin(angles[i] + offset), 0);
+            lifeBubble.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             lives[i] = lifeBubble.GetComponent<ImageAnimation>();
             lives[i].spriteSht = bubbleSprite;
         }
