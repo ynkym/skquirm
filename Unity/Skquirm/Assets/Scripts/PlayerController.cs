@@ -99,7 +99,17 @@ public class PlayerController : MonoBehaviour {
         Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal;
         lookDirection.Normalize();
 
-        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+        Quaternion newRotation;
+
+        if (lookDirection != Vector3.zero) //Just to avoid the messages on console
+        {
+            newRotation = Quaternion.LookRotation(lookDirection);
+        }
+        else
+        {
+            newRotation = new Quaternion(0f, 0f, 0f, 1f); //This is the Quaternion when the direction is the zero vector
+        }
+        
         Vector3 temp_rot = newRotation.eulerAngles;
         float time_slerp = 0f;
 
@@ -108,10 +118,6 @@ public class PlayerController : MonoBehaviour {
             if (vertical != 0)
             {
                 time_slerp = 1.9f;
-
-                if (playerNum == 0)
-                    print(temp_rot);
-
                 temp_rot.z = -8f * horizontal;
                 temp_rot.x = 0f;
             }
@@ -133,12 +139,8 @@ public class PlayerController : MonoBehaviour {
 
                 newRotation.eulerAngles = temp_rot;
                 rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
-            }
-            
+            }   
         }
-        
-        
-
     }
 
 	void PickupItem (string newType) {
@@ -182,9 +184,12 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision){
         if (collision.gameObject.tag == "Player") {
+
+            DefenseBarrier dBarrier = GetComponent<DefenseBarrier>();
             OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier> ();
 
-            if (odBarrier != null) {
+            if (odBarrier != null)
+            {
                 // this player have OD barrier
 
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
@@ -193,6 +198,9 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log(test + " " + gameObject.name);
                 test = 0;
             }
+            else if (dBarrier != null) {
+                dBarrier.BubbleReaction();
+            }
 
         }
     }
@@ -200,5 +208,15 @@ public class PlayerController : MonoBehaviour {
 
     public void IncreaseScore(){
         PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
+    }
+
+    public void IncreaseSpeed(float time) {
+        StartCoroutine(IncreaseTheSpeedFor(time));
+    }
+
+    IEnumerator IncreaseTheSpeedFor(float time) {
+        speed = 70f;
+        yield return new WaitForSeconds(time);
+        speed = 40f;
     }
 }
