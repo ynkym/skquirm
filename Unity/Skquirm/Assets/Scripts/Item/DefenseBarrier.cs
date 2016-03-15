@@ -7,11 +7,14 @@ public class DefenseBarrier : MonoBehaviour {
   public float remainingTime;
   public int barrierCount;
 
+    protected BubbleBehavior bubbleBehavior;
+
   // Use this for initialization
   void Start () {
-    GameObject prefab = Resources.Load("Prefabs/Barrier/Barrier", (typeof(GameObject))) as GameObject;
-    barrier = (GameObject) Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
-    barrier.transform.parent = gameObject.transform;
+        GameObject prefab = Resources.Load("Prefabs/Barrier/Barrier", (typeof(GameObject))) as GameObject;
+        barrier = (GameObject) Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
+        barrier.transform.parent = gameObject.transform;
+        bubbleBehavior = barrier.GetComponent<BubbleBehavior>();
   }
 
   // Update is called once per frame
@@ -24,11 +27,13 @@ public class DefenseBarrier : MonoBehaviour {
     }
   }
 
-  void DestroyBarrier () {
-        Destroy(barrier);
+  public virtual void DestroyBarrier () {
+        /*Destroy(barrier);
         GameObject prefab = Resources.Load("Prefabs/Barrier/BarrierClosing", (typeof(GameObject))) as GameObject;
         GameObject tempBarrier = Instantiate(prefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         tempBarrier.transform.parent = gameObject.transform;
+        Destroy(this);*/
+        bubbleBehavior.DestroyBarrier();
         Destroy(this);
   }
 
@@ -44,4 +49,8 @@ public class DefenseBarrier : MonoBehaviour {
       DestroyBarrier();
     }
   }
+
+    public virtual void BubbleReaction() {
+        bubbleBehavior.BubbleReaction();
+    }
 }

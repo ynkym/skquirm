@@ -9,6 +9,7 @@ public class OffenseDefenseBarrier : DefenseBarrier {
 		GameObject prefab = Resources.Load("Prefabs/Barrier/Barrier", (typeof(GameObject))) as GameObject;
 		barrier = (GameObject) Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
 		barrier.transform.parent = gameObject.transform;
-	}
+        bubbleBehavior = barrier.GetComponent<BubbleBehavior>();
+    }
 
 }
