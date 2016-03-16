@@ -6,14 +6,11 @@ using Prime31.TransitionKit;
 
 public class GoToScene : MonoBehaviour {
 
-  static Dictionary<string, int> sceneList = new Dictionary<string, int>();
-
-  void Start () {
-    sceneList.Clear();
-    sceneList.Add("Title", 0);
-    sceneList.Add("Scene 1", 1);
-    sceneList.Add("GameOver", 2);
-  }
+  static Dictionary<string, int> sceneList = new Dictionary<string, int>(){
+    {"Title", 0},
+    {"Scene 1", 1},
+    {"GameOver", 2}
+  };
 
 	public void loadScene(string sceneName){
     windTransition(sceneName);

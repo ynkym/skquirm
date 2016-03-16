@@ -46,9 +46,10 @@ public class PlayerController : MonoBehaviour {
         health = GetComponent<Health>();
 
         PlayerScore.Create(playerNum);
-        GlobalSetting.Instance.registerPlayer(this.gameObject);
 
         rider_particles = GetComponent<RiderParticles>();
+        GlobalSetting.Instance.registerPlayer(this.gameObject);
+        this.enabled = false; // wait until game start
 	}
 
 	// Update is called once per frame
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour {
         {
             newRotation = new Quaternion(0f, 0f, 0f, 1f); //This is the Quaternion when the direction is the zero vector
         }
-        
+
         Vector3 temp_rot = newRotation.eulerAngles;
         float time_slerp = 0f;
 
@@ -139,7 +140,7 @@ public class PlayerController : MonoBehaviour {
 
                 newRotation.eulerAngles = temp_rot;
                 rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
-            }   
+            }
         }
     }
 

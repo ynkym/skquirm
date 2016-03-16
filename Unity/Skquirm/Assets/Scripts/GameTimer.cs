@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,18 +8,17 @@ public class GameTimer : MonoBehaviour {
 
   public float remainingTime = 3 * 60; // 3 mins by default
   public GameObject timerUIObject;
+  public float gameStartCount = 3 * 60 + 5;
   private bool gameOver;
+  private bool gameStarted;
   private Text timerText;
   private Color tcol;
   private float fadeoutTimer;
   private int index;
 
-  private TimeNotification[] notification = new TimeNotification[]{
-    new TimeNotification( 20f, 0.5f, "0:20" ),
-    new TimeNotification( 10f, 0.5f, "0:10" ),
-    new TimeNotification( 5f, 0.5f, "0:05" ),
-    new TimeNotification( 0f, 1.0f, "Time Up!" ),
-  };
+  private List<PlayerController> controllers;
+
+  private TimeNotification[] notification;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +30,25 @@ public class GameTimer : MonoBehaviour {
     timerText.color = tcol;
 		fadeoutTimer = 0;
 		index = 0;
-	}
+
+    notification = new TimeNotification[]{
+      new TimeNotification( gameStartCount + 3f, 0.5f, "3" ),
+      new TimeNotification( gameStartCount + 2f, 0.5f, "2" ),
+      new TimeNotification( gameStartCount + 1f, 0.5f, "1" ),
+      new TimeNotification( gameStartCount, 1.0f, "Go!" ),
+      new TimeNotification( 20f, 0.5f, "0:20" ),
+      new TimeNotification( 10f, 0.5f, "0:10" ),
+      new TimeNotification( 5f, 0.5f, "0:05" ),
+      new TimeNotification( 0f, 1.0f, "Time Up!" ),
+    };
+
+    controllers = new List<PlayerController>();
+    ArrayList players = GetComponent<GlobalSetting>().getAllPlayers();
+    for (int i = 0; i < players.Count; i++){
+      GameObject currPlayer = (GameObject)players[i];
+      controllers.Add(currPlayer.GetComponent<PlayerController>());
+    }
+  }
 
   void ThereIsWinner () {
     gameOver = true;
@@ -45,11 +63,15 @@ public class GameTimer : MonoBehaviour {
   void GameOver () {
     gameOver = true;
     // stop all players
-    ArrayList players = GetComponent<GlobalSetting>().getAllPlayers();
-    for (int i = 0; i < players.Count; i++){
-            GameObject currPlayer = (GameObject)players[i];
-            PlayerController controller = currPlayer.GetComponent<PlayerController>();
-      controller.enabled = !controller.enabled;
+    foreach(PlayerController ctl in controllers){
+        ctl.enabled = false;
+    }
+  }
+
+  void GameStart () {
+    gameStarted = true;
+    foreach(PlayerController ctl in controllers){
+        ctl.enabled = true;
     }
   }
 
@@ -57,6 +79,7 @@ public class GameTimer : MonoBehaviour {
 	void Update () {
     remainingTime = remainingTime - Time.deltaTime;
 		if (index < notification.Length && remainingTime < notification[index].time) {
+      timerUIObject.transform.localScale = new Vector3(1,1,1);
 			tcol.a = 1;
 			fadeoutTimer = notification[index].fadeTime;
       timerText.text = notification[index].text;
@@ -65,7 +88,7 @@ public class GameTimer : MonoBehaviour {
 
 		if (fadeoutTimer > 0) {
 			float scaleFactor = (Time.deltaTime / fadeoutTimer);
-			tcol.a = tcol.a - scaleFactor;
+			tcol.a = tcol.a - (scaleFactor);
 			timerUIObject.transform.localScale += new Vector3(scaleFactor, scaleFactor, 0);
 			timerText.color = tcol;
 			if (tcol.a <= 0) {
@@ -75,6 +98,10 @@ public class GameTimer : MonoBehaviour {
 			}
       timerText.color = tcol;
 		}
+
+    if (remainingTime <= gameStartCount && gameStarted == false){
+      GameStart();
+    }
 
     if (remainingTime < 0 && gameOver == false){
       GameOver();

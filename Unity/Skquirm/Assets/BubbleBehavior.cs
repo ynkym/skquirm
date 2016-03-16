@@ -28,7 +28,7 @@ public class BubbleBehavior : MonoBehaviour {
     }
 
 
-    public void BubbleReaction() { 
+    public void BubbleReaction() {
 
         if (interactable)
         {
@@ -37,7 +37,7 @@ public class BubbleBehavior : MonoBehaviour {
             iTween.ScaleTo(gameObject, iTween.Hash("scale", 1.1f*regular_scale, "easetype", "spring", "time", 0.3f, "delay", 0.12f));
             iTween.ScaleTo(gameObject, iTween.Hash("scale", regular_scale, "easetype", "spring", "delay", 0.4f, "time", 0.3f));
         }
-        
+
     }
 
     public void DestroyBarrier() {
@@ -48,6 +48,6 @@ public class BubbleBehavior : MonoBehaviour {
 
         transform.localPosition = position;
         iTween.ScaleTo(gameObject, iTween.Hash("scale", start_scale, "easetype", "spring", "time", 0.5f));
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 0.6f); // 0.1f gap to make sure we are completely done tweening
     }
 }
