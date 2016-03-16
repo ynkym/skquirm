@@ -54,8 +54,11 @@ public class OffenseOffenseProjectile : Projectile {
 		}
 		//Are we colliding with anything else?
 		else {
-			//What to do?
-		}
+            //Explosion particles
+            GameObject temp_explosion = Instantiate(explosion, collision.gameObject.transform.position, Quaternion.identity) as GameObject;
+            Destroy(temp_explosion, 6f);
+            Destroy(gameObject);
+        }
 	}
 
 
