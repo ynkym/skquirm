@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 9f4187631d220b643ac8fd16f5ea9580
-timeCreated: 1457238682
+timeCreated: 1458178979
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - obstacle1: {fileID: 101496, guid: 5f1925f461534ba409c1ed70933eda12, type: 2}
+  - obstacle2: {fileID: 128092, guid: 2e21aa5d2bcc1d549b7615edfeb72c02, type: 2}
+  - obstacle3: {fileID: 134628, guid: 0a2067c4a51218546a0b75347bf48f6b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
