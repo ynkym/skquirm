@@ -206,41 +206,42 @@ public class PlayerController : MonoBehaviour {
                 dBarrier.BubbleReaction();
             }
         }
+    }
 
-       
-        //this is really ugly code even for me, but i can't think of anything else at 1 in the morning
-        //need help in rotating, ill give it a go again in the morning
-        if (collision.gameObject.tag == "pipe1")
+void OnTriggerEnter(Collider other)
+    {
+        //it doesnt teleport with every collision now, however it doesnt always teleport for some odd reason.
+        if (other.gameObject.CompareTag("pipe1"))
         {
             //transfers to pipe6 at coordinates X:22, Y:14, Z:18
-            gameObject.transform.position = new Vector3(22,14,18);
+            gameObject.transform.position = new Vector3(22, 14, 18);
         }
-        else if (collision.gameObject.tag == "pipe2")
+        else if (other.gameObject.CompareTag("pipe2"))
         {
             //transfer to pipe 5 at coordinates X:20.5, Y:14, Z:-15
             gameObject.transform.position = new Vector3(-17, 14, -17);
         }
-        else if (collision.gameObject.tag == "pipe3")
+        else if (other.gameObject.CompareTag("pipe3"))
         {
             //transfer to pipe 7 at coordinates X:-16, Y:14, Z:18
             gameObject.transform.position = new Vector3(-16, 14, 18);
         }
-        else if (collision.gameObject.tag == "pipe4")
+        else if (other.gameObject.CompareTag("pipe4"))
         {
             //transfer to pipe 8 at coordinates X:20.5, Y:14, Z:-15
             gameObject.transform.position = new Vector3(20.5f, 14, -15);
         }
-        else if (collision.gameObject.tag == "pipe5")
+        else if (other.gameObject.CompareTag("pipe5"))
         {
             //transfer to pipe 2 at coordinates X:3, Y:4, Z:26
             gameObject.transform.position = new Vector3(3, 4, 26);
         }
-        else if (collision.gameObject.tag == "pipe6")
+        else if (other.gameObject.CompareTag("pipe6"))
         {
             //transfer to pipe 1 at coordinates X:2.5, Y:4, Z:-25
             gameObject.transform.position = new Vector3(2.5f, 4, -25);
         }
-        else if (collision.gameObject.tag == "pipe7")
+        else if (other.gameObject.CompareTag("pipe7"))
         {
             //transfer to pipe 3 at coordinates X:28, Y:4, Z:1.5
             gameObject.transform.position = new Vector3(28, 4, 1.5f);
@@ -250,11 +251,9 @@ public class PlayerController : MonoBehaviour {
             //transfer to pipe 4 at coordinates X:-23, Y:4, Z:2
             gameObject.transform.position = new Vector3(-23, 4, 2);
         }
-
     }
 
-
-    public void IncreaseScore(){
+public void IncreaseScore(){
         PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
     }
 
