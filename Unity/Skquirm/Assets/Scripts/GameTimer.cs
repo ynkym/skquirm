@@ -23,6 +23,7 @@ public class GameTimer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
     gameOver = false;
+    gameStarted = false;
 
     timerText = timerUIObject.GetComponent<Text>();
     tcol = timerText.color;
@@ -41,13 +42,6 @@ public class GameTimer : MonoBehaviour {
       new TimeNotification( 5f, 0.5f, "0:05" ),
       new TimeNotification( 0f, 1.0f, "Time Up!" ),
     };
-
-    controllers = new List<PlayerController>();
-    ArrayList players = GetComponent<GlobalSetting>().getAllPlayers();
-    for (int i = 0; i < players.Count; i++){
-      GameObject currPlayer = (GameObject)players[i];
-      controllers.Add(currPlayer.GetComponent<PlayerController>());
-    }
   }
 
   void ThereIsWinner () {
@@ -70,6 +64,12 @@ public class GameTimer : MonoBehaviour {
 
   void GameStart () {
     gameStarted = true;
+    controllers = new List<PlayerController>();
+    ArrayList players = GetComponent<GlobalSetting>().getAllPlayers();
+    for (int i = 0; i < players.Count; i++){
+      GameObject currPlayer = (GameObject)players[i];
+      controllers.Add(currPlayer.GetComponent<PlayerController>());
+    }
     foreach(PlayerController ctl in controllers){
         ctl.enabled = true;
     }
