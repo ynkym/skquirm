@@ -77,13 +77,13 @@ public class GameTimer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-    remainingTime = remainingTime - Time.deltaTime;
+        remainingTime = remainingTime - Time.deltaTime;
 		if (index < notification.Length && remainingTime < notification[index].time) {
-      timerUIObject.transform.localScale = new Vector3(1,1,1);
+            timerUIObject.transform.localScale = new Vector3(1,1,1);
 			tcol.a = 1;
 			fadeoutTimer = notification[index].fadeTime;
-      timerText.text = notification[index].text;
-      index++;
+            timerText.text = notification[index].text;
+            index++;
 		}
 
 		if (fadeoutTimer > 0) {
@@ -94,25 +94,29 @@ public class GameTimer : MonoBehaviour {
 			if (tcol.a <= 0) {
 				tcol.a = 0;
 				fadeoutTimer = 0;
-        timerUIObject.transform.localScale = new Vector3(1,1,1);
-			}
-      timerText.color = tcol;
+                timerUIObject.transform.localScale = new Vector3(1,1,1);
+		    }
+            timerText.color = tcol;
 		}
 
-    if (remainingTime <= gameStartCount && gameStarted == false){
-      GameStart();
+        if (remainingTime <= gameStartCount && gameStarted == false){
+            GameStart();
+        }
+
+        if (remainingTime < 0 && gameOver == false){
+            GameOver();
+        }
+
+        // when enough time has passed, switch scene
+        if (remainingTime < -3){
+            GoToScene.sceneTransition("GameOver");
+            Destroy(this);
+        }
+
+        CustomizedSettingsForScene();
     }
 
-    if (remainingTime < 0 && gameOver == false){
-      GameOver();
-    }
-
-    // when enough time has passed, switch scene
-    if (remainingTime < -3){
-      GoToScene.sceneTransition("GameOver");
-      Destroy(this);
-    }
-	}
+    public virtual void CustomizedSettingsForScene() {} //Used By children classes
 }
 
 public struct TimeNotification {

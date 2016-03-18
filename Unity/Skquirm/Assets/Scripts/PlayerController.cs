@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
             item = newItem;
             ItemStateUI.UpdateForPlayer(playerNum, item);
         }
-        rider_particles.UpdateParticles(horizontal, vertical);
+        rider_particles.UpdateParticles(horizontal, vertical); 
     }
 
 
