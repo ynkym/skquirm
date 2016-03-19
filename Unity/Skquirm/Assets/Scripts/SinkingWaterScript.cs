@@ -7,6 +7,7 @@ public class SinkingWaterScript : MonoBehaviour {
 
     public float fstReleaseYValue;
     public float sndReleaseYValue;
+    public float maxDepth;
     public float sinkSpeed;
 
     bool triggered;
@@ -25,7 +26,8 @@ public class SinkingWaterScript : MonoBehaviour {
         if (triggered)
         {
             transform.Translate(Vector3.up * sinkSpeed);
-            if( transform.position.y >= sndReleaseYValue && sndLayer.transform.parent == transform )
+            if (transform.position.y > maxDepth) triggered = false;
+            if ( transform.position.y >= sndReleaseYValue && sndLayer.transform.parent == transform )
             {
                 sndLayer.transform.parent = transform.parent;
             }
