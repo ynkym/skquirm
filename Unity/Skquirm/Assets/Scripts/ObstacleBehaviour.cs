@@ -42,7 +42,8 @@ public class ObstacleBehaviour : MonoBehaviour
         //collision case of a meteor obstacle vs. player
         if (collision.gameObject.tag == "Player")
         {
-            if (gameObject.transform.position.y > 3.6F)
+            //absolutely no clue why a regular box will always deal damage on collision, it makes no sense. Maybe if we replace it with the duck model itd be fine.
+            if (transform.position.y > collision.gameObject.transform.position.y)
             {
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
             }else{

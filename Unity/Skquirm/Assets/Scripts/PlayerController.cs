@@ -33,6 +33,15 @@ public class PlayerController : MonoBehaviour {
 
     private RiderParticles rider_particles;
 
+    public Transform pipe1;
+    public Transform pipe2;
+    public Transform pipe3;
+    public Transform pipe4;
+    public Transform pipe5;
+    public Transform pipe6;
+    public Transform pipe7;
+    public Transform pipe8;
+
     [SerializeField] private float rotationAngle;
 
     InputDevice inputDevice;
@@ -217,43 +226,49 @@ public class PlayerController : MonoBehaviour {
             {
                 //transfers to pipe6 at coordinates X:22, Y:14, Z:18
                 transform.position = new Vector3(19, 15, 15);
-
+                transform.LookAt(pipe5);
             }
             else if (other.gameObject.CompareTag("pipe2"))
             {
                 //transfer to pipe 5 at coordinates X:20.5, Y:14, Z:-15
                 transform.position = new Vector3(-15, 15, -15);
-
+                transform.LookAt(pipe6);
             }
             else if (other.gameObject.CompareTag("pipe3"))
             {
                 //transfer to pipe 7 at coordinates X:-16, Y:14, Z:18
                 transform.position = new Vector3(-13, 15, 14);
+                transform.LookAt(pipe8);
             }
             else if (other.gameObject.CompareTag("pipe4"))
             {
                 //transfer to pipe 8 at coordinates X:20.5, Y:14, Z:-15
                 transform.position = new Vector3(19, 15, -14);
+                transform.LookAt(pipe7);
             }
             else if (other.gameObject.CompareTag("pipe5"))
             {
                 //transfer to pipe 2 at coordinates X:3, Y:4, Z:26
                 transform.position = new Vector3(2.5f, 4, 24);
+                transform.LookAt(pipe1);
             }
             else if (other.gameObject.CompareTag("pipe6"))
             {
                 //transfer to pipe 1 at coordinates X:2.5, Y:4, Z:-25
                 transform.position = new Vector3(2, 4, -22);
+                transform.LookAt(pipe2);
             }
             else if (other.gameObject.CompareTag("pipe7"))
             {
                 //transfer to pipe 3 at coordinates X:28, Y:4, Z:1.5
                 transform.position = new Vector3(25, 4, 1.5f);
+                transform.LookAt(pipe4);
             }
             else if (other.gameObject.CompareTag("pipe8"))
             {
                 //transfer to pipe 4 at coordinates X:-23, Y:4, Z:2
                 transform.position = new Vector3(-20, 4, 2);
+                transform.LookAt(pipe3);
             }
         }
     }
