@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour {
     private bool fire;
 
     private int test = 0;
-
     // hash variables for animation
     private int hitHash = Animator.StringToHash("Hit");
 
@@ -208,49 +207,50 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        //it doesnt teleport with every collision now, however it doesnt always teleport for some odd reason.
-        if (other.gameObject.CompareTag("pipe1"))
-        {
-            //transfers to pipe6 at coordinates X:22, Y:14, Z:18
-            transform.position = new Vector3(19, 15, 15);
-        }
-        else if (other.gameObject.CompareTag("pipe2"))
-        {
-            //transfer to pipe 5 at coordinates X:20.5, Y:14, Z:-15
-            transform.position = new Vector3(-15, 15, -15);
-        }
-        else if (other.gameObject.CompareTag("pipe3"))
-        {
-            //transfer to pipe 7 at coordinates X:-16, Y:14, Z:18
-            transform.position = new Vector3(-13, 15, 14);
-        }
-        else if (other.gameObject.CompareTag("pipe4"))
-        {
-            //transfer to pipe 8 at coordinates X:20.5, Y:14, Z:-15
-            transform.position = new Vector3(19, 15, -14);
-        }
-        else if (other.gameObject.CompareTag("pipe5"))
-        {
-            //transfer to pipe 2 at coordinates X:3, Y:4, Z:26
-            transform.position = new Vector3(2.5f, 4, 24);
-        }
-        else if (other.gameObject.CompareTag("pipe6"))
-        {
-            //transfer to pipe 1 at coordinates X:2.5, Y:4, Z:-25
-            transform.position = new Vector3(2, 4, -22);
-        }
-        else if (other.gameObject.CompareTag("pipe7"))
-        {
-            //transfer to pipe 3 at coordinates X:28, Y:4, Z:1.5
-            transform.position = new Vector3(25, 4, 1.5f);
-        }
-        else
-        {
-            //transfer to pipe 4 at coordinates X:-23, Y:4, Z:2
-            transform.position = new Vector3(-20, 4, 2);
-        }
+            //it doesnt teleport with every collision now, however it doesnt always teleport for some odd reason.
+            if (other.gameObject.CompareTag("pipe1"))
+            {
+                //transfers to pipe6 at coordinates X:22, Y:14, Z:18
+                transform.position = new Vector3(19, 15, 15);
+            }
+            else if (other.gameObject.CompareTag("pipe2"))
+            {
+                //transfer to pipe 5 at coordinates X:20.5, Y:14, Z:-15
+                transform.position = new Vector3(-15, 15, -15);
+            }
+            else if (other.gameObject.CompareTag("pipe3"))
+            {
+                //transfer to pipe 7 at coordinates X:-16, Y:14, Z:18
+                transform.position = new Vector3(-13, 15, 14);
+            }
+            else if (other.gameObject.CompareTag("pipe4"))
+            {
+                //transfer to pipe 8 at coordinates X:20.5, Y:14, Z:-15
+                transform.position = new Vector3(19, 15, -14);
+            }
+            else if (other.gameObject.CompareTag("pipe5"))
+            {
+                //transfer to pipe 2 at coordinates X:3, Y:4, Z:26
+                transform.position = new Vector3(2.5f, 4, 24);
+            }
+            else if (other.gameObject.CompareTag("pipe6"))
+            {
+                //transfer to pipe 1 at coordinates X:2.5, Y:4, Z:-25
+                transform.position = new Vector3(2, 4, -22);
+            }
+            else if (other.gameObject.CompareTag("pipe7"))
+            {
+                //transfer to pipe 3 at coordinates X:28, Y:4, Z:1.5
+                transform.position = new Vector3(25, 4, 1.5f);
+            }
+            else if (other.gameObject.CompareTag("pipe8"))
+            {
+                //transfer to pipe 4 at coordinates X:-23, Y:4, Z:2
+                transform.position = new Vector3(-20, 4, 2);
+            }
+        
     }
 
 public void IncreaseScore(){
