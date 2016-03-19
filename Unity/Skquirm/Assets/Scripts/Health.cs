@@ -79,7 +79,7 @@ public class Health : MonoBehaviour
     }
 
 	void OnCollisionEnter(Collision other) {
-		if (other.gameObject.CompareTag("obstacle")){
+		if (other.gameObject.CompareTag("floater")){
 			this.gameObject.GetComponent<PlayerController>().TryToHurt();
 			//other.gameObject.GetComponent<Health>().life -= 1;
 			//Health.life -=1;
