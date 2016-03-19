@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using InControl;
 
@@ -209,16 +210,20 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        if (SceneManager.GetActiveScene().name == "SewerScene")
+        {
             //it doesnt teleport with every collision now, however it doesnt always teleport for some odd reason.
             if (other.gameObject.CompareTag("pipe1"))
             {
                 //transfers to pipe6 at coordinates X:22, Y:14, Z:18
                 transform.position = new Vector3(19, 15, 15);
+
             }
             else if (other.gameObject.CompareTag("pipe2"))
             {
                 //transfer to pipe 5 at coordinates X:20.5, Y:14, Z:-15
                 transform.position = new Vector3(-15, 15, -15);
+
             }
             else if (other.gameObject.CompareTag("pipe3"))
             {
@@ -250,7 +255,7 @@ public class PlayerController : MonoBehaviour {
                 //transfer to pipe 4 at coordinates X:-23, Y:4, Z:2
                 transform.position = new Vector3(-20, 4, 2);
             }
-        
+        }
     }
 
 public void IncreaseScore(){
