@@ -40,19 +40,19 @@ public class FloatCylinderRotate : MonoBehaviour {
 
 		if(timeLeft <= 41 && timeLeft > 40){
 			//transform.Rotate(Vector3.up * Time.deltaTime * 30, Space.World);
-			transform.Rotate(0,0.5F,0 * Time.deltaTime, Space.World);
+			transform.Rotate(0,0.45F,0 * Time.deltaTime, Space.World);
 		}
 
 		else if(timeLeft <= 39 && timeLeft > 38){
-			transform.Rotate(0,-0.5F,0 * Time.deltaTime, Space.World);
+			transform.Rotate(0,-0.45F,0 * Time.deltaTime, Space.World);
 		}
 
 		if(timeLeft <= 21 && timeLeft > 20){
-			transform.Rotate(0,-0.5F,0 * Time.deltaTime, Space.World);
+			transform.Rotate(0,-0.45F,0 * Time.deltaTime, Space.World);
 		}
 
 		else if(timeLeft <= 19 && timeLeft > 18){
-			transform.Rotate(0,0.5F,0 * Time.deltaTime, Space.World);
+			transform.Rotate(0,0.45F,0 * Time.deltaTime, Space.World);
 		}
 	}
 }
