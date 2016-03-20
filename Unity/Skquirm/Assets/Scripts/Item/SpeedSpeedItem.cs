@@ -16,7 +16,7 @@ public class SpeedSpeedItem : Item {
   override public Item Activate () {
     Debug.Log("Used SS Item");
         // TODO: implement
-        SpeedSpeedBuff ssb = gameObject.AddComponent<SpeedSpeedBuff>();
+        //SpeedSpeedBuff ssb = gameObject.AddComponent<SpeedSpeedBuff>();
         
         // get a random item excluding itself
         int rand = Random.Range(0, GlobalSetting.getTotalNumOfCombinedItem()-1);

@@ -5,7 +5,7 @@ public class FloatCylinderRotate : MonoBehaviour {
 	float timeLeft = 60.0f;
 	bool cylinderrotate; 
 	bool cylinderswing;
-	bool rotateback;
+	//bool rotateback;
 	void Update() {
 
 
@@ -15,7 +15,7 @@ public class FloatCylinderRotate : MonoBehaviour {
 		{
 			cylinderrotate = true ; 
 
-			if(cylinderrotate = true){
+			if(cylinderrotate == true){
 
 				//transform.Rotate(0,15,0);
 				//transform.Rotate(Vector3.right * Time.deltaTime);
@@ -30,9 +30,9 @@ public class FloatCylinderRotate : MonoBehaviour {
 		else if(timeLeft <= 48 && timeLeft > 47 || timeLeft <= 38 && timeLeft > 37 || timeLeft <= 28 && timeLeft > 27 || timeLeft <= 18 && timeLeft > 17 || timeLeft <= 8 && timeLeft > 7)
 		{
 
-			rotateback = true ; 
+			//rotateback = true ; 
 
-			if(cylinderrotate = true){
+			if(cylinderrotate == true){
 				transform.Rotate(0,0,35 * Time.deltaTime, Space.World);
 			}
 

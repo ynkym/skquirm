@@ -21,7 +21,7 @@ public class TankRise : MonoBehaviour {
 		{
 			tankrise = true ; 
 
-			if(tankrise = true){
+			if(tankrise == true){
 				//transform.localScale -= new Vector3(0, 0.0035F, 0);
 				//transform.Translate(0, -0.0035F, 0);
 				//transform.localScale += new Vector3(0, 0.0025F, 0);
@@ -33,7 +33,7 @@ public class TankRise : MonoBehaviour {
 		if( timeLeft <= 0 )
 		{
 			tankrise = false;
-			if(tankrise = false){
+			if(tankrise == false){
 				transform.localScale -= new Vector3(0, 0, 0);
 				//VortexForce.waterHorizon -= 0; 
 			}

@@ -3,14 +3,14 @@ using System.Collections;
 
 public class ObstacleBehaviour : MonoBehaviour
 {
-    private ObstacleSpawn obstaclespawn;
+    //private ObstacleSpawn obstaclespawn;
     public Rigidbody rb; //rigidbody is being strange?
     private VortexForce vf;
     // Use this for initialization
     void Start()
     {
         vf = GetComponent<VortexForce>();
-        obstaclespawn = GetComponent<ObstacleSpawn>();
+        //obstaclespawn = GetComponent<ObstacleSpawn>();
         rb = GetComponent<Rigidbody>();
     }
 
