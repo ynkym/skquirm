@@ -25,7 +25,7 @@ public class TankRise : MonoBehaviour {
 				//transform.localScale -= new Vector3(0, 0.0035F, 0);
 				//transform.Translate(0, -0.0035F, 0);
 				//transform.localScale += new Vector3(0, 0.0025F, 0);
-				transform.Translate(0, +0.003F, 0);
+				transform.Translate(0, +0.001F, 0);
 				//VortexForce.waterHorizon -= 0.001F; 
 			}
 		}
