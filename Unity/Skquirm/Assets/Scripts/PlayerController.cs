@@ -33,6 +33,20 @@ public class PlayerController : MonoBehaviour {
 
     private RiderParticles rider_particles;
 
+    [SerializeField] private float rotationAngle;
+
+    [Header("Sounds")]
+    public AudioSource bumpAudioSource;
+    public AudioSource riderAudioSource;
+    public AudioSource riderEffects;
+    public AudioSource reactionAudioSource;
+    public AudioClip p2pBump;
+    public AudioClip p2wallBump;
+    public AudioClip[] damageAudios;
+    public AudioClip[] comemorationAudios;
+    public AudioClip boostSound;
+
+    [Header("Sewer Stage Variables")]
     public Transform pipe1;
     public Transform pipe2;
     public Transform pipe3;
@@ -42,7 +56,7 @@ public class PlayerController : MonoBehaviour {
     public Transform pipe7;
     public Transform pipe8;
 
-    [SerializeField] private float rotationAngle;
+    
 
     InputDevice inputDevice;
     bool button_pressed = false;
@@ -57,6 +71,7 @@ public class PlayerController : MonoBehaviour {
         PlayerScore.Create(playerNum);
 
         rider_particles = GetComponent<RiderParticles>();
+        
         GlobalSetting.Instance.registerPlayer(this.gameObject);
         this.enabled = false; // wait until game start
 	}
@@ -123,6 +138,8 @@ public class PlayerController : MonoBehaviour {
         Vector3 temp_rot = newRotation.eulerAngles;
         float time_slerp = 0f;
 
+        riderAudioSource.volume = Mathf.Sqrt(Mathf.Pow(vertical, 2f) + Mathf.Pow(horizontal, 2f))/2.8f;
+
         if (horizontal != 0)
         {
             if (vertical != 0)
@@ -184,6 +201,10 @@ public class PlayerController : MonoBehaviour {
             charAnimator.SetTrigger(hitHash); // Go to "Hit" animation
 
             print("caused damage to the player");
+            //Reaction Sounds
+            reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
+            reactionAudioSource.Play();
+
             return true;
         } else {
             // block by barrier
@@ -199,6 +220,8 @@ public class PlayerController : MonoBehaviour {
 
             DefenseBarrier dBarrier = GetComponent<DefenseBarrier>();
             OffenseDefenseBarrier odBarrier = GetComponent<OffenseDefenseBarrier>();
+            bumpAudioSource.clip = p2pBump;
+            bumpAudioSource.Play();
 
             if (odBarrier != null)
             {
@@ -214,6 +237,11 @@ public class PlayerController : MonoBehaviour {
             {
                 dBarrier.BubbleReaction();
             }
+        }
+        else if (collision.gameObject.tag == "obstacle")
+        {
+            bumpAudioSource.clip = p2wallBump;
+            bumpAudioSource.Play();
         }
     }
 
@@ -273,8 +301,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-public void IncreaseScore(){
+    public void IncreaseScore(){
         PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
+        reactionAudioSource.clip = comemorationAudios[Random.Range(0, 2)];
+        reactionAudioSource.Play();
     }
 
     public void IncreaseSpeed(float time) {
@@ -282,8 +312,15 @@ public void IncreaseScore(){
     }
 
     IEnumerator IncreaseTheSpeedFor(float time) {
+        riderEffects.clip = boostSound;
+        riderEffects.Play();
+
         speed = 70f;
         yield return new WaitForSeconds(time);
         speed = 40f;
+    }
+
+    public void CarSound() {
+        riderAudioSource.Play();
     }
 }

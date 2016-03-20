@@ -72,6 +72,7 @@ public class GameTimer : MonoBehaviour {
     }
     foreach(PlayerController ctl in controllers){
         ctl.enabled = true;
+            ctl.CarSound();
     }
   }
 
