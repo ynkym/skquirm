@@ -18,6 +18,12 @@ public class RiderParticles : MonoBehaviour
 
     float alpha, beta; //variables used in the linear algebra computation
 
+    void Start() {
+        SetEmissionRate(right_wave, 0f);
+        SetEmissionRate(left_wave, 0f);
+        SetEmissionRate(bubble, 0f);
+    }
+
     public void UpdateParticles(float horizontal, float vertical)
     {
         float emission_right, emission_left, emission_bubbles;
