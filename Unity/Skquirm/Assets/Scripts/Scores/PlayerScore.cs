@@ -21,7 +21,11 @@ public class PlayerScore : Object {
   }
 
   public static PlayerScore Create(int playerNum){
-    return new PlayerScore(playerNum);
+    if (Instances.ContainsKey(playerNum)){
+      return Instances[playerNum];
+    }else{
+      return new PlayerScore(playerNum);
+    }
   }
 
   public static void Clear(){ Instances.Clear(); }
@@ -29,11 +33,7 @@ public class PlayerScore : Object {
   private int score;
 
   public PlayerScore(int playerNum){
-    if (Instances.ContainsKey(playerNum)){
-      Instances[playerNum] = this;
-    }else{
-      Instances.Add(playerNum, this);
-    }
+    Instances.Add(playerNum, this);
     score = 0;
   }
 

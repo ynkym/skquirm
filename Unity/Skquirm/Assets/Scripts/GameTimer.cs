@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour {
 
+  public int stageNum;
+
   public float remainingTime = 3 * 60; // 3 mins by default
   public GameObject timerUIObject;
   public float gameStartCount = 3 * 60 + 5;
@@ -110,7 +112,8 @@ public class GameTimer : MonoBehaviour {
 
         // when enough time has passed, switch scene
         if (remainingTime < -3){
-            GoToScene.sceneTransition("GameOver");
+            GoToScene.goToResult(stageNum);
+            //GoToScene.sceneTransition("GameOver");
             Destroy(this);
         }
 

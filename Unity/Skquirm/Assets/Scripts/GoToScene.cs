@@ -8,36 +8,55 @@ public class GoToScene : MonoBehaviour {
 
   static Dictionary<string, int> sceneList = new Dictionary<string, int>(){
     {"Title", 0},
-    {"Scene 1", 1},
-    {"GameOver", 2}
+    {"Tank", 1},
+    {"Toilet", 2},
+    {"Sewer", 3},
+    {"GameOver", 4}
   };
 
-	public void loadScene(string sceneName){
-    windTransition(sceneName);
-    //SceneManager.LoadScene(sceneName);
+  static public int currentGame;
+  static public int maxGame = 3;
+
+  // called from result / game over screen
+  public void goNext(){
+    if (currentGame > 0 && currentGame < maxGame){
+      sceneTransitionByIndex(currentGame + 1);
+    }else{
+      windTransition(sceneList["Title"]);
+    }
   }
 
+  // called from title screen
   public void startGame(string sceneName){
     PlayerScore.Clear();
     ItemStateUI.Clear();
     LifeStateUI.Clear();
     sceneTransition(sceneName);
-    //SceneManager.LoadScene(sceneName);
+  }
+
+  // called from gametimer
+  public static void goToResult(int stageNum){
+    currentGame = stageNum;
+    sceneTransition("GameOver");
   }
 
   public static void sceneTransition(string sceneName){
-  int sceneIndex = sceneList[sceneName];
-      var fader = new FadeTransition()
-      {
-        nextScene = sceneIndex,
-        fadedDelay = 0.1f,
-        fadeToColor = Color.black
-      };
-      TransitionKit.instance.transitionWithDelegate( fader );
+    int sceneIndex = sceneList[sceneName];
+    sceneTransitionByIndex(sceneIndex);
   }
 
-  public static void windTransition(string sceneName){
-      int sceneIndex = sceneList[sceneName];
+  public static void sceneTransitionByIndex(int sceneIndex){
+    var fader = new FadeTransition()
+    {
+      nextScene = sceneIndex,
+      fadedDelay = 0.1f,
+      fadeToColor = Color.black
+    };
+    TransitionKit.instance.transitionWithDelegate( fader );
+  }
+
+  public static void windTransition(int sceneIndex){
+      //int sceneIndex = sceneList[sceneName];
       var wind = new WindTransition()
       {
         nextScene = sceneIndex,
