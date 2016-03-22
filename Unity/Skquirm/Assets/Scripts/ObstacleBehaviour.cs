@@ -43,10 +43,10 @@ public class ObstacleBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             //absolutely no clue why a regular box will always deal damage on collision, it makes no sense. Maybe if we replace it with the duck model itd be fine.
-            if (transform.position.y > collision.gameObject.transform.position.y)
+            /*if (transform.position.y > collision.gameObject.transform.position.y)
             {
                 collision.gameObject.GetComponent<PlayerController>().TryToHurt();
-            }else{
+            }else{*/
 
                 // get reflection vector
                 Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
@@ -56,7 +56,7 @@ public class ObstacleBehaviour : MonoBehaviour
                 reflVector.Normalize();
                 rb.AddForce(10 * reflVector, ForceMode.Impulse);
 
-            }
+            //}
         }
     }
 }
