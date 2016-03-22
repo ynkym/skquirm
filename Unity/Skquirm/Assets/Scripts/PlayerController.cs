@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using InControl;
 
 public class PlayerController : MonoBehaviour {
@@ -29,7 +30,12 @@ public class PlayerController : MonoBehaviour {
 
     private int test = 0;
     // hash variables for animation
-    private int hitHash = Animator.StringToHash("Hit");
+    private Dictionary<string, int> animHash = new Dictionary<string, int>()
+    {
+        { "Hit", Animator.StringToHash("Hit") },
+        { "Celebrate", Animator.StringToHash("Celebrate") },
+        { "Throw", Animator.StringToHash("Throw") },
+    };
 
     private RiderParticles rider_particles;
 
@@ -56,7 +62,7 @@ public class PlayerController : MonoBehaviour {
     public Transform pipe7;
     public Transform pipe8;
 
-    
+
 
     InputDevice inputDevice;
     bool button_pressed = false;
@@ -71,7 +77,7 @@ public class PlayerController : MonoBehaviour {
         PlayerScore.Create(playerNum);
 
         rider_particles = GetComponent<RiderParticles>();
-        
+
         GlobalSetting.Instance.registerPlayer(this.gameObject);
         this.enabled = false; // wait until game start
 	}
@@ -111,7 +117,7 @@ public class PlayerController : MonoBehaviour {
             item = newItem;
             ItemStateUI.UpdateForPlayer(playerNum, item);
         }
-        rider_particles.UpdateParticles(horizontal, vertical); 
+        rider_particles.UpdateParticles(horizontal, vertical);
     }
 
 
@@ -198,7 +204,7 @@ public class PlayerController : MonoBehaviour {
             // quick hack: shift the position vertically to make bouncing due to buoyancy happen
             rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
             // set a trigger to animate the character
-            charAnimator.SetTrigger(hitHash); // Go to "Hit" animation
+            charAnimator.SetTrigger(animHash["Hit"]); // Go to "Hit" animation
 
             print("caused damage to the player");
             //Reaction Sounds
@@ -227,7 +233,10 @@ public class PlayerController : MonoBehaviour {
             {
                 // this player have OD barrier
 
-                collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+                bool attackSuccess = collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+                if (attackSuccess){
+                    IncreaseScore();
+                }
                 odBarrier.breakingBarrier();
                 test++;
                 Debug.Log(test + " " + gameObject.name);
@@ -301,10 +310,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void EnterThrow(object[] storage){
+        // shoot a projectile. storage should contain [0] speed, [1] target
+        charAnimator.gameObject.SendMessage("EnterThrow", storage);
+        charAnimator.SetTrigger(animHash["Throw"]);
+    }
+
     public void IncreaseScore(){
         PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
         reactionAudioSource.clip = comemorationAudios[Random.Range(0, 2)];
         reactionAudioSource.Play();
+
+        // play attack success animation
+        charAnimator.SetTrigger(animHash["Celebrate"]);
     }
 
     public void IncreaseSpeed(float time) {

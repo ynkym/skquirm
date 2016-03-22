@@ -19,10 +19,12 @@ public class SpeedDefenseProjectile : Projectile {
 			collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.up*20f);
 
 			// Cause Damage
-			collision.gameObject.GetComponent<PlayerController>().TryToHurt();
+			bool attackSuccess = collision.gameObject.GetComponent<PlayerController>().TryToHurt();
 
 			// Send the score to the player
-			origin.IncreaseScore();
+			if (attackSuccess) {
+				origin.IncreaseScore();
+			}
 
 		}
 		//Are we colliding with anything else?

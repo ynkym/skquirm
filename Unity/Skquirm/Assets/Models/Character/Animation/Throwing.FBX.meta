@@ -1,0 +1,392 @@
+fileFormatVersion: 2
+guid: 618d8cccedac54fbdb4fb7001fc1ddd6
+timeCreated: 1458592512
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: character_mesh
+    100002: eyeL
+    100004: eyeR
+    100006: Group001
+    100008: head01
+    100010: head02
+    100012: head_end
+    100014: L_antena01
+    100016: L_antena02
+    100018: L_antena03
+    100020: L_antena04
+    100022: L_antena05
+    100024: L_antena06
+    100026: L_antena07
+    100028: L_antena08
+    100030: L_antena_end
+    100032: L_hand01
+    100034: L_hand02
+    100036: L_hand_end
+    100038: L_leg01
+    100040: L_leg02
+    100042: L_leg03
+    100044: L_leg04
+    100046: L_leg05
+    100048: L_leg06
+    100050: L_leg07
+    100052: L_leg_end
+    100054: left_arm01
+    100056: left_arm02
+    100058: left_arm03
+    100060: left_arm04
+    100062: left_arm_end
+    100064: object_1
+    100066: object_2
+    100068: object_3
+    100070: R_antena01
+    100072: R_antena02
+    100074: R_antena03
+    100076: R_antena04
+    100078: R_antena05
+    100080: R_antena06
+    100082: R_antena07
+    100084: R_antena08
+    100086: R_antena_end
+    100088: R_arm01
+    100090: R_arm03
+    100092: R_arm04
+    100094: R_arm2
+    100096: R_arm_end
+    100098: R_hand01
+    100100: R_hand02
+    100102: R_hand_end
+    100104: R_leg01
+    100106: R_leg02
+    100108: R_leg03
+    100110: R_leg04
+    100112: R_leg05
+    100114: R_leg06
+    100116: R_leg07
+    100118: R_leg_end
+    100120: spine01
+    100122: spine02
+    100124: spine03
+    100126: spine_end
+    100128: //RootNode
+    100130: wings
+    400000: character_mesh
+    400002: eyeL
+    400004: eyeR
+    400006: Group001
+    400008: head01
+    400010: head02
+    400012: head_end
+    400014: L_antena01
+    400016: L_antena02
+    400018: L_antena03
+    400020: L_antena04
+    400022: L_antena05
+    400024: L_antena06
+    400026: L_antena07
+    400028: L_antena08
+    400030: L_antena_end
+    400032: L_hand01
+    400034: L_hand02
+    400036: L_hand_end
+    400038: L_leg01
+    400040: L_leg02
+    400042: L_leg03
+    400044: L_leg04
+    400046: L_leg05
+    400048: L_leg06
+    400050: L_leg07
+    400052: L_leg_end
+    400054: left_arm01
+    400056: left_arm02
+    400058: left_arm03
+    400060: left_arm04
+    400062: left_arm_end
+    400064: object_1
+    400066: object_2
+    400068: object_3
+    400070: R_antena01
+    400072: R_antena02
+    400074: R_antena03
+    400076: R_antena04
+    400078: R_antena05
+    400080: R_antena06
+    400082: R_antena07
+    400084: R_antena08
+    400086: R_antena_end
+    400088: R_arm01
+    400090: R_arm03
+    400092: R_arm04
+    400094: R_arm2
+    400096: R_arm_end
+    400098: R_hand01
+    400100: R_hand02
+    400102: R_hand_end
+    400104: R_leg01
+    400106: R_leg02
+    400108: R_leg03
+    400110: R_leg04
+    400112: R_leg05
+    400114: R_leg06
+    400116: R_leg07
+    400118: R_leg_end
+    400120: spine01
+    400122: spine02
+    400124: spine03
+    400126: spine_end
+    400128: //RootNode
+    400130: wings
+    2300000: eyeL
+    2300002: eyeR
+    2300004: object_1
+    2300006: object_2
+    2300008: object_3
+    2300010: wings
+    3300000: eyeL
+    3300002: eyeR
+    3300004: object_1
+    3300006: object_2
+    3300008: object_3
+    3300010: wings
+    4300000: character_mesh
+    4300002: eyeL
+    4300004: eyeR
+    4300006: wings
+    4300008: object_1
+    4300010: object_3
+    4300012: object_2
+    7400000: Throwing
+    9500000: //RootNode
+    13700000: character_mesh
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Throwing
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.17944536
+        functionName: ThrowEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: character_mesh
+        weight: 1
+      - path: Group001
+        weight: 1
+      - path: Group001/object_1
+        weight: 1
+      - path: Group001/object_2
+        weight: 1
+      - path: Group001/object_3
+        weight: 1
+      - path: spine01
+        weight: 1
+      - path: spine01/head01
+        weight: 1
+      - path: spine01/head01/head02
+        weight: 1
+      - path: spine01/head01/head02/eyeL
+        weight: 1
+      - path: spine01/head01/head02/eyeR
+        weight: 1
+      - path: spine01/head01/head02/head_end
+        weight: 1
+      - path: spine01/head01/head02/L_antena01
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03/L_antena04
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03/L_antena04/L_antena05
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03/L_antena04/L_antena05/L_antena06
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03/L_antena04/L_antena05/L_antena06/L_antena07
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03/L_antena04/L_antena05/L_antena06/L_antena07/L_antena08
+        weight: 1
+      - path: spine01/head01/head02/L_antena01/L_antena02/L_antena03/L_antena04/L_antena05/L_antena06/L_antena07/L_antena08/L_antena_end
+        weight: 1
+      - path: spine01/head01/head02/R_antena01
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03/R_antena04
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03/R_antena04/R_antena05
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03/R_antena04/R_antena05/R_antena06
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03/R_antena04/R_antena05/R_antena06/R_antena07
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03/R_antena04/R_antena05/R_antena06/R_antena07/R_antena08
+        weight: 1
+      - path: spine01/head01/head02/R_antena01/R_antena02/R_antena03/R_antena04/R_antena05/R_antena06/R_antena07/R_antena08/R_antena_end
+        weight: 1
+      - path: spine01/left_arm01
+        weight: 1
+      - path: spine01/left_arm01/left_arm02
+        weight: 1
+      - path: spine01/left_arm01/left_arm02/left_arm03
+        weight: 1
+      - path: spine01/left_arm01/left_arm02/left_arm03/L_hand01
+        weight: 1
+      - path: spine01/left_arm01/left_arm02/left_arm03/L_hand01/L_hand02
+        weight: 1
+      - path: spine01/left_arm01/left_arm02/left_arm03/L_hand01/L_hand02/L_hand_end
+        weight: 1
+      - path: spine01/left_arm01/left_arm02/left_arm03/left_arm04
+        weight: 1
+      - path: spine01/left_arm01/left_arm02/left_arm03/left_arm04/left_arm_end
+        weight: 1
+      - path: spine01/R_arm01
+        weight: 1
+      - path: spine01/R_arm01/R_arm2
+        weight: 1
+      - path: spine01/R_arm01/R_arm2/R_arm03
+        weight: 1
+      - path: spine01/R_arm01/R_arm2/R_arm03/R_arm04
+        weight: 1
+      - path: spine01/R_arm01/R_arm2/R_arm03/R_arm04/R_arm_end
+        weight: 1
+      - path: spine01/R_arm01/R_arm2/R_arm03/R_hand01
+        weight: 1
+      - path: spine01/R_arm01/R_arm2/R_arm03/R_hand01/R_hand02
+        weight: 1
+      - path: spine01/R_arm01/R_arm2/R_arm03/R_hand01/R_hand02/R_hand_end
+        weight: 1
+      - path: spine01/spine02
+        weight: 1
+      - path: spine01/spine02/spine03
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02/L_leg03
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02/L_leg03/L_leg04
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02/L_leg03/L_leg04/L_leg05
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02/L_leg03/L_leg04/L_leg05/L_leg06
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02/L_leg03/L_leg04/L_leg05/L_leg06/L_leg07
+        weight: 1
+      - path: spine01/spine02/spine03/L_leg01/L_leg02/L_leg03/L_leg04/L_leg05/L_leg06/L_leg07/L_leg_end
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02/R_leg03
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02/R_leg03/R_leg04
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02/R_leg03/R_leg04/R_leg05
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02/R_leg03/R_leg04/R_leg05/R_leg06
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02/R_leg03/R_leg04/R_leg05/R_leg06/R_leg07
+        weight: 1
+      - path: spine01/spine02/spine03/R_leg01/R_leg02/R_leg03/R_leg04/R_leg05/R_leg06/R_leg07/R_leg_end
+        weight: 1
+      - path: spine01/spine02/spine03/spine_end
+        weight: 1
+      - path: spine01/wings
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

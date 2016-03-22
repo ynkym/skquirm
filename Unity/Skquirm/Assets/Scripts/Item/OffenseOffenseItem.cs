@@ -5,7 +5,7 @@ public class OffenseOffenseItem : Item {
 
 	public GameObject target;
 	public GameObject shooter;
-	GameObject projectile_prefab;
+	//GameObject projectile_prefab;
 
 	GameObject temp_projectile;
 
@@ -16,11 +16,11 @@ public class OffenseOffenseItem : Item {
 
 	// Use this for initialization
 	void Start () {
-		origin = GetComponent<PlayerController> ();
+		//origin = GetComponent<PlayerController> ();
 
-		projectile_prefab = Resources.Load("Prefabs/Projectile/OOProjectile", (typeof(GameObject))) as GameObject;
+		//projectile_prefab = Resources.Load("Prefabs/Projectile/OOProjectile", (typeof(GameObject))) as GameObject;
 		//Find the shooter
-		shooter = origin.shooter;
+		//shooter = origin.shooter;
 	}
 
   override public Item CombineWith (string anotherType) {
@@ -29,27 +29,31 @@ public class OffenseOffenseItem : Item {
   }
 
 	override public Item Activate () {
-	    Debug.Log("Used OO Item");
-	    // TODO: implement
-		//Get the rotation of the car object as EulerAngles
-		Vector3 temp_rotation = transform.rotation.eulerAngles;
-
-		//Adjust the rotation of the projectile that will be generated
-		temp_rotation.x = 90f;
-
-		//Instantiate
-		temp_projectile = Instantiate(projectile_prefab, shooter.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
-
-		//Get target
 		target = GlobalSetting.Instance.ReturnTheNearest (this.gameObject);//return the nearest target
+		object[] tempStorage = new object[2]{ speed, target };
+		gameObject.SendMessage("EnterThrow", tempStorage);
 
-		//Give it a velocity
-		temp_projectile.GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * speed;
+	 //    Debug.Log("Used OO Item");
+	 //    // TODO: implement
+		// //Get the rotation of the car object as EulerAngles
+		// Vector3 temp_rotation = transform.rotation.eulerAngles;
 
-		//Set projectile info
-		temp_projectile.GetComponent<OffenseOffenseProjectile> ().SetInfo (target, origin);
+		// //Adjust the rotation of the projectile that will be generated
+		// temp_rotation.x = 90f;
 
-		temp_projectile = null;
+		// //Instantiate
+		// temp_projectile = Instantiate(projectile_prefab, shooter.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
+
+		// //Get target
+		// target = GlobalSetting.Instance.ReturnTheNearest (this.gameObject);//return the nearest target
+
+		// //Give it a velocity
+		// temp_projectile.GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * speed;
+
+		// //Set projectile info
+		// temp_projectile.GetComponent<OffenseOffenseProjectile> ().SetInfo (target, origin);
+
+		// temp_projectile = null;
 
         return null;
   }
