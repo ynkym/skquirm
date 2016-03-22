@@ -16,7 +16,7 @@ public class LifeStateUI : MonoBehaviour {
   }
   public static void Clear(){ Instances.Clear(); }
 
-  public enum PlayerColor{ yellow, red, brown, purple }
+  public enum PlayerColor{ yellow, red, green, purple }
   public PlayerColor color;
 
   public int playerNum;
