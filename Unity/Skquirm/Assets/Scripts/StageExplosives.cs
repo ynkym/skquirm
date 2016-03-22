@@ -5,6 +5,7 @@ public class StageExplosives : Projectile
 {
 
     GameObject explosion;
+    AudioSource audio;
 
     void Start()
     {

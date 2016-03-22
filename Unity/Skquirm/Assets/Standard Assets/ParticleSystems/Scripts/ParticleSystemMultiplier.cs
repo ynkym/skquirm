@@ -8,11 +8,14 @@ namespace UnityStandardAssets.Effects
         // a simple script to scale the size, speed and lifetime of a particle system
 
         public float multiplier = 1;
+        AudioSource source;
 
 
         private void Start()
         {
             var systems = GetComponentsInChildren<ParticleSystem>();
+            source = GetComponent<AudioSource>();
+
             foreach (ParticleSystem system in systems)
             {
                 system.startSize *= multiplier;
@@ -21,6 +24,8 @@ namespace UnityStandardAssets.Effects
                 system.Clear();
                 system.Play();
             }
+            source.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            source.Play();
         }
     }
 }
