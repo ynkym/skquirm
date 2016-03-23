@@ -27,7 +27,7 @@ public class GoToScene : MonoBehaviour {
   }
 
   // called from title screen
-  public void startGame(string sceneName){
+  public static void startGame(string sceneName){
     PlayerScore.Clear();
     ItemStateUI.Clear();
     LifeStateUI.Clear();
