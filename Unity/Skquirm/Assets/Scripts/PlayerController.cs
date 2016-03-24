@@ -211,6 +211,8 @@ public class PlayerController : MonoBehaviour {
             reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
             reactionAudioSource.Play();
 
+            //Coins
+
             return true;
         } else {
             // block by barrier
