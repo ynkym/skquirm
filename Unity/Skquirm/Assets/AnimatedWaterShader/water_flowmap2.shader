@@ -97,6 +97,12 @@ Shader "Custom/Animated Water" {
     		//o.Albedo = _Color.rgb;
     		//o.Emission = reflcol.rgb * _ReflectColor.rgb;
         float2 offset = o.Normal * _DistAmt * _GrabTexture_TexelSize.xy;
+
+        // Attempted fix at reflection issue
+        #if UNITY_UV_STARTS_AT_TOP
+        	IN.screenPos.y = IN.screenPos.w - IN.screenPos.y;
+        #endif
+
         IN.screenPos.xy = IN.screenPos.z * offset + IN.screenPos.xy;
         o.Emission = (tex2Dproj (_GrabTexture, UNITY_PROJ_COORD (IN.screenPos)) * _Color.rgb) + reflcol.rgb * reflcol.rgb * _ReflectColor.rgb;
 		}
