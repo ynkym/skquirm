@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     private bool fire;
 
     private Vector3 movement;
+    private Vector3 lookDirection;
 
     int max_blink = 15;
     int blink = 0;
@@ -78,6 +79,8 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        lookDirection = new Vector3(0, 0, 0);
         movement = new Vector3(0, 0, 0);
         rb = GetComponent<Rigidbody>();
 		item = GetComponent<Item>();
@@ -135,33 +138,48 @@ public class PlayerController : MonoBehaviour {
         //acceleration on button hold
         if (InputManager.ActiveDevice.Action1.IsPressed || Input.GetButton("Vertical"))
         {
+            //acceleration starts to become less harsh as the speed nears its peak speed
             if (speed <= 10)
             {
-                speed += 0.25f;
+                speed += 0.5f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal;
             }
-            else if (speed > 10 && speed <= 45)
+            else if (speed > 10 && speed <= 40)
             {
-                speed += 0.3f;
+                speed += 0.4f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.9f;
             }
-            else if (speed > 45 && speed <= 50)
+            else if (speed > 40 && speed <= 50)
             {
                 speed += 0.005f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.3f;
             }
         }
-        //decelerate
+        //decelerate the speed if there is no acceleration button pressed
         else {
             if (speed > 0)
             {
-                speed -= 0.3f;
+                speed -= 0.7f;
+
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.4f;
+            }
+            else {
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.3f;
             }
         }
-        movement = speed * transform.forward * vertical + new Vector3(0, jump * jumpheight, 0);
-        rb.AddForce(movement);
-        // now count horizontal input to determine the new direction we want to face.
 
-        //--- Maybe we should add a drift button to increase turning? ---
-        Vector3 lookDirection = transform.forward * vertical + transform.right * horizontal * 0.1f;
+        //sorry for the horrific code, it basically sees if both the drift button (which is jump) and the
+        //accelerate button are pressed together at the same time. For some reason, doesnt register both at once unless
+        //specified 
+        if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.Action2.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
+        {
+            speed += 0.005f;
+            lookDirection = transform.forward * vertical + transform.right * horizontal * 0.9f;
+        }
+        movement = speed * transform.forward * vertical + new Vector3(0, 0, 0);
+        rb.AddForce(movement);
         lookDirection.Normalize();
+        // now count horizontal input to determine the new direction we want to face.
 
         Quaternion newRotation;
 
