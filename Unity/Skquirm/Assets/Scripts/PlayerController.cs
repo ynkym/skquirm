@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour {
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
 	public GameObject shooter_back; //drop position of the mine (also an empty Obj for coordinate purposes)
 
+    public GameObject mesh_obj_1;
+    public GameObject mesh_obj_2;
+    public GameObject mesh_obj_3;
+
     public int playerNum;
 
     public Animator charAnimator;
@@ -27,6 +31,9 @@ public class PlayerController : MonoBehaviour {
     private float vertical;
     private float jump;
     private bool fire;
+
+    int max_blink = 15;
+    int blink = 0;
 
     private int test = 0;
     // hash variables for animation
@@ -213,6 +220,11 @@ public class PlayerController : MonoBehaviour {
 
             //Coins
 
+
+            //Blink
+            StartCoroutine(BlinkingAnimation());
+
+
             return true;
         } else {
             // block by barrier
@@ -342,5 +354,22 @@ public class PlayerController : MonoBehaviour {
 
     public void CarSound() {
         riderAudioSource.Play();
+    }
+
+    public IEnumerator BlinkingAnimation()
+    {
+        if (blink < max_blink)
+        {
+            blink++;
+            mesh_obj_1.SetActive(false);
+            mesh_obj_2.SetActive(false);
+            mesh_obj_3.SetActive(false);
+            yield return new WaitForSeconds(0.1f);
+            mesh_obj_1.SetActive(true);
+            mesh_obj_2.SetActive(true);
+            mesh_obj_3.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(BlinkingAnimation());
+        }
     }
 }
