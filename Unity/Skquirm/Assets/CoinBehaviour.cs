@@ -19,6 +19,9 @@ public class CoinBehaviour : MonoBehaviour {
     [SerializeField] bool jumping_aside = true;
     bool trigger_rotation = false;
     bool trigger_animation = false;
+    int max_blink = 15;
+    int blink = 0;
+
 
     //Time settings
     float start_time;
@@ -26,7 +29,14 @@ public class CoinBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        ThrowCoin(transform.position, new Vector3(3f, 2f, 1f));
+        //ThrowCoin(transform.position, new Vector3(3f, 2f, 1f));
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Vanish();
+        }
     }
 
 	void FixedUpdate () {
@@ -50,6 +60,7 @@ public class CoinBehaviour : MonoBehaviour {
                 {
                     starting_point = transform.position;
                     trigger_rotation = true;
+                    gameObject.GetComponent<Collider>().enabled = true;
                 }
                 
                 start_time = Time.time;
@@ -61,14 +72,42 @@ public class CoinBehaviour : MonoBehaviour {
         trigger_rotation = true;
     }
 
+    // ANIMATION FUNCTIONS
+
     public void ThrowCoin(Vector3 starting_point, Vector3 velocity, bool jump = true) {
         velocity_horizontal = ProjectVectorOnPlane(new Vector3(0f, 1f, 0f), velocity);
         velocity_y = Vector3.Project(velocity, new Vector3(0f, 1f, 0f));
+
         this.starting_point = starting_point;
         start_time = Time.time;
+
         trigger_animation = true;
+        if (jump == true) trigger_rotation = false;
         jumping_aside = jump;
+        horizontal_factor = 1f;
+        boyancy_factor = 1f;
+        blink = 0;
     }
+
+    public void Vanish() {
+            StartCoroutine(VanishingAnimation());
+    }
+
+    public IEnumerator VanishingAnimation() {
+        if (blink < max_blink)
+        {
+            blink++;
+            GetComponent<SkinnedMeshRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            GetComponent<SkinnedMeshRenderer>().enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(VanishingAnimation());
+        }
+    }
+
+
+
+    // MATH FUNCTIONS
 
     Vector3 ProjectVectorOnPlane(Vector3 planeNormal , Vector3 v )  {
         planeNormal.Normalize();
@@ -76,5 +115,9 @@ public class CoinBehaviour : MonoBehaviour {
         return v + planeNormal* distance;
     }
 
+    void OnTriggerEnter(Collider other) {
+        gameObject.SetActive(false);
+    }
 
-}
+
+    }
