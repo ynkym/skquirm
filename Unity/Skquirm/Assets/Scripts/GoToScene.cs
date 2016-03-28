@@ -18,7 +18,7 @@ public class GoToScene : MonoBehaviour {
   static public int maxGame = 3;
 
   // called from result / game over screen
-  public void goNext(){
+  public static void goNext(){
     if (currentGame > 0 && currentGame < maxGame){
       sceneTransitionByIndex(currentGame + 1);
     }else{

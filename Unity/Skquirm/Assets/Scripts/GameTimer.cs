@@ -60,6 +60,7 @@ public class GameTimer : MonoBehaviour {
     gameOver = true;
     // stop all players
     foreach(PlayerController ctl in controllers){
+      if (ctl != null)
         ctl.enabled = false;
     }
   }

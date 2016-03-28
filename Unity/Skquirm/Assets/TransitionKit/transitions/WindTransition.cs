@@ -46,7 +46,7 @@ namespace Prime31.TransitionKit
 
 		public IEnumerator onScreenObscured( TransitionKit transitionKit )
 		{
-			transitionKit.transitionKitCamera.clearFlags = CameraClearFlags.Nothing;
+			transitionKit.transitionKitCamera.clearFlags = CameraClearFlags.Depth;
 
 			// set some material properties
 			transitionKit.material.SetFloat( "_Size", size );

@@ -1,39 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class ScoreBoard : MonoBehaviour {
 
   public Text titleText;
-  public Text buttonText;
+  public Text pressText;
+  public GameObject[] winnerLogo;
 
-  public Text[] scoreText;
+  public PlayerScoreUI[] scoreUIs;
+  public Sprite[] avatars;
+  public Sprite[] nextButtons;
+
+  public Material[] priMaterials;
+  public Material[] secMaterials;
+
+  public SkinnedMeshRenderer winner;
+  private int winnerNum;
+  private Color color = Color.white;
 
 	// Use this for initialization
 	void Start () {
     int currentGame = GoToScene.currentGame;
-    Debug.Log(currentGame);
     if (currentGame > 0 && currentGame < GoToScene.maxGame){
       titleText.text = "Result: Stage " + GoToScene.currentGame;
-      buttonText.text = "Go Next";
+    }else{
+      titleText.gameObject.SetActive(false);
+      float w = 0;
+      foreach(GameObject letter in winnerLogo){
+        letter.SetActive(true);
+        StartCoroutine("doAnimation", new object[2]{letter, 0.3f * w});
+        w++;
+      }
     }
 
-
-    //Debug.Log(GlobalSetting.Instance);
-    ArrayList players = GlobalSetting.Instance.getAllPlayers();
-
-    //Debug.Log(players.Count);
-    for (int i = 0; i < players.Count; i++){
-      // GameObject player = (GameObject)players[i];
-
-      // PlayerController controller = player.GetComponent<PlayerController>();
-      // int playerId = controller.playerNum;
-      scoreText[i].text = "" + PlayerScore.GetScore(i);
+    List<PlayerScore> scores = PlayerScore.GetSortedScores();
+    int i = 0;
+    winnerNum = scores[0].playerNum;
+    winner.materials = new Material[2]{ priMaterials[winnerNum], secMaterials[winnerNum] };
+    foreach (PlayerScore score in scores){
+      scoreUIs[i].SetPlayerNum(score.playerNum);
+      scoreUIs[i].UpdateScore(score.score, avatars[score.playerNum], nextButtons[score.playerNum]);
+      i++;
     }
 	}
 
-	// Update is called once per frame
-	void Update () {
+  void Update () {
+    float fade = 0.5f * (Mathf.Sin(Time.time * 4) + 1);
+    color.a = fade;
+    pressText.color = color;
+  }
 
-	}
+  private IEnumerator doAnimation(object[] param){
+    GameObject letter = (GameObject)param[0];
+    float wait = (float)param[1];
+    yield return new WaitForSeconds(wait);
+    iTween.MoveTo(letter, iTween.Hash("y", -3f, "time", 1.0f, "islocal", true, "EaseType", iTween.EaseType.easeInOutSine, "loopType", iTween.LoopType.pingPong));
+  }
 }
