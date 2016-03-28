@@ -22,13 +22,20 @@ public class CoinBehaviour : MonoBehaviour {
     int max_blink = 15;
     int blink = 0;
 
+    AudioSource coin_poof;
+
+    bool stop_vanishing_animation = false;
+
 
     //Time settings
     float start_time;
 
+    //parent
+    GameObject CoinManager;
+
 	// Use this for initialization
 	void Start () {
-
+        coin_poof = GetComponent<AudioSource>();
         //ThrowCoin(transform.position, new Vector3(3f, 2f, 1f));
     }
 
@@ -68,6 +75,11 @@ public class CoinBehaviour : MonoBehaviour {
         }
 	}
 
+    public void SetCoinManager(GameObject obj)
+    {
+        CoinManager = obj;
+    }
+
     public void StartCoinRotation() {
         trigger_rotation = true;
     }
@@ -87,21 +99,37 @@ public class CoinBehaviour : MonoBehaviour {
         horizontal_factor = 1f;
         boyancy_factor = 1f;
         blink = 0;
+
+        //Activate collider
+        //GetComponent<Collider>().enabled = true;
+        GetComponent<SkinnedMeshRenderer>().enabled = true;
+        stop_vanishing_animation = false;
     }
 
     public void Vanish() {
-            StartCoroutine(VanishingAnimation());
+        StartCoroutine(VanishingAnimation());
     }
 
     public IEnumerator VanishingAnimation() {
-        if (blink < max_blink)
+        if (blink < max_blink && !stop_vanishing_animation)
         {
             blink++;
-            GetComponent<SkinnedMeshRenderer>().enabled = false;
+            if (!stop_vanishing_animation)
+                GetComponent<SkinnedMeshRenderer>().enabled = false;
             yield return new WaitForSeconds(0.1f);
-            GetComponent<SkinnedMeshRenderer>().enabled = true;
+
+            if (!stop_vanishing_animation)
+                GetComponent<SkinnedMeshRenderer>().enabled = true;
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(VanishingAnimation());
+        }
+        else {
+            if (!stop_vanishing_animation)
+            {
+                transform.parent = CoinManager.transform;
+                gameObject.SetActive(false);
+            }
+            
         }
     }
 
@@ -116,8 +144,17 @@ public class CoinBehaviour : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
+        StartCoroutine(Timing());
+    }
+
+    IEnumerator Timing() {
+        GetComponent<Collider>().enabled = false;
+        GetComponent<SkinnedMeshRenderer>().enabled = false;
+        stop_vanishing_animation = true;
+
+        coin_poof.Play();
+        yield return new WaitForSeconds(coin_poof.clip.length+0.1f);
         gameObject.SetActive(false);
     }
 
-
-    }
+}

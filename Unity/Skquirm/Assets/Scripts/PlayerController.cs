@@ -73,6 +73,11 @@ public class PlayerController : MonoBehaviour {
     public Transform pipe8;
 
 
+    public Vector3 torque;
+    public bool apply_torque = false;
+    public float time_torque;
+    RigidbodyConstraints originalConstraints;
+
 
     InputDevice inputDevice;
     bool button_pressed = false;
@@ -87,6 +92,7 @@ public class PlayerController : MonoBehaviour {
         health = GetComponent<Health>();
 
         PlayerScore.Create(playerNum);
+        originalConstraints = GetComponent<Rigidbody>().constraints;
 
         rider_particles = GetComponent<RiderParticles>();
 
@@ -225,6 +231,9 @@ public class PlayerController : MonoBehaviour {
                 rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, newRotation, time_slerp * Time.deltaTime);
             }
         }
+
+        //apply torque when damaged. apply_torque is set but IEnumerator ApplyTorqueWhenDamaged function 
+        if (apply_torque) GetComponent<Rigidbody>().AddTorque(torque, ForceMode.VelocityChange);
     }
 
 	void PickupItem (string newType) {
@@ -266,8 +275,9 @@ public class PlayerController : MonoBehaviour {
 
 
             //Blink
+            blink = 0;
             StartCoroutine(BlinkingAnimation());
-
+            StartCoroutine(ApplyTorqueWhenDamaged());
 
             return true;
         } else {
@@ -415,5 +425,15 @@ public class PlayerController : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(BlinkingAnimation());
         }
+    }
+
+    public IEnumerator ApplyTorqueWhenDamaged() {
+        //Still Need to block controlls
+
+        apply_torque = true;
+        GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
+        yield return new WaitForSeconds(time_torque);
+        GetComponent<Rigidbody>().constraints = originalConstraints;
+        apply_torque = false;
     }
 }

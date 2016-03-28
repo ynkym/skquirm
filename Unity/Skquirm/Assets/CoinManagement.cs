@@ -9,6 +9,8 @@ public class CoinManagement : MonoBehaviour {
 
     int current_index = 0;
 
+  
+
 	// Use this for initialization
 	void Start () {
 	
@@ -37,8 +39,10 @@ public class CoinManagement : MonoBehaviour {
             for (int i = current_index; i < current_index + 5; i++)
             {
                 coins[i].gameObject.SetActive(true);
+                coins[i].SetCoinManager(this.gameObject);
                 coins[i].transform.parent = transform.parent;
                 coins[i].ThrowCoin(avatar[0].transform.position + new Vector3(0f, 1.5f, 0f), directions[i%5]);
+                
             }
             current_index = current_index + 5;
         }

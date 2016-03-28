@@ -46,6 +46,9 @@ public class GameTimer : MonoBehaviour {
     };
   }
 
+    public AudioSource timer_sound;
+
+
   void ThereIsWinner () {
     gameOver = true;
     index = notification.Length;
@@ -83,6 +86,7 @@ public class GameTimer : MonoBehaviour {
 	void Update () {
         remainingTime = remainingTime - Time.deltaTime;
 		if (index < notification.Length && remainingTime < notification[index].time) {
+            timer_sound.Play();
             timerUIObject.transform.localScale = new Vector3(1,1,1);
 			tcol.a = 1;
 			fadeoutTimer = notification[index].fadeTime;
