@@ -54,7 +54,7 @@ public class PlayerScoreUI : MonoBehaviour {
 
     if (!readyForNext && next > 0){
       readyForNext = true;
-      iTween.RotateTo(readyButton.gameObject, iTween.Hash("y", 0, "time", 0.5f, "oncomplete", "CheckReady", "oncompletetarget", gameObject));
+      iTween.RotateTo(readyButton.gameObject, iTween.Hash("y", 0, "time", 0.5f, "islocal", true, "oncomplete", "CheckReady", "oncompletetarget", gameObject));
     }
   }
 
