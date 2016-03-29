@@ -82,6 +82,8 @@ public class PlayerController : MonoBehaviour {
     InputDevice inputDevice;
     bool button_pressed = false;
 
+    [SerializeField] CoinManagement coin_management;
+
     // Use this for initialization
     void Start () {
 
@@ -271,13 +273,10 @@ public class PlayerController : MonoBehaviour {
             reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
             reactionAudioSource.Play();
 
-            //Coins
-
-
             //Blink
             blink = 0;
             StartCoroutine(BlinkingAnimation());
-            StartCoroutine(ApplyTorqueWhenDamaged());
+            StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
 
             return true;
         } else {
@@ -432,7 +431,10 @@ public class PlayerController : MonoBehaviour {
 
         apply_torque = true;
         GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
-        yield return new WaitForSeconds(time_torque);
+        yield return new WaitForSeconds(time_torque/2f);
+        //Coins
+        coin_management.InstantiateCoins(gameObject);
+        yield return new WaitForSeconds(time_torque / 2f);
         GetComponent<Rigidbody>().constraints = originalConstraints;
         apply_torque = false;
     }

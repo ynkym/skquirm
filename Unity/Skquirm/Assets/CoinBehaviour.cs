@@ -25,6 +25,7 @@ public class CoinBehaviour : MonoBehaviour {
     AudioSource coin_poof;
 
     bool stop_vanishing_animation = false;
+    [SerializeField] bool setLifeTime = false;
 
 
     //Time settings

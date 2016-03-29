@@ -4,7 +4,6 @@ using System.Collections;
 public class CoinManagement : MonoBehaviour {
 
     public CoinBehaviour[] coins;
-    public GameObject[] avatar;
     public Vector3[] directions;
 
     int current_index = 0;
@@ -18,10 +17,6 @@ public class CoinManagement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(Input.GetKeyDown(KeyCode.P))
-        {
-            InstantiateCoins();
-        }
 	}
 
     // Put all coins as children of this GO
@@ -33,7 +28,7 @@ public class CoinManagement : MonoBehaviour {
 
     // "Instantiate" the coins around the player's avatar
     [ContextMenu("Instantiate Coins")]
-    public void InstantiateCoins() {
+    public void InstantiateCoins(GameObject player_damaged) {
         if (current_index + 5 < coins.Length)
         {
             for (int i = current_index; i < current_index + 5; i++)
@@ -41,7 +36,7 @@ public class CoinManagement : MonoBehaviour {
                 coins[i].gameObject.SetActive(true);
                 coins[i].SetCoinManager(this.gameObject);
                 coins[i].transform.parent = transform.parent;
-                coins[i].ThrowCoin(avatar[0].transform.position + new Vector3(0f, 1.5f, 0f), directions[i%5]);
+                coins[i].ThrowCoin(player_damaged.transform.position + new Vector3(0f, 1.5f, 0f), directions[i%5]);
                 
             }
             current_index = current_index + 5;
