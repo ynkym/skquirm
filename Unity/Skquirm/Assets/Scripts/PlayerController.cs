@@ -74,13 +74,15 @@ public class PlayerController : MonoBehaviour {
 
 
     public Vector3 torque;
-    public bool apply_torque = false;
+    bool apply_torque = false;
     public float time_torque;
     RigidbodyConstraints originalConstraints;
 
 
     InputDevice inputDevice;
     bool button_pressed = false;
+
+    bool is_damaging = false;
 
     [SerializeField] CoinManagement coin_management;
 
@@ -259,26 +261,31 @@ public class PlayerController : MonoBehaviour {
     public bool TryToHurt(){
         //Todo
         DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
-        if (barrier == null) {
-            // Do actual damage
-            health.getDamaged(playerNum);
-            StartCoroutine(health.getDamaged(playerNum));
-            // quick hack: shift the position vertically to make bouncing due to buoyancy happen
-            rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
-            // set a trigger to animate the character
-            charAnimator.SetTrigger(animHash["Hit"]); // Go to "Hit" animation
+        if (barrier == null ) {
+            if (!is_damaging)
+            {
+                // Do actual damage
+                health.getDamaged(playerNum);
+                StartCoroutine(health.getDamaged(playerNum));
+                // quick hack: shift the position vertically to make bouncing due to buoyancy happen
+                //rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
+                // set a trigger to animate the character
+                charAnimator.SetTrigger(animHash["Hit"]); // Go to "Hit" animation
 
-            print("caused damage to the player");
-            //Reaction Sounds
-            reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
-            reactionAudioSource.Play();
+                print("caused damage to the player");
+                //Reaction Sounds
+                reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
+                reactionAudioSource.Play();
 
-            //Blink
-            blink = 0;
-            StartCoroutine(BlinkingAnimation());
-            StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
+                //Blink
+                blink = 0;
+                is_damaging = true;
+                StartCoroutine(BlinkingAnimation());
+                StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
 
-            return true;
+                return true;
+            }
+            return false;
         } else {
             // block by barrier
             barrier.breakingBarrier();
@@ -413,6 +420,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (blink < max_blink)
         {
+
             blink++;
             mesh_obj_1.SetActive(false);
             mesh_obj_2.SetActive(false);
@@ -423,6 +431,10 @@ public class PlayerController : MonoBehaviour {
             mesh_obj_3.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(BlinkingAnimation());
+        }
+        else
+        {
+            is_damaging = false;
         }
     }
 

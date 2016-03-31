@@ -13,16 +13,21 @@ public class EventHorizon : MonoBehaviour {
 
 	}
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision c)
     {
-        if (other.gameObject.CompareTag("Player")){
-          GlobalSetting.Instance.SendMessage("PlayerDefeated", other.gameObject);
+        
+        if (c.gameObject.CompareTag("Player")){
+            Vector3 direction = c.gameObject.transform.position - transform.position;
+            direction.Normalize();
+            c.gameObject.GetComponent<PlayerController>().TryToHurt();
+            print("did it hit?");
+            c.collider.attachedRigidbody.AddForce(direction * 10f, ForceMode.VelocityChange);
         }
-        if (other.gameObject.CompareTag("obstacle"))
+        if (c.gameObject.CompareTag("obstacle"))
         {
             gameObject.GetComponent<ObstacleSpawn>().currentNumOfObs -= 1;
+            Destroy(c.gameObject);
         }
         //other.gameObject.SetActive(false);
-        Destroy(other.gameObject);
     }
 }
