@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour {
             else if (speed > 40 && speed <= 50)
             {
                 speed += 0.005f;
-                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.3f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.5f;
             }
         }
         //decelerate the speed if there is no acceleration button pressed
@@ -169,10 +169,10 @@ public class PlayerController : MonoBehaviour {
             {
                 speed -= 0.7f;
 
-                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.4f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal *0.6f;
             }
             else {
-                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.3f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.5f;
             }
         }
 
