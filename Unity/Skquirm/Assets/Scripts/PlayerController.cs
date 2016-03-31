@@ -269,28 +269,7 @@ public class PlayerController : MonoBehaviour {
     public bool TryToHurt(){
         //Todo
         DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
-<<<<<<< HEAD
-        if (barrier == null) {
-            // Do actual damage
-            health.getDamaged(playerNum);
-            StartCoroutine(health.getDamaged(playerNum));
-            // quick hack: shift the position vertically to make bouncing due to buoyancy happen
-            rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
-            // set a trigger to animate the character
-            charAnimator.SetTrigger(animHash["Hit"]); // Go to "Hit" animation
 
-            print("caused damage to the player");
-            //Reaction Sounds
-            reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
-            reactionAudioSource.Play();
-
-            //Blink
-            blink = 0;
-            StartCoroutine(BlinkingAnimation());
-            StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too
-
-            return true;
-=======
         if (barrier == null ) {
             if (!is_damaging)
             {
@@ -316,7 +295,6 @@ public class PlayerController : MonoBehaviour {
                 return true;
             }
             return false;
->>>>>>> song
         } else {
             // block by barrier
             barrier.breakingBarrier();
