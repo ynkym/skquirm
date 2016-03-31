@@ -1,17 +1,12 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: 5d03a4af4883e6349a2f0f91eb003856
 timeCreated: 1456085668
-=======
-guid: 96b8ff49a07eaae4390528976fff5e00
-timeCreated: 1456089263
->>>>>>> offenseSpeed
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:
