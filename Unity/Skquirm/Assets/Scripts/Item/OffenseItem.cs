@@ -23,19 +23,19 @@ public class OffenseItem : Item {
 	}
 
   override public Item CombineWith (string anotherType) {
-    Item newitem = null;
-    if (anotherType == "Defense"){
-      newitem = gameObject.AddComponent<OffenseDefenseItem>() as OffenseDefenseItem;
-    } else if (anotherType == "Offense"){
-      newitem = gameObject.AddComponent<OffenseOffenseItem>() as OffenseOffenseItem;
-    } else if (anotherType == "Speed"){
-      newitem = gameObject.AddComponent<OffenseSpeedItem>() as OffenseSpeedItem;
-    }
+    // Item newitem = null;
+    // if (anotherType == "Defense"){
+    //   newitem = gameObject.AddComponent<OffenseDefenseItem>() as OffenseDefenseItem;
+    // } else if (anotherType == "Offense"){
+    //   newitem = gameObject.AddComponent<OffenseOffenseItem>() as OffenseOffenseItem;
+    // } else if (anotherType == "Speed"){
+    //   newitem = gameObject.AddComponent<OffenseSpeedItem>() as OffenseSpeedItem;
+    // }
 
-    if (newitem != null){
-       Destroy(this);
-       return newitem;
-    }
+    // if (newitem != null){
+    //    Destroy(this);
+    //    return newitem;
+    // }
     return this;
   }
 
