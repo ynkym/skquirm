@@ -39,6 +39,9 @@ public class SpeedItem : Item {
 
   // activation for "mine" item
   override public Item Activate() {
+    Rigidbody rb = GetComponent<Rigidbody>();
+    rb.AddForce(GlobalSetting.Instance.speedItemThrust * transform.forward, ForceMode.Impulse);
+
     //Get the rotation of the car object as EulerAngles
     Vector3 temp_rotation = transform.rotation.eulerAngles;
 
