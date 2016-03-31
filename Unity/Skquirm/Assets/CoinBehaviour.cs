@@ -34,6 +34,9 @@ public class CoinBehaviour : MonoBehaviour {
     //parent
     GameObject CoinManager;
 
+    // for spawner
+    private GameObject spawner;
+
 	// Use this for initialization
 	void Start () {
         coin_poof = GetComponent<AudioSource>();
@@ -145,6 +148,9 @@ public class CoinBehaviour : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
+        if (spawner != null){
+            spawner.SendMessage("StartCount");
+        }
         StartCoroutine(Timing());
         other.gameObject.SendMessage("PickUpCoin", gameObject.transform.position);
     }
@@ -158,5 +164,9 @@ public class CoinBehaviour : MonoBehaviour {
         yield return new WaitForSeconds(coin_poof.clip.length+0.1f);
         gameObject.SetActive(false);
     }
+
+  void RegisterSpawner(GameObject s){
+    spawner = s;
+  }
 
 }

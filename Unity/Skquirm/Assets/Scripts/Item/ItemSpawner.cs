@@ -7,9 +7,12 @@ public class ItemSpawner : MonoBehaviour {
 	public GameObject defenseItem;
 	public GameObject speedItem;
 
+	public GameObject coinItem;
+
 	public int offenseRatio = 1;
 	public int defenseRatio = 1;
 	public int speedRatio = 1;
+	public int coinRatio = 0;
 
 	public float spawnTime;
 
@@ -35,14 +38,16 @@ public class ItemSpawner : MonoBehaviour {
 			if (remainingTime <= 0) {
 				GameObject prefab;
 				// determine randomly which item to spawn
-				float rand = Random.Range (0.0f, offenseRatio + defenseRatio + speedRatio);
+				float rand = Random.Range (0.0f, offenseRatio + defenseRatio + speedRatio + coinRatio);
 
 				if (rand < offenseRatio) {
 					prefab = offenseItem;
 				} else if (rand < offenseRatio + defenseRatio) {
 					prefab = defenseItem;
-				} else {
+				} else if (rand < offenseRatio + defenseRatio + speedRatio){
 					prefab = speedItem;
+				} else {
+					prefab = coinItem;
 				}
 
 				currentItem = (GameObject)Instantiate (prefab, transform.position, transform.rotation);
