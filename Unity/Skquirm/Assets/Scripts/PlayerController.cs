@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour {
 
         //sorry for the horrific code, it basically sees if both the drift button (which is jump) and the
         //accelerate button are pressed together at the same time. For some reason, doesnt register both at once unless
-        //specified 
+        //specified
         if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.Action2.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
         {
             speed += 0.005f;
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        //apply torque when damaged. apply_torque is set but IEnumerator ApplyTorqueWhenDamaged function 
+        //apply torque when damaged. apply_torque is set but IEnumerator ApplyTorqueWhenDamaged function
         if (apply_torque) GetComponent<Rigidbody>().AddTorque(torque, ForceMode.VelocityChange);
     }
 
@@ -256,6 +256,14 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+    public void PickUpCoin(Vector3 targetPosition){
+        Vector2 viewportPosition = playercamera.WorldToViewportPoint(targetPosition);
+        PlusOneManager.GetInstance().DisplayPlusOne(playerNum, viewportPosition);
+
+        PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
+        ScoreStateUI.UpdateForPlayer(playerNum);
+    }
+
     public bool TryToHurt(){
         //Todo
         DefenseBarrier barrier = GetComponent<DefenseBarrier> ();
@@ -276,7 +284,7 @@ public class PlayerController : MonoBehaviour {
             //Blink
             blink = 0;
             StartCoroutine(BlinkingAnimation());
-            StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
+            StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too
 
             return true;
         } else {

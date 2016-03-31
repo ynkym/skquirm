@@ -30,7 +30,8 @@ public class GoToScene : MonoBehaviour {
   public static void startGame(string sceneName){
     PlayerScore.Clear();
     ItemStateUI.Clear();
-    LifeStateUI.Clear();
+    //LifeStateUI.Clear();
+    ScoreStateUI.Clear();
     sceneTransition(sceneName);
   }
 

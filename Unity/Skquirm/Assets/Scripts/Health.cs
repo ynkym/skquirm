@@ -32,8 +32,8 @@ public class Health : MonoBehaviour
     {
         if (!invincible)
         {
-            currentLife -= 1;
-            LifeStateUI.UpdateForPlayer(playerNum, currentLife);
+            //currentLife -= 1;
+            //LifeStateUI.UpdateForPlayer(playerNum, currentLife);
             if (currentLife <= 0)
             {
                 //Application.LoadLevel("GameOver");

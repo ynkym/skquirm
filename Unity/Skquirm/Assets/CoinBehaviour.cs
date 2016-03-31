@@ -70,7 +70,7 @@ public class CoinBehaviour : MonoBehaviour {
                     trigger_rotation = true;
                     gameObject.GetComponent<Collider>().enabled = true;
                 }
-                
+
                 start_time = Time.time;
             }
         }
@@ -130,7 +130,7 @@ public class CoinBehaviour : MonoBehaviour {
                 transform.parent = CoinManager.transform;
                 gameObject.SetActive(false);
             }
-            
+
         }
     }
 
@@ -146,6 +146,7 @@ public class CoinBehaviour : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         StartCoroutine(Timing());
+        other.gameObject.SendMessage("PickUpCoin", gameObject.transform.position);
     }
 
     IEnumerator Timing() {
