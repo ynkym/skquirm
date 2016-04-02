@@ -23,7 +23,7 @@ public class PlayerScore : Object, System.IComparable<PlayerScore> {
     if (Instances.ContainsKey(playerNum)){
       return Instances[playerNum].GetScore();
     }else{
-      return -1;
+      return 0;
     }
   }
 
