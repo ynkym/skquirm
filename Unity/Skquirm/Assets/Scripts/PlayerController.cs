@@ -5,24 +5,33 @@ using System.Collections.Generic;
 using InControl;
 
 public class PlayerController : MonoBehaviour {
-
+    
+    //general variables
 	private Rigidbody rb;
 	private Item item;
 	public Camera playercamera;
 	public float speed;
 	public float jumpheight;
 
+    //shooters
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
 	public GameObject shooter_back; //drop position of the mine (also an empty Obj for coordinate purposes)
-
+    
+    //meshes
     public GameObject mesh_obj_1;
     public GameObject mesh_obj_2;
     public GameObject mesh_obj_3;
 
     public int playerNum;
 
+    //animation
     public Animator charAnimator;
 
+    //invincibility variables
+    private int invincibilityFrames = 5;
+    private bool invincible = false;
+    
+    //movement variables
 	public bool testingObj;
 	public bool TestWithoutJoystick;
     private Health health;
@@ -115,7 +124,7 @@ public class PlayerController : MonoBehaviour {
             jump = inputDevice.Action2;
             fire = inputDevice.Action3;
 
-            print(inputDevice.AnyButton);
+            //print(inputDevice.AnyButton);
             if (inputDevice.AnyButton == null) button_pressed = false;
             else button_pressed = true;
         }
@@ -273,26 +282,30 @@ public class PlayerController : MonoBehaviour {
         if (barrier == null ) {
             if (!is_damaging)
             {
-                // Do actual damage
-                health.getDamaged(playerNum);
-                StartCoroutine(health.getDamaged(playerNum));
-                // quick hack: shift the position vertically to make bouncing due to buoyancy happen
-                //rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
-                // set a trigger to animate the character
-                charAnimator.SetTrigger(animHash["Hit"]); // Go to "Hit" animation
+                if (!invincible)
+                {
+                    // Do actual damage
+                    //health.getDamaged(playerNum);
+                    //StartCoroutine(health.getDamaged(playerNum));
+                    // quick hack: shift the position vertically to make bouncing due to buoyancy happen
+                    //rb.transform.position = rb.transform.position + new Vector3(0, -1, 0);
+                    // set a trigger to animate the character
+                    charAnimator.SetTrigger(animHash["Hit"]); // Go to "Hit" animation
 
-                print("caused damage to the player");
-                //Reaction Sounds
-                reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
-                reactionAudioSource.Play();
+                    print("caused damage to the player");
+                    //Reaction Sounds
+                    reactionAudioSource.clip = damageAudios[Random.Range(0, 2)];
+                    reactionAudioSource.Play();
 
-                //Blink
-                blink = 0;
-                is_damaging = true;
-                StartCoroutine(BlinkingAnimation());
-                StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
+                    //Blink
+                    blink = 0;
+                    is_damaging = true;
+                    StartCoroutine(invincibilityCheck());
+                    StartCoroutine(BlinkingAnimation());
+                    StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
 
-                return true;
+                    return true;
+                }
             }
             return false;
         } else {
@@ -458,5 +471,13 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(time_torque / 2f);
         GetComponent<Rigidbody>().constraints = originalConstraints;
         apply_torque = false;
+    }
+
+    public IEnumerator invincibilityCheck() {
+        invincible = true;
+        print("INVINCIBLE");
+        yield return new WaitForSeconds(invincibilityFrames);
+        invincible = false;
+        print("Not Invincible...");
     }
 }
