@@ -9,7 +9,7 @@ public class ScoreStateUI : MonoBehaviour {
 
   static Dictionary<int, ScoreStateUI> Instances = new Dictionary<int, ScoreStateUI>();
   public static void UpdateForPlayer(int playerNum){
-    Debug.Log(playerNum);
+    //Debug.Log(playerNum);
     if (Instances.ContainsKey(playerNum)){
         Instances[playerNum].UpdateUI();
     }
@@ -39,7 +39,7 @@ public class ScoreStateUI : MonoBehaviour {
       ringImage.sprite = ringSprite;
       baseImage.sprite = bubbleSprite;
 
-      scoreText.text = "0";
+      scoreText.text = "" + PlayerScore.GetScore(playerNum);
 
     if (Instances.ContainsKey(playerNum)){
       Instances[playerNum] = this;

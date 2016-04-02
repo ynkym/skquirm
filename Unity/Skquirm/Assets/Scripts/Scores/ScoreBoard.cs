@@ -23,8 +23,9 @@ public class ScoreBoard : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
     int currentGame = GoToScene.currentGame;
+    //currentGame = 1;
     if (currentGame > 0 && currentGame < GoToScene.maxGame){
-      titleText.text = "Result: Stage " + GoToScene.currentGame;
+      titleText.text = "Result: Stage " + currentGame;
     }else{
       titleText.gameObject.SetActive(false);
       float w = 0;
