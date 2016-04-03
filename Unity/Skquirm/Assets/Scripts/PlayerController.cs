@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using InControl;
 
 public class PlayerController : MonoBehaviour {
-    
+
     //general variables
 	private Rigidbody rb;
 	private Item item;
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     //shooters
 	public GameObject shooter; //start position of the projectiles (empty GameObj)
 	public GameObject shooter_back; //drop position of the mine (also an empty Obj for coordinate purposes)
-    
+
     //meshes
     public GameObject mesh_obj_1;
     public GameObject mesh_obj_2;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     //invincibility variables
     private int invincibilityFrames = 5;
     private bool invincible = false;
-    
+
     //movement variables
 	public bool testingObj;
 	public bool TestWithoutJoystick;
@@ -249,7 +249,8 @@ public class PlayerController : MonoBehaviour {
         if (apply_torque) GetComponent<Rigidbody>().AddTorque(torque, ForceMode.VelocityChange);
     }
 
-	void PickupItem (string newType) {
+	void PickupItem (ItemController newitem) {
+        string newType = newitem.itemType;
 		if (!testingObj) {
 			if (item != null) {
 				item = item.CombineWith (newType);
@@ -262,6 +263,8 @@ public class PlayerController : MonoBehaviour {
 				} else if (newType == "Speed") {
 					item = gameObject.AddComponent<SpeedItem> () as SpeedItem;
 				}
+                newitem.gameObject.SendMessage("NotifySpawner");
+                Destroy(newitem.gameObject);
 			}
 			ItemStateUI.UpdateForPlayer (playerNum, item);
 		}
@@ -302,7 +305,7 @@ public class PlayerController : MonoBehaviour {
                     is_damaging = true;
                     StartCoroutine(invincibilityCheck());
                     StartCoroutine(BlinkingAnimation());
-                    StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too 
+                    StartCoroutine(ApplyTorqueWhenDamaged()); //responsible for the coins too
 
                     return true;
                 }

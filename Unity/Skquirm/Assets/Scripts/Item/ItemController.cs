@@ -26,12 +26,15 @@ public class ItemController : MonoBehaviour {
     // player to handle picking up / combination
     if (other.gameObject.CompareTag("Player")){
       // notify spawner if applicable
-      if (spawner != null){
-        spawner.SendMessage("StartCount");
-      }
+      other.gameObject.SendMessage("PickupItem", this);
+      // destroy handled on players end
+      //Destroy(this.gameObject);
+    }
+  }
 
-      other.gameObject.SendMessage("PickupItem", this.itemType);
-      Destroy(this.gameObject);
+  void NotifySpawner(){
+    if (spawner != null){
+      spawner.SendMessage("StartCount");
     }
   }
 }

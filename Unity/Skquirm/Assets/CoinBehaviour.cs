@@ -151,11 +151,13 @@ public class CoinBehaviour : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (spawner != null){
-            spawner.SendMessage("StartCount");
+        if (other.gameObject.CompareTag("Player")){
+            if (spawner != null){
+                spawner.SendMessage("StartCount");
+            }
+            StartCoroutine(Timing());
+            other.gameObject.SendMessage("PickUpCoin", gameObject.transform.position);
         }
-        StartCoroutine(Timing());
-        other.gameObject.SendMessage("PickUpCoin", gameObject.transform.position);
     }
 
     IEnumerator Timing() {
