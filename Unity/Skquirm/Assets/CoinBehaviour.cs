@@ -46,6 +46,7 @@ public class CoinBehaviour : MonoBehaviour {
     }
 
     void Update() {
+        transform.Rotate(new Vector3(0,30,0) * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.V))
         {
             Vanish();
