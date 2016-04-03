@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
     public Animator charAnimator;
 
     //invincibility variables
-    private int invincibilityFrames = 5;
+    private float invincibilityFrames = 3.5f;
     private bool invincible = false;
 
     //movement variables
@@ -464,7 +464,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public IEnumerator ApplyTorqueWhenDamaged() {
-        if (PlayerScore.GetScore(playerNum) > 5)
+        if (PlayerScore.GetScore(playerNum) >= 5)
         {
             //Still Need to block controlls
             apply_torque = true;
@@ -475,7 +475,7 @@ public class PlayerController : MonoBehaviour {
             yield return new WaitForSeconds(time_torque / 2f);
             GetComponent<Rigidbody>().constraints = originalConstraints;
             apply_torque = false;
-            PlayerScore.AddScoreToPlayer(playerNum, -6); //subtract 5 coins from score
+            PlayerScore.AddScoreToPlayer(playerNum, -5); //subtract 5 coins from score
             ScoreStateUI.UpdateForPlayer(playerNum);
         }
         else {
