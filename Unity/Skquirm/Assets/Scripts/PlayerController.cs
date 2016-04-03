@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour {
             else if (speed > 40 && speed <= 60)
             {
                 speed += 0.005f;
-                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.7f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.5f;
             }
         }
         //decelerate the speed if there is no acceleration button pressed
@@ -461,16 +461,45 @@ public class PlayerController : MonoBehaviour {
     }
 
     public IEnumerator ApplyTorqueWhenDamaged() {
-        //Still Need to block controlls
-
-        apply_torque = true;
-        GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
-        yield return new WaitForSeconds(time_torque/2f);
-        //Coins
-        coin_management.InstantiateCoins(gameObject);
-        yield return new WaitForSeconds(time_torque / 2f);
-        GetComponent<Rigidbody>().constraints = originalConstraints;
-        apply_torque = false;
+        if (PlayerScore.GetScore(playerNum) > 5)
+        {
+            //Still Need to block controlls
+            apply_torque = true;
+            GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
+            yield return new WaitForSeconds(time_torque / 2f);
+            //Coins
+            coin_management.InstantiateCoins(gameObject);
+            yield return new WaitForSeconds(time_torque / 2f);
+            GetComponent<Rigidbody>().constraints = originalConstraints;
+            apply_torque = false;
+            PlayerScore.AddScoreToPlayer(playerNum, -6); //subtract 5 coins from score
+            ScoreStateUI.UpdateForPlayer(playerNum);
+        }
+        else {
+            //Still Need to block controlls
+            apply_torque = true;
+            GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
+            yield return new WaitForSeconds(time_torque / 2f);
+            //Coins
+            yield return new WaitForSeconds(time_torque / 2f);
+            GetComponent<Rigidbody>().constraints = originalConstraints;
+            apply_torque = false;
+        }
+        /*
+        //this code is for if we figure out how to spawn less than 5 coins on being hit
+        else {
+            apply_torque = true;
+            GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
+            yield return new WaitForSeconds(time_torque / 2f);
+            //Coins
+            coin_management.InstantiateCoins(gameObject);
+            yield return new WaitForSeconds(time_torque / 2f);
+            GetComponent<Rigidbody>().constraints = originalConstraints;
+            apply_torque = false;
+            PlayerScore.AddScoreToPlayer(playerNum, -1*PlayerScore.GetScore(playerNum)); //subtract <5 coins from score
+            ScoreStateUI.UpdateForPlayer(playerNum);
+        }
+        */
     }
 
     public IEnumerator invincibilityCheck() {
