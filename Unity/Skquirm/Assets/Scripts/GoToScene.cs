@@ -26,13 +26,23 @@ public class GoToScene : MonoBehaviour {
     }
   }
 
-  // called from title screen
+  // called from title screen (tutorialcontroller)
   public static void startGame(string sceneName){
     PlayerScore.Clear();
     ItemStateUI.Clear();
     //LifeStateUI.Clear();
     ScoreStateUI.Clear();
     sceneTransition(sceneName);
+  }
+
+  // called from title screen for going to tutorial
+  public static void gotoTutorial(){
+    var wind = new WindTransition()
+    {
+      duration = 1.5f,
+      size = 0.3f
+    };
+    TransitionKit.instance.transitionWithDelegate( wind );
   }
 
   // called from gametimer

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Prime31.TransitionKit;
 
 public class ReadyButton : MonoBehaviour {
   static Dictionary<int, ReadyButton> Instances = new Dictionary<int, ReadyButton>();
@@ -10,6 +11,9 @@ public class ReadyButton : MonoBehaviour {
   public int playerNum;
   public bool ready;
   private UnityEngine.UI.Image image;
+
+  public TutorialController tutorial;
+  public GameObject gui3d;
 
   private bool started;
 
@@ -34,11 +38,18 @@ public class ReadyButton : MonoBehaviour {
            readyCount += button.ready ? 1 : 0;
       }
       if (!started && readyCount >= 4){
-        GoToScene.startGame("Tank");
+        GoToScene.gotoTutorial();
+        TransitionKit.onScreenObscured += displayTutorial;
+        //GoToScene.startGame("Tank");
         started = true;
       }
     }
 	}
+
+  void displayTutorial(){
+    tutorial.gameObject.SetActive(true);
+    gui3d.SetActive(false);
+  }
 
   public static void UpdateReadyForPlayer(int playerNum, bool readyvalue){
     if (Instances.ContainsKey(playerNum)){
