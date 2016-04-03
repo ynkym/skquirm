@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour {
             horizontal = inputDevice.LeftStickX; //for inControl functionality
             //vertical = inputdevice.LeftStickY;
             vertical = inputDevice.Action1;
-            jump = inputDevice.Action2;
+            jump = inputDevice.RightBumper;
             fire = inputDevice.Action3;
 
             //print(inputDevice.AnyButton);
@@ -168,10 +168,10 @@ public class PlayerController : MonoBehaviour {
                 speed += 0.4f;
                 lookDirection = transform.forward * vertical + transform.right * horizontal * 0.9f;
             }
-            else if (speed > 40 && speed <= 50)
+            else if (speed > 40 && speed <= 60)
             {
                 speed += 0.005f;
-                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.5f;
+                lookDirection = transform.forward * vertical + transform.right * horizontal * 0.7f;
             }
         }
         //decelerate the speed if there is no acceleration button pressed
@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour {
         if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.Action2.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
         {
             speed += 0.005f;
-            lookDirection = transform.forward * vertical + transform.right * horizontal * 0.9f;
+            lookDirection = transform.forward * vertical + transform.right * horizontal * 1.3f;
         }
         movement = speed * transform.forward * vertical + new Vector3(0, 0, 0);
         rb.AddForce(movement);
