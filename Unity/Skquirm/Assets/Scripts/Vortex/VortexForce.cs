@@ -8,20 +8,66 @@ public class VortexForce : MonoBehaviour {
   public float buoyancyStrength;
   public float pullStrength;
   public float whirlStrength;
+    public GameObject waterPlane;
   private float DAMPER =  0.9f;
+    private object vector3;
+
+    private float originalWaterHorizon;
+    private WaterControll waterControll;
+    private Material mat;
+    private Texture2D heightmap;
 
 
-  // Use this for initialization
-  void Start () {
-    rb = GetComponent<Rigidbody>();
-  }
+    // Use this for initialization
+    void Start () {
+        rb = GetComponent<Rigidbody>();
+        waterControll = waterPlane.GetComponent<WaterControll>();
+        mat = waterPlane.GetComponent<Renderer>().sharedMaterial;
+        heightmap = mat.GetTexture("_HeightMap") as Texture2D;
+        originalWaterHorizon = waterHorizon;
+    }
 
   // Update is called once per frame
   void Update () {
+        //Mesh mesh = waterPlane.GetComponent<MeshFilter>().mesh;
+        //float mindistsqr = Mathf.Infinity;
+        //Vector3 nearestvertex = Vector3.zero;
+        //Vector3 wp = transform.TransformPoint(new Vector3(0, 0, 0));
 
-  }
 
-  void FixedUpdate () {
+        //foreach (Vector3 vertex in mesh.vertices)
+        //{
+        //    Vector3 diff = wp - vertex;
+        //    float distsqr = diff.sqrMagnitude;
+
+        //    if (distsqr < mindistsqr)
+        //    {
+        //        mindistsqr = distsqr;
+        //        nearestvertex = vertex;
+        //    }
+        //}
+        //Debug.Log(waterPlane.transform.TransformPoint(nearestvertex));
+        //waterHorizon = nearestvertex.y;
+
+        // The scale of width of the wave
+        Vector4 waveHeightScale4 = waterControll.getWaveHeightScale4();
+        Vector4 heightOffset = waterControll.getHeightOffsetClamped();
+        float tempx = transform.position.x * waveHeightScale4.x + heightOffset.x;
+        float tempy = transform.position.z * waveHeightScale4.y + heightOffset.y;
+        Color height1Col = heightmap.GetPixelBilinear(tempx, tempy);
+        tempx = transform.position.x * waveHeightScale4.z + heightOffset.z;
+        tempy = transform.position.z * waveHeightScale4.w + heightOffset.w;
+        Color height2Col = heightmap.GetPixelBilinear(tempx, tempy);
+        float height1 = (height1Col.r + height1Col.g + height1Col.b) / 3.0f;
+        float height2 = (height2Col.r + height2Col.g + height2Col.b) / 3.0f;
+        float height = (height1 + height2) * 0.5f;
+
+        // The scale of height of the wave
+        float heightScale = mat.GetFloat("_WaveHeight");
+        waterHorizon = originalWaterHorizon + height * heightScale;
+    }
+
+    void FixedUpdate () {
 
     // TODO: Clean up the calculation
 
