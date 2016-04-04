@@ -464,7 +464,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     public IEnumerator ApplyTorqueWhenDamaged() {
-        if (PlayerScore.GetScore(playerNum) >= 5)
+
+        int current_score = PlayerScore.GetScore(playerNum);
+
+        if (current_score  >= 5)
         {
             //Still Need to block controlls
             apply_torque = true;
@@ -484,9 +487,13 @@ public class PlayerController : MonoBehaviour {
             GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezeRotationY;
             yield return new WaitForSeconds(time_torque / 2f);
             //Coins
+            if( current_score != 0 ) coin_management.InstantiateCoins(gameObject, current_score);
             yield return new WaitForSeconds(time_torque / 2f);
             GetComponent<Rigidbody>().constraints = originalConstraints;
             apply_torque = false;
+
+            PlayerScore.AddScoreToPlayer(playerNum, -current_score); //subtract 5 coins from score
+            ScoreStateUI.UpdateForPlayer(playerNum);
         }
         /*
         //this code is for if we figure out how to spawn less than 5 coins on being hit
