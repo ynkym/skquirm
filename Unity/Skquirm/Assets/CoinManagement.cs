@@ -28,10 +28,10 @@ public class CoinManagement : MonoBehaviour {
 
     // "Instantiate" the coins around the player's avatar
     [ContextMenu("Instantiate Coins")]
-    public void InstantiateCoins(GameObject player_damaged) {
-        if (current_index + 5 < coins.Length)
+    public void InstantiateCoins(GameObject player_damaged, int spilled_coins = 5) {
+        if (current_index + spilled_coins < coins.Length)
         {
-            for (int i = current_index; i < current_index + 5; i++)
+            for (int i = current_index; i < current_index + spilled_coins; i++)
             {
                 coins[i].gameObject.SetActive(true);
                 coins[i].SetCoinManager(this.gameObject);
