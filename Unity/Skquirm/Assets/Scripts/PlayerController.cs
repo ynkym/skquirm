@@ -95,6 +95,17 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] CoinManagement coin_management;
 
+
+    public bool AIMode = false;
+    public float speedChangeChance = 0.5f;
+    public float speedChangeRange = 0.1f;
+    public float useItemChance = 0.02f;
+    public float steerChangeChance = 0.8f;
+    public float steerChangeRange = 0.2f;
+    private bool ai_bumped = false;
+    private float ai_bumptime = 0.0f;
+
+
     // Use this for initialization
     void Start () {
 
@@ -111,6 +122,9 @@ public class PlayerController : MonoBehaviour {
 
         GlobalSetting.Instance.registerPlayer(this.gameObject);
         this.enabled = false; // wait until game start
+
+        vertical = 0f;
+        horizontal = 0f;
 	}
 
 	// Update is called once per frame
@@ -127,6 +141,34 @@ public class PlayerController : MonoBehaviour {
             //print(inputDevice.AnyButton);
             if (inputDevice.AnyButton == null) button_pressed = false;
             else button_pressed = true;
+        }
+        else if (AIMode){
+            float flgAcc = Random.Range(0f, 1f);
+            float flgSteer = Random.Range(0f, 1f);
+            float flgFire = Random.Range(0f, 1f);
+            if (flgAcc < speedChangeChance){
+                vertical += Random.Range(-1 * speedChangeRange / 2, speedChangeRange);
+                if (vertical > 1){ vertical = 1; }
+                if (vertical < 0){ vertical = 0; }
+            }
+            if (flgSteer < steerChangeChance){
+
+                if (ai_bumped){
+                    ai_bumptime -= Time.deltaTime;
+                    if (ai_bumptime <= 0f){
+                        ai_bumped = false;
+                        horizontal = 0f;
+                    }
+                }else{
+                    horizontal += Random.Range(-1 * steerChangeRange, steerChangeRange);
+                }
+                //Debug.Log(horizontal);
+            }
+            if (item != null && flgFire < useItemChance){
+                fire = true;
+            }else{
+                fire = false;
+            }
         }
         else {
             if (playerNum == 0)
@@ -155,7 +197,7 @@ public class PlayerController : MonoBehaviour {
     // Fixed time step update, usually for physics, everything moved to updateMovement
     void FixedUpdate () {
         //acceleration on button hold
-        if (InputManager.ActiveDevice.Action1.IsPressed || Input.GetButton("Vertical"))
+        if (vertical > 0 || InputManager.ActiveDevice.Action1.IsPressed || Input.GetButton("Vertical"))
         {
             //acceleration starts to become less harsh as the speed nears its peak speed
             if (speed <= 10)
@@ -350,6 +392,25 @@ public class PlayerController : MonoBehaviour {
         {
             bumpAudioSource.clip = p2wallBump;
             bumpAudioSource.Play();
+            ai_bumptime = 1.0f;
+            if (ai_bumped == false){
+                ai_bumped = true;
+                if (Random.value > 0.5){
+                    horizontal = 1f;
+                }else{
+                    horizontal = -1f;
+                }
+            }
+        }else{
+            ai_bumptime = 1.0f;
+            if (ai_bumped == false){
+                ai_bumped = true;
+                if (Random.value > 0.5){
+                    horizontal = 1f;
+                }else{
+                    horizontal = -1f;
+                }
+            }
         }
     }
 
