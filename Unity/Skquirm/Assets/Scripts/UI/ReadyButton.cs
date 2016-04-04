@@ -47,6 +47,7 @@ public class ReadyButton : MonoBehaviour {
 	}
 
   void displayTutorial(){
+    TransitionKit.onScreenObscured -= displayTutorial;
     tutorial.gameObject.SetActive(true);
     gui3d.SetActive(false);
   }
