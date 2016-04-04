@@ -264,6 +264,7 @@ public class PlayerController : MonoBehaviour {
 					item = gameObject.AddComponent<SpeedItem> () as SpeedItem;
 				}
                 newitem.gameObject.SendMessage("NotifySpawner");
+                EffectsManager.GetInstance().DisplayItemEffect(newitem.gameObject.transform.position);
                 Destroy(newitem.gameObject);
 			}
 			ItemStateUI.UpdateForPlayer (playerNum, item);
@@ -273,6 +274,8 @@ public class PlayerController : MonoBehaviour {
     public void PickUpCoin(Vector3 targetPosition){
         Vector2 viewportPosition = playercamera.WorldToViewportPoint(targetPosition);
         PlusOneManager.GetInstance().DisplayPlusOne(playerNum, viewportPosition);
+
+        EffectsManager.GetInstance().DisplayCoinEffect(targetPosition);
 
         PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
         ScoreStateUI.UpdateForPlayer(playerNum);
