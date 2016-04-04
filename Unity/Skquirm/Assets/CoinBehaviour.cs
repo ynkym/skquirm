@@ -11,7 +11,7 @@ public class CoinBehaviour : MonoBehaviour {
     Vector3 euler_vector = new Vector3(0f, 0f, 1f);
 
     public Collider mycollider;
-    public SkinnedMeshRenderer myrenderer;
+    public MeshRenderer myrenderer;
 
     Vector3 velocity_horizontal, velocity_y;
     Vector3 delta_space_horizontal;
