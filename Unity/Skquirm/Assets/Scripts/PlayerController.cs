@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
     private float vertical;
     private float jump;
     private bool fire;
+    private float brake;
 
     private Vector3 movement;
     private Vector3 lookDirection;
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour {
             vertical = inputDevice.Action1;
             jump = inputDevice.RightBumper;
             fire = inputDevice.Action3;
+            brake = inputDevice.Action2;
 
             //print(inputDevice.AnyButton);
             if (inputDevice.AnyButton == null) button_pressed = false;
@@ -178,9 +180,14 @@ public class PlayerController : MonoBehaviour {
         else {
             if (speed > 0)
             {
-                speed -= 0.7f;
-
-                lookDirection = transform.forward * vertical + transform.right * horizontal *0.6f;
+                if (InputManager.ActiveDevice.Action2.IsPressed) {
+                    speed -= 2.3f;
+                    lookDirection = transform.forward * vertical + transform.right * horizontal * 1f;
+                }
+                else {
+                    speed -= 0.7f;
+                    lookDirection = transform.forward * vertical + transform.right * horizontal * 0.6f;
+                }
             }
             else {
                 lookDirection = transform.forward * vertical + transform.right * horizontal * 0.5f;
@@ -190,7 +197,7 @@ public class PlayerController : MonoBehaviour {
         //sorry for the horrific code, it basically sees if both the drift button (which is jump) and the
         //accelerate button are pressed together at the same time. For some reason, doesnt register both at once unless
         //specified
-        if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.Action2.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
+        if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.RightBumper.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
         {
             speed += 0.005f;
             lookDirection = transform.forward * vertical + transform.right * horizontal * 1.3f;
