@@ -25,9 +25,9 @@ public class ObstacleSpawn : MonoBehaviour {
             spawnTime -= Time.deltaTime;
             if (spawnTime <= 0)
             {
-                pickint = Random.Range(0,3);
-                xVar = Random.Range(-37.0F, 25.0F);
-                zVar = Random.Range(-28.0F, 25.0F);
+                pickint = Random.Range(0,2);
+                xVar = Random.Range(-69.0F, 70.0F);
+                zVar = Random.Range(-58.0F, 58.0F);
                 currentNumOfObs += 1;
                 if (pickint == 0)
                 {
