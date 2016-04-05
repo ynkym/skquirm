@@ -47,7 +47,7 @@ public class CoinManagement : MonoBehaviour {
     public void InstantiateCoins(GameObject player_damaged, int spilled_coins = 5) {
         //if (current_index + spilled_coins < coins.Length)
         //{
-            for (int i = current_index; i < current_index + spilled_coins; i++)
+            for (int i = 0; i < spilled_coins; i++)
             {
                 coins[i].gameObject.SetActive(true);
                 //coins[i].SetCoinManager(this.gameObject);

@@ -419,7 +419,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void IncreaseScore(){
-        PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
+        //PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
         reactionAudioSource.clip = comemorationAudios[Random.Range(0, 2)];
         reactionAudioSource.Play();
 
