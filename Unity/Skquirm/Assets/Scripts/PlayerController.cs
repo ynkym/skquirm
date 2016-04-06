@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
     private float vertical;
     private float jump;
     private bool fire;
+    private float brake;
 
     private Vector3 movement;
     private Vector3 lookDirection;
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour {
             vertical = inputDevice.Action1;
             jump = inputDevice.RightBumper;
             fire = inputDevice.Action3;
+            brake = inputDevice.Action2;
 
             //print(inputDevice.AnyButton);
             if (inputDevice.AnyButton == null) button_pressed = false;
@@ -178,9 +180,14 @@ public class PlayerController : MonoBehaviour {
         else {
             if (speed > 0)
             {
-                speed -= 0.7f;
-
-                lookDirection = transform.forward * vertical + transform.right * horizontal *0.6f;
+                if (InputManager.ActiveDevice.Action2.IsPressed) {
+                    speed -= 2.3f;
+                    lookDirection = transform.forward * vertical + transform.right * horizontal * 1f;
+                }
+                else {
+                    speed -= 0.7f;
+                    lookDirection = transform.forward * vertical + transform.right * horizontal * 0.6f;
+                }
             }
             else {
                 lookDirection = transform.forward * vertical + transform.right * horizontal * 0.5f;
@@ -190,7 +197,7 @@ public class PlayerController : MonoBehaviour {
         //sorry for the horrific code, it basically sees if both the drift button (which is jump) and the
         //accelerate button are pressed together at the same time. For some reason, doesnt register both at once unless
         //specified
-        if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.Action2.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
+        if ((speed > 40) && ((Input.GetButton("Vertical") && Input.GetButton("Jump")) || (InputManager.ActiveDevice.RightBumper.IsPressed && InputManager.ActiveDevice.Action1.IsPressed)))
         {
             speed += 0.005f;
             lookDirection = transform.forward * vertical + transform.right * horizontal * 1.3f;
@@ -366,48 +373,63 @@ public class PlayerController : MonoBehaviour {
                 //transfers to pipe6 at coordinates X:22, Y:14, Z:18
                 transform.position = new Vector3(35, 18, 28);
                 transform.LookAt(pipe5);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe2"))
             {
                 //transfer to pipe 5 at coordinates X:20.5, Y:14, Z:-15
                 transform.position = new Vector3(-17, 18, -19);
                 transform.LookAt(pipe6);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe3"))
             {
                 //transfer to pipe 7 at coordinates X:-16, Y:14, Z:18
                 transform.position = new Vector3(-17, 18, 29);
                 transform.LookAt(pipe8);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe4"))
             {
                 //transfer to pipe 8 at coordinates X:20.5, Y:14, Z:-15
                 transform.position = new Vector3(36, 18, -17.5f);
                 transform.LookAt(pipe7);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe5"))
             {
                 //transfer to pipe 2 at coordinates X:3, Y:4, Z:26
                 transform.position = new Vector3(9, 4, 40);
                 transform.LookAt(pipe1);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe6"))
             {
                 //transfer to pipe 1 at coordinates X:2.5, Y:4, Z:-25
                 transform.position = new Vector3(7, 4, -32);
                 transform.LookAt(pipe2);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe7"))
             {
                 //transfer to pipe 3 at coordinates X:28, Y:4, Z:1.5
                 transform.position = new Vector3(43.5f, 4, 7);
                 transform.LookAt(pipe4);
+                speed = 0;
             }
             else if (other.gameObject.CompareTag("pipe8"))
             {
                 //transfer to pipe 4 at coordinates X:-23, Y:4, Z:2
                 transform.position = new Vector3(-28, 4, 6);
                 transform.LookAt(pipe3);
+                speed = 0;
+            }else if (other.gameObject.CompareTag("water")){
+                if (rb.velocity.y < -10f){
+                    // splash!
+                    Vector3 pos = transform.position;
+                    pos.y = other.gameObject.transform.position.y;
+                    EffectsManager.GetInstance().DisplaySplashEffect(pos);
+                }
             }
         }
     }
@@ -419,7 +441,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void IncreaseScore(){
-        PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
+        //PlayerScore.AddScoreToPlayer(playerNum, 1); //add 1 to the score
         reactionAudioSource.clip = comemorationAudios[Random.Range(0, 2)];
         reactionAudioSource.Play();
 

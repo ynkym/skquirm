@@ -11,7 +11,7 @@ public class CoinBehaviour : MonoBehaviour {
     Vector3 euler_vector = new Vector3(0f, 0f, 1f);
 
     public Collider mycollider;
-    public SkinnedMeshRenderer myrenderer;
+    public MeshRenderer myrenderer;
 
     Vector3 velocity_horizontal, velocity_y;
     Vector3 delta_space_horizontal;
@@ -74,7 +74,7 @@ public class CoinBehaviour : MonoBehaviour {
                 {
                     starting_point = transform.position;
                     trigger_rotation = true;
-                    gameObject.GetComponent<Collider>().enabled = true;
+                    mycollider.enabled = true;
                 }
 
                 start_time = Time.time;
@@ -109,7 +109,8 @@ public class CoinBehaviour : MonoBehaviour {
 
         //Activate collider
         //GetComponent<Collider>().enabled = true;
-        GetComponent<SkinnedMeshRenderer>().enabled = true;
+        mycollider.enabled = false;
+        myrenderer.enabled = true;
         stop_vanishing_animation = false;
     }
 
@@ -122,11 +123,11 @@ public class CoinBehaviour : MonoBehaviour {
         {
             blink++;
             if (!stop_vanishing_animation)
-                GetComponent<SkinnedMeshRenderer>().enabled = false;
+                myrenderer.enabled = false;
             yield return new WaitForSeconds(0.1f);
 
             if (!stop_vanishing_animation)
-                GetComponent<SkinnedMeshRenderer>().enabled = true;
+                myrenderer.enabled = true;
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(VanishingAnimation());
         }

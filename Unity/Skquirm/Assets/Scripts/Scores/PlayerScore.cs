@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class PlayerScore : Object, System.IComparable<PlayerScore> {
 
+  public static int maxScore = 0;
+
   static Dictionary<int, PlayerScore> Instances = new Dictionary<int, PlayerScore>();
   // for debugging
   // static Dictionary<int, PlayerScore> Instances = new Dictionary<int, PlayerScore>(){
@@ -15,7 +17,18 @@ public class PlayerScore : Object, System.IComparable<PlayerScore> {
 
   public static void AddScoreToPlayer(int playerNum, int increment=1){
     if (Instances.ContainsKey(playerNum)){
-        Instances[playerNum].AddScore(increment);
+      Instances[playerNum].AddScore(increment);
+
+      // update maxScore
+      maxScore = 0;
+      for (int i = 0; i < 4; i++){
+        maxScore = Instances[i].score > maxScore ? Instances[i].score : maxScore;
+      }
+
+      // update rank
+      for (int i = 0; i < 4; i++){
+        Instances[i].CheckWinner();
+      }
     }
   }
 
@@ -24,6 +37,12 @@ public class PlayerScore : Object, System.IComparable<PlayerScore> {
       return Instances[playerNum].GetScore();
     }else{
       return 0;
+    }
+  }
+
+  public static void CheckWinnerForPlayer(int playerNum){
+    if (Instances.ContainsKey(playerNum)){
+      Instances[playerNum].CheckWinner();
     }
   }
 
@@ -44,7 +63,7 @@ public class PlayerScore : Object, System.IComparable<PlayerScore> {
     return scores;
   }
 
-  public static void Clear(){ Instances.Clear(); }
+  public static void Clear(){ Instances.Clear(); maxScore = 0; }
 
   public int playerNum;
   public int score;
@@ -63,6 +82,14 @@ public class PlayerScore : Object, System.IComparable<PlayerScore> {
 
   public int CompareTo(PlayerScore other){
     return other.score - this.score;
+  }
+
+  public void CheckWinner(){
+    if (score >= maxScore && score != 0){
+      WinnerIndicatorBehavior.ShowForPlayer(playerNum);
+    }else{
+      WinnerIndicatorBehavior.HideForPlayer(playerNum);
+    }
   }
 
   void AddScore(int increment){

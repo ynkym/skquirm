@@ -14,11 +14,15 @@ public class ItemStateUI : MonoBehaviour {
   }
   public static void Clear(){ Instances.Clear(); }
 
+  public static Color semiWhite = Color.white;
+
   public int playerNum;
 
   private Sprite emptySprite;
   private UnityEngine.UI.Image image;
   private Dictionary<string, Sprite> spriteTable;
+
+  public UnityEngine.UI.Image maskImage;
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +41,7 @@ public class ItemStateUI : MonoBehaviour {
     spriteTable.Add("default", emptySprite);
 
     image = gameObject.GetComponent<UnityEngine.UI.Image>();
+    maskImage = transform.parent.gameObject.GetComponent<UnityEngine.UI.Image>();
     image.sprite = emptySprite;
 
     if (Instances.ContainsKey(playerNum)){
@@ -44,6 +49,10 @@ public class ItemStateUI : MonoBehaviour {
     }else{
       Instances.Add(playerNum, this);
     }
+
+    semiWhite.a = 0.5f;
+    image.color = semiWhite;
+    maskImage.color = semiWhite;
 	}
 
   public void UpdateUI (Item item){
@@ -51,8 +60,12 @@ public class ItemStateUI : MonoBehaviour {
 
     if (item != null){
       itemtype = item.GetType().ToString();
+      image.color = Color.white;
+      maskImage.color = Color.white;
     } else {
       itemtype = "default";
+      image.color = semiWhite;
+      maskImage.color = semiWhite;
     }
 
     if (spriteTable.ContainsKey(itemtype)){

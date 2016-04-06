@@ -33,6 +33,8 @@ public class ItemSpawner : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		bool iscoin = false;
+
 		if (currentItem == null && !testing) {
 			remainingTime -= Time.deltaTime;
 			if (remainingTime <= 0) {
@@ -48,9 +50,14 @@ public class ItemSpawner : MonoBehaviour {
 					prefab = speedItem;
 				} else {
 					prefab = coinItem;
+					iscoin = true;
 				}
 
-				currentItem = (GameObject)Instantiate (prefab, transform.position, transform.rotation);
+				if (iscoin){
+					currentItem = CoinManagement.InstantiateCoinAt(transform.position);
+				}else{
+					currentItem = (GameObject)Instantiate (prefab, transform.position, transform.rotation);
+				}
 				currentItem.SendMessage ("RegisterSpawner", gameObject);
 			}
 		} else {
