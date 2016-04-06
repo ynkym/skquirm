@@ -36,8 +36,9 @@ public class SpeedDefenseItem : Item {
 		//Adjust the rotation of the projectile that will be generated
 		//temp_rotation.x = 90f;
 
+        Vector3 offset = new Vector3(0,0,20);
 		//Instantiate
-		temp_projectile = Instantiate(projectile_prefab, shooter_back.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
+		temp_projectile = Instantiate(projectile_prefab, shooter_back.transform.position + offset, Quaternion.Euler(temp_rotation)) as GameObject;
 
 		//Set projectile info
 		temp_projectile.GetComponent<SpeedDefenseProjectile> ().SetInfo (null, GetComponent<PlayerController>());

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TutorialController : MonoBehaviour {
 
+  public GameObject controlScreen;
   public UnityEngine.UI.Image[] letters;
   public float timePerLetter = 0.5f;
   private int nextind;
@@ -28,8 +29,10 @@ public class TutorialController : MonoBehaviour {
         }else{
           letters[nextind].gameObject.SetActive(true);
           nextind += 1;
+          if (nextind == 5){
+            controlScreen.SetActive(false);
+          }
         }
-
       }
     }
 	}

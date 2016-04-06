@@ -15,12 +15,16 @@ public class GameTimer : MonoBehaviour {
   private bool gameStarted;
   private Text timerText;
   private Color tcol;
+  private Color textColor;
   private float fadeoutTimer;
   private int index;
+
+  private MaskableGraphic fadeGraphic;
 
   private List<PlayerController> controllers;
 
   private TimeNotification[] notification;
+  public Image[] timerImage;
 
 	// Use this for initialization
 	void Start () {
@@ -28,21 +32,21 @@ public class GameTimer : MonoBehaviour {
     gameStarted = false;
 
     timerText = timerUIObject.GetComponent<Text>();
-    tcol = timerText.color;
+    textColor = timerText.color;
+    tcol = Color.white;
     tcol.a = 0;
-    timerText.color = tcol;
 		fadeoutTimer = 0;
 		index = 0;
 
     notification = new TimeNotification[]{
-      new TimeNotification( gameStartCount + 3f, 0.5f, "3" ),
-      new TimeNotification( gameStartCount + 2f, 0.5f, "2" ),
-      new TimeNotification( gameStartCount + 1f, 0.5f, "1" ),
-      new TimeNotification( gameStartCount, 1.0f, "Go!" ),
+      new TimeNotification( gameStartCount + 3f, 0.5f, "3", 0 ),
+      new TimeNotification( gameStartCount + 2f, 0.5f, "2", 1 ),
+      new TimeNotification( gameStartCount + 1f, 0.5f, "1", 2 ),
+      new TimeNotification( gameStartCount, 1.0f, "Go!", 3 ),
       new TimeNotification( 20f, 0.5f, "0:20" ),
       new TimeNotification( 10f, 0.5f, "0:10" ),
       new TimeNotification( 5f, 0.5f, "0:05" ),
-      new TimeNotification( 0f, 1.0f, "Time Up!" ),
+      new TimeNotification( 0f, 1.0f, "Time Up!", 4 ),
     };
   }
 
@@ -84,27 +88,38 @@ public class GameTimer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        remainingTime = remainingTime - Time.deltaTime;
+    remainingTime = remainingTime - Time.deltaTime;
 		if (index < notification.Length && remainingTime < notification[index].time) {
-            timer_sound.Play();
-            timerUIObject.transform.localScale = new Vector3(1,1,1);
-			tcol.a = 1;
-			fadeoutTimer = notification[index].fadeTime;
-            timerText.text = notification[index].text;
-            index++;
+      timer_sound.Play();
+      if (notification[index].imageIndex >= 0 && notification[index].imageIndex < timerImage.Length){
+        Image image = timerImage[notification[index].imageIndex];
+        timerUIObject = image.gameObject;
+        fadeGraphic = image;
+        tcol = Color.white;
+      }else{
+        timerUIObject = timerText.gameObject;
+        fadeGraphic = timerText;
+        tcol = textColor;
+        timerText.text = notification[index].text;
+      }
+      tcol.a = 1;
+      fadeoutTimer = notification[index].fadeTime;
+      timerUIObject.transform.localScale = new Vector3(1,1,1);
+      fadeGraphic.color = tcol;
+      index++;
 		}
 
 		if (fadeoutTimer > 0) {
 			float scaleFactor = (Time.deltaTime / fadeoutTimer);
 			tcol.a = tcol.a - (scaleFactor);
 			timerUIObject.transform.localScale += new Vector3(scaleFactor, scaleFactor, 0);
-			timerText.color = tcol;
+			fadeGraphic.color = tcol;
 			if (tcol.a <= 0) {
 				tcol.a = 0;
 				fadeoutTimer = 0;
-                timerUIObject.transform.localScale = new Vector3(1,1,1);
-		    }
-            timerText.color = tcol;
+        timerUIObject.transform.localScale = new Vector3(1,1,1);
+		  }
+      fadeGraphic.color = tcol;
 		}
 
         if (remainingTime <= gameStartCount && gameStarted == false){
@@ -132,7 +147,8 @@ public struct TimeNotification {
   public float time;
   public float fadeTime;
   public string text;
-  public TimeNotification (float t, float ft, string x){
-    time = t; fadeTime = ft; text = x;
+  public int imageIndex;
+  public TimeNotification (float t, float ft, string x, int i = -1){
+    time = t; fadeTime = ft; text = x; imageIndex = i;
   }
 }
