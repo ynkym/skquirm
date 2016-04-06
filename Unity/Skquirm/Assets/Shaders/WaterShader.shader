@@ -23,7 +23,7 @@
 	{
 		Tags { "Queue"="Transparent" "RenderType"="Transparent" }
 
-		GrabPass{ "_GrabTexture" }
+		GrabPass{  }
 		Pass
 		{
 			CGPROGRAM
