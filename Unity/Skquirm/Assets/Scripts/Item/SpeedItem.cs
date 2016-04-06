@@ -44,9 +44,8 @@ public class SpeedItem : Item {
 
     //Get the rotation of the car object as EulerAngles
     Vector3 temp_rotation = transform.rotation.eulerAngles;
-
     //Instantiate
-    temp_mine = Instantiate(mine_prefab, shooter_back.transform.position, Quaternion.Euler(temp_rotation)) as GameObject;
+    temp_mine = Instantiate(mine_prefab, shooter_back.transform.position - transform.forward * 2, Quaternion.Euler(temp_rotation)) as GameObject;
 
     //Set projectile info
     temp_mine.GetComponent<SpeedDefenseProjectile> ().SetInfo (null, player_control);
