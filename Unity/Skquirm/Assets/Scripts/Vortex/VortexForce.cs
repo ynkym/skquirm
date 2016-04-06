@@ -184,7 +184,7 @@ public class VortexForce : MonoBehaviour {
 
         for (int i = 0; i < triangleVectices.Length; i++)
         {
-            Instantiate(testObject, new Vector3(triangleVectices[i].x, 6, triangleVectices[i].y), Quaternion.identity);
+           // Instantiate(testObject, new Vector3(triangleVectices[i].x, 6, triangleVectices[i].y), Quaternion.identity);
 
         }
 
