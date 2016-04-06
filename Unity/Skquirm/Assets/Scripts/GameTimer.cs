@@ -43,9 +43,9 @@ public class GameTimer : MonoBehaviour {
       new TimeNotification( gameStartCount + 2f, 0.5f, "2", 1 ),
       new TimeNotification( gameStartCount + 1f, 0.5f, "1", 2 ),
       new TimeNotification( gameStartCount, 1.0f, "Go!", 3 ),
-      new TimeNotification( 20f, 0.5f, "0:20" ),
+      new TimeNotification( 60f, 0.5f, "1:00" ),
+      new TimeNotification( 30f, 0.5f, "0:30" ),
       new TimeNotification( 10f, 0.5f, "0:10" ),
-      new TimeNotification( 5f, 0.5f, "0:05" ),
       new TimeNotification( 0f, 1.0f, "Time Up!", 4 ),
     };
   }
