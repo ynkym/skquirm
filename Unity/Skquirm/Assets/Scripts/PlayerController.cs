@@ -423,6 +423,13 @@ public class PlayerController : MonoBehaviour {
                 transform.position = new Vector3(-28, 4, 6);
                 transform.LookAt(pipe3);
                 speed = 0;
+            }else if (other.gameObject.CompareTag("water")){
+                if (rb.velocity.y < -10f){
+                    // splash!
+                    Vector3 pos = transform.position;
+                    pos.y = other.gameObject.transform.position.y;
+                    EffectsManager.GetInstance().DisplaySplashEffect(pos);
+                }
             }
         }
     }

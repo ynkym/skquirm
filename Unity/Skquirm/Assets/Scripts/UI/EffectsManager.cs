@@ -22,6 +22,13 @@ public class EffectsManager : MonoBehaviour {
   private int coinEffectNextIndex;
   private int coinEffectReadyIndex;
 
+  // splash effect
+  public GameObject splashEffectPrefab;
+  public int splashEffectPoolSize;
+  public List<GameObject> splashEffectPool;
+  private int splashEffectNextIndex;
+  private int splashEffectReadyIndex;
+
   void Start(){
     Instance = this;
 
@@ -46,6 +53,17 @@ public class EffectsManager : MonoBehaviour {
     }
     coinEffectNextIndex = 0;
     coinEffectReadyIndex = -1;
+
+    //initialize splash effect pool
+    splashEffectPool = new List<GameObject>();
+    for (int i=0 ; i<splashEffectPoolSize; i++){
+      GameObject go = (GameObject) Instantiate(splashEffectPrefab, splashEffectPrefab.transform.position, Quaternion.identity);
+      go.transform.parent = gameObject.transform;
+      go.transform.localScale = new Vector3(1f, 1f, 1f);
+      splashEffectPool.Add(go);
+    }
+    splashEffectNextIndex = 0;
+    splashEffectReadyIndex = -1;
   }
 
   public void DisplayItemEffect(Vector3 position){
@@ -74,5 +92,19 @@ public class EffectsManager : MonoBehaviour {
 
   public void CoinEffectReady(){
     coinEffectReadyIndex = (coinEffectReadyIndex + 1) % coinEffectPoolSize;
+  }
+
+  public void DisplaySplashEffect(Vector3 position){
+    if (splashEffectReadyIndex == splashEffectNextIndex){
+      Debug.Log("Ran out of splash Effect pool!!");
+      return;
+    }
+    splashEffectPool[splashEffectNextIndex].transform.position = position;
+    splashEffectPool[splashEffectNextIndex].SetActive(true);
+    splashEffectNextIndex = (splashEffectNextIndex + 1) % splashEffectPoolSize;
+  }
+
+  public void SplashEffectReady(){
+    splashEffectReadyIndex = (splashEffectReadyIndex + 1) % splashEffectPoolSize;
   }
 }
